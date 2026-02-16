@@ -1,0 +1,449 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.site_name }} — Сайты, которые работают. Доказано делом.</title>
+    <meta name="description" content="{{ site.meta_description|default:'SiteBiz Lab - создаем сайты, которые работают. Лендинги и сайты под ключ. От 25 000 ₽.' }}">
+    <meta name="keywords" content="разработка сайтов, лендинг, создание сайта под ключ, веб-студия, заказать сайт, лендинг под ключ, сайт для бизнеса">
+    <meta name="author" content="{{ site.site_name }}">
+    <link rel="canonical" href="{{ canonical_url|default:'' }}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ canonical_url|default:'' }}">
+    <meta property="og:title" content="{{ site.site_name }} — Сайты, которые работают">
+    <meta property="og:description" content="{{ site.meta_description|default:'Лендинги и сайты под ключ. От 25 000 ₽. Ответим в течение 15 минут.' }}">
+    <meta property="og:image" content="{{ og_image_url|default:'' }}">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="{{ site.site_name }}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ site.site_name }} — Сайты, которые работают">
+    <meta name="twitter:description" content="{{ site.meta_description|default:'Лендинги и сайты под ключ. От 25 000 ₽.' }}">
+    <meta name="twitter:image" content="{{ og_image_url|default:'' }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'site/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'site/assets/favicon.ico' %}">
+
+    <!-- JSON-LD: Organization + WebSite для поисковиков -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "{{ base_url|default:'' }}/#organization",
+                "name": "{{ site.site_name }}",
+                "url": "{{ base_url|default:'' }}",
+                "description": "{{ site.meta_description|default:'Создаем сайты и лендинги, которые приносят заявки.' }}",
+                "potentialAction": {
+                    "@type": "ContactAction",
+                    "target": "{{ base_url|default:'' }}/#contact",
+                    "url": "{{ base_url|default:'' }}/#contact"
+                }
+            },
+            {
+                "@type": "WebSite",
+                "name": "{{ site.site_name }}",
+                "url": "{{ canonical_url|default:'' }}",
+                "description": "{{ site.meta_description|default:'Сайты и лендинги под ключ. От 25 000 ₽.' }}",
+                "publisher": {"@id": "{{ base_url|default:'' }}/#organization"},
+                "inLanguage": "ru-RU"
+            }
+        ]
+    }
+    </script>
+</head>
+<body itemscope itemtype="https://schema.org/WebPage">
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
+        for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r)return;}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=106429374','ym');
+        ym(106429374,'init',{clickmap:true,trackLinks:true,webvisor:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/106429374" style="position:absolute;left:-9999px;" alt="" /></div></noscript>
+
+    <div class="ai-agent-wrapper">
+        <button class="ai-agent-trigger" id="aiTrigger" aria-label="Открыть чат с помощником"><i class="fas fa-comments"></i><span class="pulse"></span></button>
+        <div class="ai-agent-container" id="aiAgent">
+            <div class="ai-header">
+                <div class="ai-avatar"><i class="fas fa-bolt"></i></div>
+                <div class="ai-info"><h4>SitBiz Scout</h4><p>AI-помощник</p></div>
+                <button class="ai-close" id="closeAi" aria-label="Закрыть чат">×</button>
+            </div>
+            <div class="ai-chat" id="aiChat">
+                <div class="ai-message"><div class="message-bubble">
+                    <p>👋 <strong>Привет! Я SitBiz Scout.</strong></p>
+                    <p>Помогу за 60 секунд понять, сможем ли мы сделать для вас работающий сайт.</p>
+                    <p>Готовы начать?</p>
+                </div></div>
+            </div>
+            <div class="ai-controls">
+                <div class="quick-actions" id="quickActions">
+                    <button class="quick-btn" data-answer="Да, начать">🚀 Да, начать</button>
+                    <button class="quick-btn" data-answer="Расскажите про акцию">🎁 Акция</button>
+                    <button class="quick-btn" data-answer="Показать примеры">💼 Примеры</button>
+                </div>
+                <div class="options-grid" id="optionsGrid" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <header class="header" role="banner">
+        <nav class="nav container" role="navigation" aria-label="Основная навигация">
+            <a href="/" class="logo">
+                <div class="logo-icon"><img src="{% static 'site/assets/logo.png' %}" alt="{{ site.site_name }}"></div>
+                <div class="logo-text"><span class="logo-main">SiteBiz</span><span class="logo-sub">Lab</span></div>
+            </a>
+            <div class="nav-links">
+                <a href="/">Главная</a>
+                <a href="#cases">Портфолио</a>
+                <a href="#about">О нас</a>
+                <a href="#services">Услуги</a>
+                <a href="#offer">Акция</a>
+                <a href="#contact" class="nav-cta">Обсудить проект</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Открыть меню" aria-expanded="false"><i class="fas fa-bars"></i></button>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+            <a href="/">Главная</a>
+            <a href="#cases">Портфолио</a>
+            <a href="#about">О нас</a>
+            <a href="#services">Услуги</a>
+            <a href="#offer">Акция</a>
+            <a href="#contact" class="nav-cta">Обсудить проект</a>
+        </div>
+    </header>
+
+    {% if hero %}
+    <section class="hero" role="region" aria-labelledby="hero-heading">
+        <div class="hero-bg"><div class="hero-bg-image"></div></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title" id="hero-heading">{{ hero.title }}<span class="highlight">{{ hero.title_highlight }}</span></h1>
+                <p class="hero-subtitle">{{ hero.subtitle }}</p>
+                <div class="hero-actions">
+                    <button class="btn-primary btn-hero" id="heroCta"><span>Получить разбор проекта</span></button>
+                    <a href="#cases" class="btn-secondary btn-hero-outline">Смотреть кейсы</a>
+                </div>
+                {% if hero.note %}<p class="hero-note">{{ hero.note }}</p>{% endif %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="section section-about" id="about" role="region" aria-labelledby="about-heading">
+        <div class="container">
+            <div class="about-header">
+                <h2 id="about-heading">О нас</h2>
+                <p class="about-intro">4 года создаём сайты, которые приносят заявки.</p>
+                <p class="about-intro">Каждый проект — это логика, автоматизация и аналитика.</p>
+                <div class="about-tabs" role="tablist">
+                    <a href="#cases" class="about-tab" role="tab">Все проекты</a>
+                    <a href="#cases" class="about-tab about-tab-active" role="tab">Для бизнеса</a>
+                    <a href="#cases" class="about-tab" role="tab">Для услуг</a>
+                    <a href="#cases" class="about-tab" role="tab">Для стартапов</a>
+                    <a href="#cases" class="about-tab" role="tab">Для образования</a>
+                    <a href="#cases" class="about-tab about-tab-more" role="tab" aria-label="Ещё"><i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+            <div class="about-metrics">
+                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-calendar-alt"></i></div><span class="about-metric-value">12</span><span class="about-metric-label">реализованных проектов</span></div>
+                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-check-circle"></i></div><span class="about-metric-value">4 года</span><span class="about-metric-label">в digital</span></div>
+                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-thumbs-up"></i></div><span class="about-metric-value">90%</span><span class="about-metric-label">клиентов по рекомендаций</span></div>
+                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-rocket"></i></div><span class="about-metric-value">10-14</span><span class="about-metric-label">средний срок запуска</span></div>
+                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-percent"></i></div><span class="about-metric-value">до 50%</span><span class="about-metric-label">заявки дешевле после запуска</span></div>
+            </div>
+            <div class="about-differ">
+                <h2 class="about-differ-title">Чем мы отличаемся</h2>
+                <div class="about-differ-grid">
+                    <div class="about-differ-content">
+                        <div class="about-differ-card"><div class="about-differ-icon"><i class="fas fa-clock"></i></div><h3>Минимум бюрократии</h3><p>Не тратим время на воду, длительные созвоны, документы на 70 страниц.</p></div>
+                        <div class="about-differ-card"><div class="about-differ-icon"><i class="far fa-star"></i></div><h3>Честные рекомендации</h3><p>Если можно использовать готовое решение — скажем. Без накруток ради чека.</p></div>
+                        <div class="about-differ-card"><div class="about-differ-icon"><i class="fas fa-handshake"></i></div><h3>Партнёрство, не поток</h3><p>У нас нет конвейера. Мы погружаемся в бизнес, понимаем задачу, предлагаем полезное.</p></div>
+                    </div>
+                    <div class="about-differ-image"><img src="{% static 'difference.png' %}" alt="Чем мы отличаемся" loading="lazy"></div>
+                </div>
+            </div>
+            <div class="about-cta-block">
+                <h2 class="about-cta-title">Чем мы отличаемся</h2>
+                <p class="about-cta-text">Получите разбор вашего проекта и структуру сайта <strong>бесплатно</strong> — ответим в течение 15 минут.</p>
+                <button class="btn-primary about-cta-btn" id="aboutCta"><span>Получить разбор проекта</span></button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-services" id="services" role="region" aria-labelledby="services-heading">
+        <div class="section-services-bg" style="background-image: url('{% static "site/assets/bg-service.jpg" %}');"></div>
+        <div class="container">
+            <div class="section-header"><h2 id="services-heading">Почему наши проекты приносят заявки</h2></div>
+            <div class="services-grid" id="servicesGrid">
+                {% for service in services %}
+                <div class="service-card {% if service.is_featured %}service-card-featured{% endif %}" data-service="{{ service.slug }}">
+                    {% if service.is_featured %}<div class="service-badge">Лидеры рынка</div>{% endif %}
+                    <div class="service-icon">
+                        {% if service.slug == 'launch' %}<i class="fas fa-paper-plane"></i>{% elif service.slug == 'growth' %}<i class="fas fa-chart-bar"></i>{% else %}<i class="fas fa-th-large"></i>{% endif %}
+                    </div>
+                    <h3>{{ service.name }}</h3>
+                    <p class="service-description">{{ service.short_description }}</p>
+                    {% with suitable=service.get_features_suitable included=service.get_features_included %}
+                    {% if suitable %}
+                    <p class="service-sublabel">Подойдет если:</p>
+                    <ul class="service-features">{% for item in suitable %}<li>{{ item }}</li>{% endfor %}</ul>
+                    {% endif %}
+                    {% if included %}
+                    <p class="service-sublabel">Включено:</p>
+                    <ul class="service-features">{% for item in included %}<li>{{ item }}</li>{% endfor %}</ul>
+                    {% endif %}
+                    {% endwith %}
+                    <div class="service-price"><span class="price-value">{{ service.price_from }}</span></div>
+                    <button class="btn-primary btn-service" data-service-type="{{ service.name }}"><span>Обсудить проект</span></button>
+                    <span class="service-note">Ответим в течение 15 минут.</span>
+                </div>
+                {% empty %}
+                <p class="section-subtitle">Услуги настраиваются в админке.</p>
+                {% endfor %}
+            </div>
+            <p class="services-footer-text">Любой тариф можно доработать под ваш бизнес.<br>Мы не работаем по шаблону — мы строим систему под задачу.</p>
+        </div>
+    </section>
+
+    {% if offers %}
+    <section class="section section-offer" id="offer" role="region" aria-labelledby="offer-heading">
+        <div class="container">
+            <div class="offer-card">
+                <div class="offer-content">
+                    <div class="offer-header">
+                        <span class="offer-icon" aria-hidden="true"><i class="fas fa-gift"></i></span>
+                        <p class="offer-lead">Запуститесь сейчас — получите</p>
+                        <h2 id="offer-heading">{{ offers.0.title }}</h2>
+                    </div>
+                    <ul class="offer-benefits">
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Исправление технических ошибок</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Небольшие доработки</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Консультации по развитию</li>
+                        <li><i class="fas fa-check" aria-hidden="true"></i> Помощь с аналитикой</li>
+                    </ul>
+                    <div class="offer-pricing">
+                        <p class="offer-price-label">Ориентировочно:</p>
+                        <p class="offer-price">15 000 – 25 000 ₽</p>
+                        <p class="offer-price-note">Сейчас — бесплатно при запуске до <span class="offer-deadline"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 31 марта 2025</span></p>
+                    </div>
+                    <a href="#contact" class="btn-primary btn-offer" id="offerCta">{{ offers.0.button_text|default:"Обсудить проект" }}</a>
+                    <p class="offer-disclaimer">Ответим в течение 15 минут. Без навязывания.</p>
+                </div>
+                <div class="offer-right">
+                    <div class="offer-image-wrap"><img src="{% static 'promotion.png' %}" alt="Акция" loading="lazy"></div>
+                    <div class="offer-testimonials">
+                        <blockquote class="offer-quote"><span class="quote-mark">"</span><p>Запустили сайт за 12 дней после обращения. Заявки пришли в 3 раза быстрее. Сделали всё под ключ — подсказали, что доработать. Рекомендую.</p><cite>Дмитрий, владелец сервиса</cite></blockquote>
+                        <blockquote class="offer-quote"><span class="quote-mark">"</span><p>На старте долго мучилась с контентом и дизайном — помогли структурировать. За 3 недели получила рабочий лендинг и первые заявки.</p><cite>Анна, основатель проекта</cite></blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="section section-cases" id="cases" role="region" aria-labelledby="cases-heading">
+        <div class="container">
+            <div class="section-header">
+                <h2 id="cases-heading">Наши работы</h2>
+                <p class="section-subtitle">Показываем реальные примеры: как мы увеличили результаты клиентам</p>
+            </div>
+            <div class="cases-tabs" role="tablist" aria-label="Категории проектов">
+                <button type="button" class="cases-tab active" role="tab" data-filter="all" aria-selected="true">Все проекты</button>
+                <button type="button" class="cases-tab" role="tab" data-filter="business" aria-selected="false">Для бизнеса</button>
+                <button type="button" class="cases-tab" role="tab" data-filter="services" aria-selected="false">Для услуг</button>
+                <button type="button" class="cases-tab" role="tab" data-filter="startups" aria-selected="false">Для стартапов</button>
+                <button type="button" class="cases-tab" role="tab" data-filter="education" aria-selected="false">Для образования</button>
+            </div>
+            <div class="cases-carousel">
+                <button type="button" class="cases-carousel-btn cases-carousel-prev" aria-label="Предыдущий кейс"><i class="fas fa-chevron-left"></i></button>
+                <div class="cases-carousel-inner" id="casesCarouselInner">
+                    <div class="cases-grid" id="casesGrid">
+                {% for case in cases %}
+                <article class="case-card" data-category="{{ case.category }}">
+                    <div class="case-visual">
+                        {% if case.image %}<img src="{{ case.image.url }}" alt="Кейс: {{ case.title }}" loading="lazy">{% else %}<img src="{% static 'site/assets/case-after.jpg' %}" alt="Кейс: {{ case.title }}" loading="lazy">{% endif %}
+                    </div>
+                    <div class="case-content">
+                        <h3>{{ case.title }}</h3>
+                        <div class="case-kpi">
+                            {% if case.kpi_line_1 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_1 }}</span></div>{% endif %}
+                            {% if case.kpi_line_2 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_2 }}</span></div>{% endif %}
+                        </div>
+                        <p class="case-description">{{ case.description }}</p>
+                        <div class="case-meta">
+                            {% if case.platform %}<span><i class="fas fa-circle fa-xs" aria-hidden="true"></i> Платформа: {{ case.platform }}</span>{% endif %}
+                            {% if case.launch_days %}<span>Время запуска {{ case.launch_days }}</span>{% endif %}
+                        </div>
+                        <a href="#contact" class="case-view-btn">Посмотреть проект <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                </article>
+                {% empty %}
+                <article class="case-card" data-category="business">
+                    <div class="case-visual"><img src="{% static 'site/assets/case-after.jpg' %}" alt="Кейс" loading="lazy"></div>
+                    <div class="case-content">
+                        <h3>Организуем похороны «Под ключ»</h3>
+                        <div class="case-kpi"><div class="kpi-line"><span class="kpi-value">−55%</span> стоимость заявки</div><div class="kpi-line"><span class="kpi-value">+27 заявок</span> за первый месяц</div></div>
+                        <p class="case-description">Лендинг для похоронного агентства под ключ.</p>
+                        <div class="case-meta"><span>Платформа: Tilda</span><span>Время запуска 16 дней</span></div>
+                        <a href="#contact" class="case-view-btn">Посмотреть проект <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                </article>
+                {% endfor %}
+                    </div>
+                </div>
+                <button type="button" class="cases-carousel-btn cases-carousel-next" aria-label="Следующий кейс"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="cases-want-block">
+                <div class="want-content">
+                    <h3 class="want-title"><i class="fas fa-gift" aria-hidden="true"></i> Хотите также?</h3>
+                    <p class="want-text">Получите разбор вашего проекта и структуру сайта <strong class="want-free">бесплатно</strong> —</p>
+                    <p class="want-note">ответим в течение 15 минут.</p>
+                    <a href="#contact" class="btn-primary btn-want">Получить разбор проекта</a>
+                    <p class="want-disclaimer">Ответим в течение 15 минут. Без навязывания.</p>
+                </div>
+                <div class="want-testimonials">
+                    <blockquote class="want-quote"><span class="quote-mark">"</span><p>Быстро сделали лендинг, заявки пошли с первого дня. Рекомендую.</p><cite>Дмитрий, владелец сервиса</cite></blockquote>
+                    <blockquote class="want-quote"><span class="quote-mark">"</span><p>Понятная структура, всё под ключ. Очень доволен результатом.</p><cite>Анна, онлайн-школа</cite></blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-cta" id="contact" role="region" aria-labelledby="contact-heading">
+        <div class="section-cta-bg" style="background-image: url('{% static "site/assets/bg-end.jpeg" %}');"></div>
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-content">
+                    <h2 class="cta-title" id="contact-heading">Готовы сделать сайт, который будет работать на вас?</h2>
+                    <p class="cta-text">Оставьте заявку, и мы свяжемся с вами в течение часа для бесплатной консультации.</p>
+                    <form class="cta-form" id="mainForm" role="form" aria-label="Форма заявки">
+                        {% csrf_token %}
+                        <input type="hidden" id="selectedService" name="selectedService" value="">
+                        <div class="form-row contact-method-row">
+                            <label class="form-label">Как лучше связаться?</label>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="contactMethod" value="phone" checked><span>Телефон</span></label>
+                                <label class="radio-label"><input type="radio" name="contactMethod" value="telegram"><span>Telegram</span></label>
+                            </div>
+                        </div>
+                        <div class="form-row"><input type="text" placeholder="Ваше имя *" id="ctaName" name="name" required aria-required="true"></div>
+                        <div class="form-row"><input type="tel" placeholder="Телефон *" id="ctaPhone" name="phone" required aria-required="true"></div>
+                        <div class="form-row"><textarea placeholder="Опишите ваш проект (необязательно)" id="ctaMessage" name="message" rows="2"></textarea></div>
+                        <div class="form-row privacy-checkbox-row">
+                            <label class="privacy-checkbox-label">
+                                <input type="checkbox" id="mainFormPrivacy" name="privacy" required aria-required="true">
+                                <span>Я согласен(а) на <a href="#" id="privacyPolicyMainForm" class="privacy-link">обработку персональных данных</a></span>
+                            </label>
+                        </div>
+                        <div class="form-footer">
+                            <button type="submit" class="btn-primary btn-cta" id="submitCta"><i class="fas fa-paper-plane" aria-hidden="true"></i><span>Обсудить проект</span></button>
+                            <p class="form-note">Конфиденциально. Никакого спама.</p>
+                        </div>
+                    </form>
+                </div>
+                <div class="cta-visual">
+                    <div class="visual-element">
+                        <div class="element-circle"><img src="{% static 'site/assets/logo.png' %}" alt="{{ site.site_name }}" class="element-circle-logo"></div>
+                        <div class="element-dots"></div>
+                    </div>
+                    <p class="visual-quote">«Мы не просто делаем сайты. Мы создаем инструменты, которые приносят деньги.»</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo footer-logo">
+                        <div class="logo-icon"><img src="{% static 'site/assets/logo.png' %}" alt="{{ site.site_name }}"></div>
+                        <div class="logo-text"><span class="logo-main">SiteBiz</span><span class="logo-sub">Lab</span></div>
+                    </div>
+                    <p class="footer-tagline">Сайты, которые работают.<br>Доказано делом.</p>
+                    <div class="social-links">
+                        {% if site.telegram %}<a href="{{ site.telegram }}" aria-label="Telegram" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>{% endif %}
+                        {% if site.email %}<a href="mailto:{{ site.email }}" aria-label="Email"><i class="fas fa-envelope"></i></a>{% endif %}
+                        {% if site.vk %}<a href="{{ site.vk }}" aria-label="VKontakte" target="_blank" rel="noopener"><i class="fab fa-vk"></i></a>{% endif %}
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group"><h4>Компания</h4><a href="#about">О нас</a><a href="#services">Услуги</a><a href="#offer">Акция</a></div>
+                    <div class="link-group"><h4>Услуги</h4><a href="#services" data-service="launch">СТАРТ</a><a href="#services" data-service="growth">СИСТЕМА РОСТА</a><a href="#services" data-service="scale">МАСШТАБ</a><a href="#contact">Индивидуальный проект</a></div>
+                    <div class="link-group"><h4>Контакты</h4>{% if site.email %}<a href="mailto:{{ site.email }}">{{ site.email }}</a>{% endif %}<a href="https://t.me/sitebiz_lab_manager" target="_blank" rel="noopener">Telegram менеджер</a><a href="#contact" class="schedule-btn">Оставить заявку</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© {{ site.site_name }} 2023. Сайты, которые работают. Доказано делом.</p>
+                <div class="footer-legal"><a href="#" id="privacyPolicy">Политика конфиденциальности</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal" id="serviceModal" role="dialog" aria-labelledby="serviceModalTitle" aria-hidden="true">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose" aria-label="Закрыть окно">×</button>
+            <h3 id="serviceModalTitle">Вы выбрали: <span id="selectedServiceName"></span></h3>
+            <p id="servicePriceDisplay"></p>
+            <p>Заполните форму, и мы свяжемся с вами для обсуждения деталей.</p>
+            <form class="modal-form" id="serviceForm">
+                {% csrf_token %}
+                <input type="hidden" id="modalServiceType" name="serviceType" value="">
+                <div class="form-row contact-method-row">
+                    <label class="form-label">Как лучше связаться?</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="modalContactMethod" value="phone" checked><span>Телефон</span></label>
+                        <label class="radio-label"><input type="radio" name="modalContactMethod" value="telegram"><span>Telegram</span></label>
+                    </div>
+                </div>
+                <div class="form-row design-toggle-row">
+                    <div class="toggle-container"><span class="toggle-label">У вас есть готовый дизайн?</span><label class="switch"><input type="checkbox" id="hasDesignToggle" checked><span class="slider round"></span></label></div>
+                    <p id="designPriceNote">Так как нет дизайна, ориентировочная цена выше на <span id="designPriceDiff"></span> ₽.</p>
+                </div>
+                <div class="form-row"><input type="text" placeholder="Ваше имя *" id="modalName" name="name" required></div>
+                <div class="form-row"><input type="text" placeholder="Телефон *" id="modalContact" name="contact" required></div>
+                <div class="form-row"><textarea placeholder="Дополнительные пожелания" id="modalMessage" name="message" rows="3"></textarea></div>
+                <div class="form-row privacy-checkbox-row">
+                    <label class="privacy-checkbox-label"><input type="checkbox" id="modalFormPrivacy" name="privacy" required aria-required="true"><span>Я согласен(а) на <a href="#" id="privacyPolicyModalForm" class="privacy-link">обработку персональных данных</a></span></label>
+                </div>
+                <button type="submit" class="btn-primary" id="modalSubmit"><i class="fas fa-paper-plane"></i><span>Отправить заявку</span></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="privacyModal" role="dialog" aria-labelledby="privacyModalTitle" aria-hidden="true">
+        <div class="modal-overlay" id="privacyModalOverlay"></div>
+        <div class="modal-content modal-content-privacy">
+            <button class="modal-close" id="privacyModalClose" aria-label="Закрыть окно">×</button>
+            <h3 id="privacyModalTitle">Политика конфиденциальности</h3>
+            <div class="privacy-content">
+                <p class="privacy-date">Дата вступления в силу: 21.01.2026</p>
+                <h4>1. Общие положения</h4>
+                <p>Настоящая Политика конфиденциальности определяет порядок сбора, хранения, передачи и иных видов обработки персональных данных пользователей сайта {{ site.site_name }}.</p>
+                <h4>11. Контактная информация</h4>
+                <p>По вопросам обработки персональных данных: <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="caseLightbox" class="case-lightbox" role="dialog" aria-modal="true" aria-label="Увеличенное изображение" hidden>
+        <div class="case-lightbox-backdrop"></div>
+        <img class="case-lightbox-img" src="" alt="">
+    </div>
+
+    <script src="{% static 'site/script.js' %}"></script>
+</body>
+</html>

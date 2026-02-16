@@ -1,0 +1,123 @@
+{% load i18n static %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
+<head>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
+{% block dark-mode-vars %}
+  <link rel="stylesheet" href="{% static "admin/css/dark_mode.css" %}">
+  <script src="{% static "admin/js/theme.js" %}"></script>
+{% endblock %}
+{% block extrastyle %}{% endblock %}
+{% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
+{% block extrahead %}{% endblock %}
+{% block responsive %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "admin/css/responsive.css" %}">
+    {% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% static "admin/css/responsive_rtl.css" %}">{% endif %}
+{% endblock %}
+<link rel="stylesheet" href="{% static "admin/css/elizondo.css" %}">
+{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+</head>
+
+<body class="elizondo-admin {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+  data-admin-utc-offset="{% now "Z" %}">
+<a href="#content-start" class="skip-to-content-link">{% translate 'Skip to main content' %}</a>
+
+{% if is_popup %}
+<div id="container">
+  <div id="content" class="colM">
+    {% if title %}<h1>{{ title }}</h1>{% endif %}
+    {{ content }}
+  </div>
+</div>
+{% else %}
+<div class="elizondo-wrapper">
+  <aside class="elizondo-sidebar">
+    <div class="elizondo-brand">
+      <a href="{% url 'admin:index' %}">{% block sidebar_brand %}{{ site_header|default:_('Django administration') }}{% endblock %}</a>
+    </div>
+    {% if has_permission and user.is_authenticated %}
+    <div class="elizondo-user">
+      <div class="elizondo-user-avatar"></div>
+      <div class="elizondo-user-name">{% firstof user.get_short_name user.get_username %}</div>
+      <div class="elizondo-user-email">{{ user.email|default:"" }}</div>
+    </div>
+    <nav class="elizondo-nav" aria-label="{% translate 'Sidebar' %}">
+      {% for app in available_apps %}
+      <div class="elizondo-nav-section">
+        <div class="elizondo-nav-caption">{{ app.name }}</div>
+        {% for model in app.models %}
+          {% if model.admin_url %}
+          <a href="{{ model.admin_url }}" class="elizondo-nav-link{% if model.admin_url in request.path %} active{% endif %}">{{ model.name }}</a>
+          {% else %}
+          <span class="elizondo-nav-link disabled">{{ model.name }}</span>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </nav>
+    <div class="elizondo-sidebar-footer">
+      {% if site_url %}<a href="{{ site_url }}" target="_blank" rel="noopener">{% translate 'View site' %}</a>{% endif %}
+      {% if user.has_usable_password %}<a href="{% url 'admin:password_change' %}">{% translate 'Change password' %}</a>{% endif %}
+      <form method="post" action="{% url 'admin:logout' %}" class="elizondo-logout">
+        {% csrf_token %}
+        <button type="submit" class="elizondo-logout-btn">{% translate 'Log out' %}</button>
+      </form>
+    </div>
+    {% elif site_url %}
+    <div class="elizondo-sidebar-footer">
+      <a href="{{ site_url }}" target="_blank" rel="noopener">{% translate 'View site' %}</a>
+    </div>
+    {% endif %}
+  </aside>
+  <div class="elizondo-main">
+    <div class="elizondo-topbar">
+      {% block nav-breadcrumbs %}
+      <nav class="elizondo-breadcrumbs" aria-label="{% translate 'Breadcrumbs' %}">
+        {% block breadcrumbs %}
+        <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+        {% if title %} <span class="elizondo-bread-sep">›</span> {{ title }}{% endif %}
+        {% endblock %}
+      </nav>
+      {% endblock %}
+      {% if has_permission %}
+      <div class="elizondo-usertools">
+        {% translate 'Welcome,' %} <strong>{% firstof user.get_short_name user.get_username %}</strong>
+      </div>
+      {% endif %}
+    </div>
+    <main id="content-start" class="elizondo-content" tabindex="-1">
+      {% block messages %}
+      {% if messages %}
+      <ul class="messagelist">{% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+      {% endfor %}</ul>
+      {% endif %}
+      {% endblock messages %}
+      <div id="content" class="{% block coltype %}colM{% endblock %}">
+        {% block pretitle %}{% endblock %}
+        {% block content_title %}{% if title %}<h1 class="elizondo-page-title">{{ title }}</h1>{% endif %}{% endblock %}
+        {% block content_subtitle %}{% if subtitle %}<h2>{{ subtitle }}</h2>{% endif %}{% endblock %}
+        {% block content %}
+          {% block object-tools %}{% endblock %}
+          {{ content }}
+        {% endblock %}
+        {% block sidebar %}{% endblock %}
+        <br class="clear">
+      </div>
+    </main>
+    <footer id="footer" class="elizondo-footer">{% block footer %}{% endblock %}</footer>
+  </div>
+</div>
+{% endif %}
+
+<svg xmlns="http://www.w3.org/2000/svg" class="base-svgs">
+  <symbol viewBox="0 0 24 24" width="1.5rem" height="1.5rem" id="icon-auto"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/></symbol>
+  <symbol viewBox="0 0 24 24" width="1.5rem" height="1.5rem" id="icon-moon"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/></symbol>
+  <symbol viewBox="0 0 24 24" width="1.5rem" height="1.5rem" id="icon-sun"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/></symbol>
+</svg>
+{% block extrabody %}{% endblock extrabody %}
+</body>
+</html>

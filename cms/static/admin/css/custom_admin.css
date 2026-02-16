@@ -1,0 +1,405 @@
+/* SiteBiz Lab — оформление админки */
+
+:root {
+    --cms-sidebar: #2c3e50;
+    --cms-sidebar-text: #ecf0f1;
+    --cms-sidebar-active: #3498db;
+    --cms-main-bg: #f0f2f5;
+    --cms-card: #fff;
+    --cms-border: #e4e6e9;
+    --cms-btn: #1e3a5f;
+    --cms-btn-change: #3498db;
+}
+
+/* Сайдбар: тёмный фон, читаемый текст */
+body .main-sidebar {
+    background-color: var(--cms-sidebar) !important;
+}
+
+body .main-sidebar .brand-link,
+body .main-sidebar .brand-text {
+    color: var(--cms-sidebar-text) !important;
+}
+
+body .main-sidebar .user-panel .d-block,
+body .main-sidebar .user-panel a.d-block {
+    color: var(--cms-sidebar-text) !important;
+}
+
+body .main-sidebar .nav-sidebar .nav-link {
+    color: var(--cms-sidebar-text) !important;
+}
+
+body .main-sidebar .nav-sidebar .nav-link:hover {
+    background-color: rgba(255,255,255,0.08) !important;
+    color: #fff !important;
+}
+
+body .main-sidebar .nav-sidebar .nav-link.active {
+    background-color: rgba(52, 152, 219, 0.25) !important;
+    color: #fff !important;
+    border-left: 3px solid var(--cms-sidebar-active) !important;
+}
+
+body .main-sidebar .nav-header {
+    color: rgba(236, 240, 241, 0.8) !important;
+}
+
+/* Основная область: светлый фон */
+body .content-wrapper {
+    background-color: var(--cms-main-bg) !important;
+}
+
+/* Заголовок страницы */
+body .content-wrapper .content h1,
+body .content-wrapper .content .h4 {
+    color: #2d3748 !important;
+    font-weight: 700 !important;
+}
+
+/* Таблица: белый фон, границы, без вылезания */
+body #result_list {
+    background: var(--cms-card) !important;
+    border: 1px solid var(--cms-border) !important;
+    border-radius: 8px !important;
+    overflow-x: auto !important;
+    max-width: 100% !important;
+}
+
+body #result_list thead th {
+    background: #f8f9fa !important;
+    color: #495057 !important;
+    font-weight: 600 !important;
+    padding: 0.6rem 0.75rem !important;
+    white-space: nowrap !important;
+}
+
+body #result_list tbody td {
+    padding: 0.6rem 0.75rem !important;
+    vertical-align: middle !important;
+}
+
+body #result_list tbody tr:hover {
+    background: #f8f9fa !important;
+}
+
+/* Контейнер контента — не даём вылезать */
+body .content-wrapper .content .container-fluid {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+}
+
+body #content-main {
+    max-width: 100% !important;
+}
+
+/* Модули (формы, блоки) */
+body #content-main .module {
+    background: var(--cms-card) !important;
+    border: 1px solid var(--cms-border) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+}
+
+body #content-main .module h2 {
+    background: #f8f9fa !important;
+    border-bottom: 1px solid var(--cms-border) !important;
+    padding: 0.6rem 1rem !important;
+    font-size: 1rem !important;
+}
+
+/* Кнопки: аккуратный вид */
+body .content-wrapper .btn-primary,
+body .content-wrapper .addlink,
+body .content-wrapper a.addlink {
+    background-color: var(--cms-btn) !important;
+    border-color: var(--cms-btn) !important;
+    color: #fff !important;
+    border-radius: 6px !important;
+    padding: 0.4rem 1rem !important;
+}
+
+body .content-wrapper .btn-primary:hover,
+body .content-wrapper .addlink:hover,
+body .content-wrapper a.addlink:hover {
+    opacity: 0.9 !important;
+}
+
+/* Верхняя навбар — светлая */
+body .main-header.navbar {
+    background: #fff !important;
+    border-bottom: 1px solid var(--cms-border) !important;
+}
+
+body .main-header .nav-link {
+    color: #495057 !important;
+}
+
+/* Хлебные крошки — компактно */
+body .breadcrumb {
+    background: transparent !important;
+    padding: 0 !important;
+    font-size: 0.875rem !important;
+}
+
+/* Бейджи в таблице (Активно / Не обработано) */
+body #result_list .badge,
+body #result_list .badge-success {
+    padding: 0.25rem 0.5rem !important;
+    border-radius: 4px !important;
+    font-size: 0.8rem !important;
+}
+
+body #result_list .badge-success {
+    background-color: #2563eb !important;
+}
+
+body #result_list .badge-danger,
+body #result_list .badge-secondary {
+    background-color: #dc2626 !important;
+}
+
+/* Ссылки в таблице */
+body #result_list a {
+    color: var(--cms-btn) !important;
+}
+
+/* Фикс: строка с поиском и действиями не ломает сетку */
+body #changelist .search-form,
+body #changelist .actions {
+    margin-bottom: 0.75rem !important;
+}
+
+body #changelist .results {
+    overflow-x: auto !important;
+    max-width: 100% !important;
+}
+
+/* ========== ФОРМА РЕДАКТИРОВАНИЯ (change form): отступы, «Сохранить» ========== */
+body.change-form #content-main .row {
+    margin-left: -0.75rem !important;
+    margin-right: -0.75rem !important;
+}
+
+body.change-form #content-main .col-12.col-lg-9 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    margin-bottom: 1rem !important;
+}
+
+body.change-form #content-main .col-12.col-lg-3 {
+    padding-left: 1rem !important;
+    padding-right: 0.75rem !important;
+}
+
+/* Карточки на форме (основная форма + инлайны вроде «3 Заявки») — отступ снизу */
+body.change-form #content-main .card {
+    margin-bottom: 1.25rem !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--cms-border) !important;
+}
+
+body.change-form #content-main .card:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Блок с кнопкой «Сохранить» — отступ сверху и по бокам, чтобы не прилипал к «3 Заявки» */
+body.change-form #jazzy-actions {
+    margin-top: 1.25rem !important;
+    padding: 1rem 0 !important;
+}
+
+body.change-form #jazzy-actions .form-group {
+    margin-bottom: 0.65rem !important;
+}
+
+body.change-form #jazzy-actions .form-group:last-child {
+    margin-bottom: 0 !important;
+}
+
+body.change-form #jazzy-actions .btn.form-control {
+    padding: 0.5rem 1rem !important;
+}
+
+/* ========== ДАШБОРД (главная админки) ========== */
+body.dashboard .content-wrapper {
+    background-color: var(--cms-main-bg) !important;
+}
+
+body.dashboard .content .container-fluid {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+body.dashboard .content .row {
+    margin-left: -0.5rem !important;
+    margin-right: -0.5rem !important;
+}
+
+body.dashboard .content .col-lg-9,
+body.dashboard .content .col-lg-3,
+body.dashboard .content .col-md-6,
+body.dashboard .content .col-sm-12 {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+}
+
+/* Карточки «Контент сайта», «Пользователи и группы» */
+body.dashboard .card {
+    border: 1px solid var(--cms-border) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+    margin-bottom: 1.25rem !important;
+    overflow: visible !important;
+}
+
+body.dashboard .card-header {
+    background: #f8f9fa !important;
+    border-bottom: 1px solid var(--cms-border) !important;
+    padding: 0.85rem 1rem !important;
+    font-weight: 600 !important;
+    color: #2d3748 !important;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+body.dashboard .card-header h5 {
+    margin: 0 !important;
+    font-size: 1rem !important;
+}
+
+body.dashboard .card-body {
+    padding: 1rem 1.25rem !important;
+}
+
+body.dashboard .card-body .table {
+    margin-bottom: 0 !important;
+    table-layout: fixed !important;
+    width: 100% !important;
+}
+
+body.dashboard .card-body .table tbody tr {
+    border-bottom: 1px solid #f0f0f0 !important;
+}
+
+body.dashboard .card-body .table tbody tr:last-child {
+    border-bottom: none !important;
+}
+
+/* Ячейки: название слева, кнопки справа — фиксированные отступы */
+body.dashboard .card-body .table td {
+    padding: 0.6rem 0.75rem !important;
+    vertical-align: middle !important;
+    border: none !important;
+}
+
+body.dashboard .card-body .table td:first-child {
+    width: auto !important;
+    min-width: 0 !important;
+}
+
+body.dashboard .card-body .table td:last-child {
+    width: 1% !important;
+    white-space: nowrap !important;
+    text-align: right !important;
+    padding-left: 0.5rem !important;
+}
+
+/* Группа кнопок — в одну линию, не переносятся */
+body.dashboard .card-body .btn-group {
+    display: inline-flex !important;
+    flex-wrap: nowrap !important;
+    gap: 0.35rem !important;
+    float: none !important;
+    margin-left: 0 !important;
+}
+
+body.dashboard .card-body .btn-group .btn {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+}
+
+/* Кнопки «Добавить» и «Изменить» на дашборде */
+body.dashboard .btn-group .btn.addlink {
+    background: var(--cms-btn) !important;
+    border-color: var(--cms-btn) !important;
+    color: #fff !important;
+    padding: 0.4rem 0.85rem !important;
+    font-size: 0.8125rem !important;
+    border-radius: 6px !important;
+}
+
+body.dashboard .btn-group .btn.changelink,
+body.dashboard .btn-group .btn.viewlink {
+    background: var(--cms-btn-change) !important;
+    border-color: var(--cms-btn-change) !important;
+    color: #fff !important;
+    padding: 0.4rem 0.85rem !important;
+    font-size: 0.8125rem !important;
+    border-radius: 6px !important;
+}
+
+body.dashboard .card-body a:not(.btn) {
+    color: var(--cms-btn) !important;
+    font-weight: 500 !important;
+}
+
+/* Блок «Последние действия» — отступы и без обрезки */
+body.dashboard #content-related {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+body.dashboard #recent-actions-module,
+body.dashboard #content-related .module {
+    background: var(--cms-card) !important;
+    border: 1px solid var(--cms-border) !important;
+    border-radius: 10px !important;
+    padding: 1.25rem !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+    overflow: visible !important;
+    min-height: 0 !important;
+}
+
+body.dashboard #recent-actions-module h4 {
+    margin-bottom: 1rem !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: #2d3748 !important;
+}
+
+body.dashboard .timeline {
+    padding-bottom: 1rem !important;
+}
+
+body.dashboard .timeline-item {
+    padding-bottom: 0.75rem !important;
+}
+
+body.dashboard .timeline-body {
+    overflow: visible !important;
+    padding: 0.25rem 0 !important;
+}
+
+body.dashboard .timeline-body ul {
+    margin: 0 !important;
+    padding-left: 0 !important;
+}
+
+body.dashboard .timeline-body li {
+    margin: 0.15rem 0 !important;
+    line-height: 1.4 !important;
+}
+
+/* Хлебные крошки на дашборде */
+body.dashboard .breadcrumb {
+    font-size: 0.875rem !important;
+}
+
+body.dashboard .breadcrumb-item a {
+    color: #64748b !important;
+}
+
+body.dashboard .breadcrumb-item.active {
+    color: #94a3b8 !important;
+}
