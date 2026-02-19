@@ -183,3 +183,41 @@ cms/
 ---
 
 **Минимум** (только правки шаблонов или кода, без новых пакетов и миграций): после `git pull` достаточно выполнить **шаг 6** (`sudo systemctl restart gunicorn`).
+
+---
+
+## Ускорение загрузки сайта
+
+Уже сделано в проекте:
+- **preconnect** для шрифтов Google — браузер раньше подключается к серверам шрифтов.
+- **loading="lazy"** у картинок (кейсы, блок «Чем отличаемся», акция) — изображения ниже экрана подгружаются при прокрутке.
+- **defer** у основного `script.js` — скрипт не блокирует отрисовку страницы.
+
+Что настроить на сервере (Nginx):
+
+1. **Сжатие gzip** — меньше трафика, быстрее загрузка. В конфиг сайта (внутри блока `server` для 443) добавьте:
+   ```nginx
+   gzip on;
+   gzip_vary on;
+   gzip_types text/plain text/css application/json application/javascript text/xml application/xml;
+   gzip_min_length 256;
+   ```
+
+2. **Кэш для статики** — браузер будет хранить CSS/JS/картинки и не качать их при каждом заходе. В том же конфиге, в блоках `location /static/` и `location /media/` добавьте заголовки:
+   ```nginx
+   location /static/ {
+       alias /root/sitbizlab/cms/staticfiles/;
+       expires 30d;
+       add_header Cache-Control "public, immutable";
+   }
+   location /media/ {
+       alias /root/sitbizlab/cms/media/;
+       expires 7d;
+       add_header Cache-Control "public, immutable";
+   }
+   ```
+   После правок: `sudo nginx -t` и `sudo systemctl reload nginx`.
+
+По желанию:
+- **Картинки** — сжать `difference.png`, `promotion.png`, `bg-service.jpg` (например через [TinyPNG](https://tinypng.com/) или `cwebp`), затем снова выполнить `collectstatic` на сервере.
+- **Шрифты** — в шаблоне подключены не все начертания Inter; если оставить только 400 и 600, запрос к Google Fonts станет легче (сейчас: 300;400;500;600;700).

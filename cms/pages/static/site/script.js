@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             const aiChat = document.getElementById('aiChat');
             if (aiChat && aiChat.children.length < 2) {
-                addMessageToChat(aiChat, '👋 Привет! Ответьте на 5 коротких вопросов — подберём подходящий тариф и сориентируем по срокам и бюджету.', 'ai');
+                addMessageToChat(aiChat, '👋 Привет! Ответьте на 5 коротких вопросов — вписывайте ответы в поле ввода. Подберём подходящий тариф и сориентируем по срокам.', 'ai');
             }
         }
 
@@ -699,7 +699,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (answer === 'Да, начать') {
                     setTimeout(() => {
                         addMessageToChat(aiChat, QUESTION_STEPS[0].question, 'ai');
-                        showQuestionOptions(aiChat, quickActions, optionsGrid, 0, []);
+                        showQuestionInput(aiChat, quickActions, optionsGrid, 0, []);
                         logEvent('ai_interaction', 'start_questionnaire');
                     }, 500);
                 } else {
@@ -712,50 +712,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const QUESTION_STEPS = [
-        {
-            question: 'Какова цель проекта?',
-            options: [
-                { text: 'Больше продаж', desc: '' },
-                { text: 'Узнаваемость бренда', desc: '' },
-                { text: 'Донести информацию', desc: '' }
-            ]
-        },
-        {
-            question: 'Чем занимается ваш бизнес?',
-            options: [
-                { text: 'Услуги, малый бизнес', desc: '' },
-                { text: 'Услуги, средний бизнес', desc: '' },
-                { text: 'Товары / интернет-магазин', desc: '' },
-                { text: 'Стартап, новый проект', desc: '' }
-            ]
-        },
-        {
-            question: 'Что обязательно должно быть на проекте?',
-            options: [
-                { text: 'Каталог и заказ', desc: '' },
-                { text: 'Формы заявок', desc: '' },
-                { text: 'Интеграции (CRM, оплата)', desc: '' },
-                { text: 'Пока не знаю', desc: '' }
-            ]
-        },
-        {
-            question: 'Какой дизайн предпочитаете?',
-            options: [
-                { text: 'Уникальный под бренд', desc: '' },
-                { text: 'Современный шаблон', desc: '' }
-            ]
-        },
-        {
-            question: 'Когда планируете запуск и какой бюджет?',
-            options: [
-                { text: 'Срочно, до 50 000 ₽', desc: '' },
-                { text: '1–2 месяца, 50 000 – 100 000 ₽', desc: '' },
-                { text: 'Гибкие сроки, обсудим', desc: '' }
-            ]
-        }
+        { question: 'Какова цель проекта?' },
+        { question: 'Чем занимается ваш бизнес?' },
+        { question: 'Какой функционал планируете?' },
+        { question: 'Будут ли какие-то конкретные пожелания по дизайну?' },
+        { question: 'Когда планируете запуск?' }
     ];
 
-    function showQuestionOptions(aiChat, quickActions, optionsGrid, stepIndex, answers) {
+    function showQuestionInput(aiChat, quickActions, optionsGrid, stepIndex, answers) {
         const step = QUESTION_STEPS[stepIndex];
         if (!step) {
             showContactFormInChat(aiChat, quickActions, optionsGrid, answers);
@@ -763,42 +727,63 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         quickActions.style.display = 'none';
-        optionsGrid.style.display = 'flex';
+        optionsGrid.style.display = 'block';
         optionsGrid.innerHTML = '';
 
-        step.options.forEach(({ text, desc }) => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'option-btn';
-            btn.textContent = text;
-            if (desc) btn.title = desc;
-            
-            btn.addEventListener('click', function () {
-                addMessageToChat(aiChat, text, 'user');
-                const nextAnswers = [...(answers || []), { step: stepIndex, value: text }];
-                optionsGrid.style.display = 'none';
-                
-                const nextStep = stepIndex + 1;
-                setTimeout(() => {
-                    if (nextStep < QUESTION_STEPS.length) {
-                        addMessageToChat(aiChat, QUESTION_STEPS[nextStep].question, 'ai');
-                        showQuestionOptions(aiChat, quickActions, optionsGrid, nextStep, nextAnswers);
-                    } else {
-                        showContactFormInChat(aiChat, quickActions, optionsGrid, nextAnswers);
-                    }
-                }, 500);
-            });
-            optionsGrid.appendChild(btn);
+        const wrap = document.createElement('div');
+        wrap.className = 'ai-chat-input-wrap';
+        wrap.style.cssText = 'display:flex; flex-direction:column; gap:8px; width:100%;';
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'Введите ваш ответ...';
+        input.className = 'ai-chat-text-input';
+        input.style.cssText = 'width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--border, #e2e8f0); font-size:0.95rem;';
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-btn';
+        btn.textContent = 'Далее';
+        btn.style.cssText = 'align-self:flex-end;';
+
+        btn.addEventListener('click', function () {
+            const value = (input.value || '').trim();
+            if (!value) {
+                showNotification('Введите ответ', 'warning');
+                input.focus();
+                return;
+            }
+            addMessageToChat(aiChat, value, 'user');
+            const nextAnswers = [...(answers || []), { step: stepIndex, value: value }];
+            optionsGrid.style.display = 'none';
+            optionsGrid.innerHTML = '';
+
+            const nextStep = stepIndex + 1;
+            setTimeout(() => {
+                if (nextStep < QUESTION_STEPS.length) {
+                    addMessageToChat(aiChat, QUESTION_STEPS[nextStep].question, 'ai');
+                    showQuestionInput(aiChat, quickActions, optionsGrid, nextStep, nextAnswers);
+                } else {
+                    showContactFormInChat(aiChat, quickActions, optionsGrid, nextAnswers);
+                }
+            }, 400);
         });
+
+        input.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') { e.preventDefault(); btn.click(); }
+        });
+
+        wrap.appendChild(input);
+        wrap.appendChild(btn);
+        optionsGrid.appendChild(wrap);
+        input.focus();
     }
 
-    const QUESTION_LABELS = ['Цель', 'Тип бизнеса', 'Функционал', 'Дизайн', 'Срок и бюджет'];
+    const QUESTION_LABELS = ['Цель', 'Тип бизнеса', 'Функционал', 'Дизайн', 'Сроки'];
 
     function showContactFormInChat(aiChat, quickActions, optionsGrid, answers) {
         let priceMessage = 'Отлично! Спасибо за ответы. Ориентир по нашим тарифам: <strong>Старт</strong> от 25 000 ₽, <strong>Система роста</strong> от 55 000 ₽, <strong>Масштаб</strong> от 85 000 ₽. Свяжемся и подберём вариант под вас.';
         addMessageToChat(aiChat, priceMessage, 'ai');
         setTimeout(() => {
-            addMessageToChat(aiChat, `Давайте свяжемся, чтобы обсудить детали. Как вам удобнее?`, 'ai');
+            addMessageToChat(aiChat, 'Укажите, пожалуйста, ваше имя и номер телефона или ник в Telegram — после этого отправим заявку.', 'ai');
             
             // Создаем форму прямо в чате
             const formContainer = document.createElement('div');
@@ -818,7 +803,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="form-row" style="margin-bottom: 10px;">
                         <input type="text" id="chatContact" placeholder="Телефон" style="width:100%; padding:8px; border-radius:4px; border:1px solid #ddd;">
                     </div>
-                    <div class="form-row" style="margin-bottom: 10px;">
+                    <div class="form-row" style="margin-bottom: 10px; display:none;">
                         <textarea id="chatComment" placeholder="Комментарий (необязательно)" rows="2" style="width:100%; padding:8px; border-radius:4px; border:1px solid #ddd;"></textarea>
                     </div>
                     <div class="form-row" style="margin-bottom: 10px;">
