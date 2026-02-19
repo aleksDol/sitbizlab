@@ -73,7 +73,13 @@ body {
     padding: 0 20px;
 }
 
-/* Мобильные отступы */
+/* Планшеты и мобильные отступы */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 24px;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 0 16px;
@@ -221,6 +227,12 @@ p {
         margin-left: auto;
         margin-right: auto;
     }
+    .hero-btn-text-desktop {
+        display: none;
+    }
+    .hero-btn-text-mobile {
+        display: inline;
+    }
 }
 
 .btn-secondary {
@@ -254,6 +266,14 @@ p {
     padding: 16px 32px;
     font-size: 1.125rem;
     min-height: 56px;
+}
+
+.hero-btn-text-mobile {
+    display: none;
+}
+
+.hero-btn-text-desktop {
+    display: inline;
 }
 
 .btn-cta {
@@ -641,6 +661,20 @@ p {
     color: var(--text-secondary);
     margin: 0;
     margin-top: 0.5rem;
+}
+
+/* Планшет: hero */
+@media (max-width: 1024px) {
+    .hero {
+        padding: 100px 0 50px;
+        margin-top: 68px;
+    }
+    .hero-title {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+    }
+    .hero-subtitle {
+        font-size: 1.05rem;
+    }
 }
 
 .hero-stats {
