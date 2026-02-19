@@ -227,10 +227,12 @@ p {
         margin-left: auto;
         margin-right: auto;
     }
-    .hero-btn-text-desktop {
-        display: none;
-    }
+    .hero-btn-text-desktop,
     .hero-btn-text-mobile {
+        display: none !important;
+    }
+    .btn-hero::after {
+        content: "Разбор проекта";
         display: inline;
     }
 }

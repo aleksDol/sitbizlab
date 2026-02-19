@@ -29,7 +29,7 @@ TELEGRAM_CHAT_ID=...
 ### 2. Статика и медиа
 
 - **STATIC_ROOT** уже задан: `staticfiles/`. На сервере нужно один раз выполнить:  
-  `python manage.py collectstatic --noinput`
+  `python3 manage.py collectstatic --noinput`
 - Папку **assets** (картинки с рабочего стола) нужно либо положить в репозиторий (например в `cms/static/site/assets/`), либо загрузить на сервер и при необходимости поправить `STATICFILES_DIRS` в `config/settings.py`, чтобы путь указывал на папку на сервере.
 
 ### 3. База данных
@@ -96,9 +96,9 @@ pip install -r requirements.txt
 Для SQLite:
 
 ```bash
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py collectstatic --noinput
+python3 manage.py migrate
+python3 manage.py createsuperuser
+python3 manage.py collectstatic --noinput
 ```
 
 Для PostgreSQL (если настроили БД в панели Beget или установили Postgres на VPS) — в `config/settings.py` добавьте чтение БД из переменных окружения и заполните их в `.env`, затем выполните те же команды: `migrate`, `createsuperuser`, `collectstatic`.
@@ -257,9 +257,9 @@ sudo systemctl restart nginx
 8. **Миграции и статика**  
    В Docker-окружении, с активированным venv:
    ```bash
-   python manage.py migrate
-   python manage.py createsuperuser
-   python manage.py collectstatic --noinput
+   python3 manage.py migrate
+   python3 manage.py createsuperuser
+   python3 manage.py collectstatic --noinput
    ```
 
 9. **Симлинк для статики (если требуется)**  

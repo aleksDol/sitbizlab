@@ -157,7 +157,7 @@ cms/
    ```bash
    cd cms
    source venv/bin/activate
-   python manage.py migrate
+   python3 manage.py migrate
    cd ..
    ```
 
@@ -165,7 +165,7 @@ cms/
    ```bash
    cd cms
    source venv/bin/activate
-   python manage.py collectstatic --noinput
+   python3 manage.py collectstatic --noinput
    cd ..
    ```
 
