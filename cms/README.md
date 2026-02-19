@@ -99,3 +99,87 @@ cms/
 - **Мета и соцсети**: в шаблоне главной заданы `description`, `keywords`, canonical, Open Graph и Twitter Card.
 - **JSON-LD**: разметка Organization и WebSite для Google и Яндекса.
 - **meta_description** настраивается в админке: «Настройки сайта» → «Описание для поисковиков».
+
+## Обновление сайта: залить на GitHub и на сервер
+
+### Часть 1. С ПК на GitHub
+
+1. Откройте терминал (PowerShell или cmd) и перейдите в папку проекта:
+   ```bash
+   cd c:\Users\dolma\Desktop\sitbizlab
+   ```
+
+2. Посмотрите, что изменено:
+   ```bash
+   git status
+   ```
+
+3. Добавьте все изменения в коммит:
+   ```bash
+   git add .
+   ```
+
+4. Создайте коммит (подставьте своё описание):
+   ```bash
+   git commit -m "Описание изменений"
+   ```
+
+5. Отправьте на GitHub:
+   ```bash
+   git push
+   ```
+   При запросе введите логин и пароль (или токен) GitHub.
+
+---
+
+### Часть 2. На сервере (VPS)
+
+1. Подключитесь по SSH (подставьте свой логин и IP):
+   ```bash
+   ssh root@IP_сервера
+   ```
+
+2. Перейдите в папку проекта и подтяните изменения:
+   ```bash
+   cd ~/sitbizlab
+   git pull
+   ```
+
+3. Если добавлялись или менялись зависимости в `requirements.txt`:
+   ```bash
+   cd cms
+   source venv/bin/activate
+   pip install -r requirements.txt
+   cd ..
+   ```
+
+4. Если добавлялись миграции БД (новые или изменённые модели):
+   ```bash
+   cd cms
+   source venv/bin/activate
+   python manage.py migrate
+   cd ..
+   ```
+
+5. Если менялись статика (CSS, JS, картинки в `static` или `assets`):
+   ```bash
+   cd cms
+   source venv/bin/activate
+   python manage.py collectstatic --noinput
+   cd ..
+   ```
+
+6. Перезапустите Gunicorn:
+   ```bash
+   sudo systemctl restart gunicorn
+   ```
+
+7. Проверьте статус:
+   ```bash
+   sudo systemctl status gunicorn
+   ```
+   Должно быть `active (running)`.
+
+---
+
+**Минимум** (только правки шаблонов или кода, без новых пакетов и миграций): после `git pull` достаточно выполнить **шаг 6** (`sudo systemctl restart gunicorn`).

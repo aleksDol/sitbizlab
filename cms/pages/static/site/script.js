@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             const aiChat = document.getElementById('aiChat');
             if (aiChat && aiChat.children.length < 2) {
-                addMessageToChat(aiChat, '👋 Привет! Я вижу, вы хотите рассчитать проект. Ответьте на пару вопросов, и я сориентирую вас по цене и срокам.', 'ai');
+                addMessageToChat(aiChat, '👋 Привет! Ответьте на 5 коротких вопросов — подберём подходящий тариф и сориентируем по срокам и бюджету.', 'ai');
             }
         }
 
@@ -713,26 +713,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const QUESTION_STEPS = [
         {
-            question: 'Какой вариант вам подходит?',
+            question: 'Какова цель проекта?',
             options: [
-                { text: 'Лендинг', desc: 'Для эксперта, мастера, тренера. От 5 000 ₽' },
-                { text: 'Бизнес', desc: 'Для локального бизнеса. От 20 000 ₽' },
-                { text: 'Продажник', desc: 'Для продажи дорогих услуг и курсов. От 35 000 ₽' }
+                { text: 'Больше продаж', desc: '' },
+                { text: 'Узнаваемость бренда', desc: '' },
+                { text: 'Донести информацию', desc: '' }
             ]
         },
         {
-            question: 'Есть ли у вас готовый дизайн?',
+            question: 'Чем занимается ваш бизнес?',
             options: [
-                { text: 'Да, есть макет', desc: 'Нужна только верстка' },
-                { text: 'Нет, нужен дизайн', desc: 'Нужен дизайн с нуля (+3 000-10 000 ₽)' }
+                { text: 'Услуги, малый бизнес', desc: '' },
+                { text: 'Услуги, средний бизнес', desc: '' },
+                { text: 'Товары / интернет-магазин', desc: '' },
+                { text: 'Стартап, новый проект', desc: '' }
             ]
         },
         {
-            question: 'Как скоро нужен сайт?',
+            question: 'Что обязательно должно быть на проекте?',
             options: [
-                { text: 'Очень срочно (24 часа)', desc: 'Для лендинга' },
-                { text: '5-7 дней', desc: 'Стандартные сроки' },
-                { text: '2-3 недели', desc: 'Есть время на детали' }
+                { text: 'Каталог и заказ', desc: '' },
+                { text: 'Формы заявок', desc: '' },
+                { text: 'Интеграции (CRM, оплата)', desc: '' },
+                { text: 'Пока не знаю', desc: '' }
+            ]
+        },
+        {
+            question: 'Какой дизайн предпочитаете?',
+            options: [
+                { text: 'Уникальный под бренд', desc: '' },
+                { text: 'Современный шаблон', desc: '' }
+            ]
+        },
+        {
+            question: 'Когда планируете запуск и какой бюджет?',
+            options: [
+                { text: 'Срочно, до 50 000 ₽', desc: '' },
+                { text: '1–2 месяца, 50 000 – 100 000 ₽', desc: '' },
+                { text: 'Гибкие сроки, обсудим', desc: '' }
             ]
         }
     ];
@@ -774,34 +792,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    const QUESTION_LABELS = ['Цель', 'Тип бизнеса', 'Функционал', 'Дизайн', 'Срок и бюджет'];
+
     function showContactFormInChat(aiChat, quickActions, optionsGrid, answers) {
-        // Расчет стоимости
-        let estimatedPrice = 0;
-        let serviceType = 'Не определено';
-        const typeAnswer = answers.find(a => a.step === 0)?.value;
-        const designAnswer = answers.find(a => a.step === 1)?.value;
-        const hasDesign = designAnswer?.includes('Да');
-
-        if (typeAnswer === 'Лендинг') {
-            serviceType = 'landing';
-            estimatedPrice = PRICES.landing.base + (hasDesign ? 0 : PRICES.landing.design);
-        } else if (typeAnswer === 'Бизнес') {
-            serviceType = 'business';
-            estimatedPrice = PRICES.business.base + (hasDesign ? 0 : PRICES.business.design);
-        } else if (typeAnswer === 'Продажник') {
-            serviceType = 'sales';
-            estimatedPrice = PRICES.sales.base + (hasDesign ? 0 : PRICES.sales.design);
-        }
-
-        let priceMessage = `Отлично! Исходя из ваших ответов, примерная стоимость: <strong>${estimatedPrice.toLocaleString()} ₽</strong>`;
-        if (!hasDesign && estimatedPrice > 0) {
-            const basePrice = typeAnswer === 'Лендинг' ? PRICES.landing.base : 
-                            typeAnswer === 'Бизнес' ? PRICES.business.base : 
-                            typeAnswer === 'Продажник' ? PRICES.sales.base : 0;
-            const designPrice = estimatedPrice - basePrice;
-            priceMessage += ` (${basePrice.toLocaleString()} ₽ + ${designPrice.toLocaleString()} ₽ за дизайн)`;
-        }
-        priceMessage += '.';
+        let priceMessage = 'Отлично! Спасибо за ответы. Ориентир по нашим тарифам: <strong>Старт</strong> от 25 000 ₽, <strong>Система роста</strong> от 55 000 ₽, <strong>Масштаб</strong> от 85 000 ₽. Свяжемся и подберём вариант под вас.';
         addMessageToChat(aiChat, priceMessage, 'ai');
         setTimeout(() => {
             addMessageToChat(aiChat, `Давайте свяжемся, чтобы обсудить детали. Как вам удобнее?`, 'ai');
@@ -905,12 +899,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'Отправка...';
 
+                const labels = QUESTION_LABELS || [];
+                const answerLines = (answers || []).map(a => `${labels[a.step] || 'Вопрос'}: ${a.value}`).join('; ');
                 const fullData = {
                     name,
                     phone: method === 'phone' ? contact : '',
                     telegram: method === 'telegram' ? contact : '',
-                    message: `Заявка из чата. Ответы: ${answers.map(a => a.value).join(', ')}. Коммент: ${comment}. Цена: ${estimatedPrice}`,
-                    service: PRICES[serviceType]?.name || serviceType,
+                    message: `Заявка из чата. ${answerLines}. Коммент: ${comment}`,
+                    service: 'Чат-бот (опрос)',
                     source: 'AI Chat'
                 };
 
@@ -947,7 +943,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (question === 'Показать примеры') {
             return `Наши кейсы вы можете посмотреть в разделе "Наши работы" на странице. Там есть примеры реализованных проектов с результатами.`;
         }
-        return `Я могу помочь рассчитать стоимость сайта. Нажмите "Да, начать", чтобы пройти опрос.`;
+        return `Могу помочь подобрать вариант проекта. Нажмите "Да, начать", чтобы пройти короткий опрос.`;
     }
 
     function resetChatOptions() {
