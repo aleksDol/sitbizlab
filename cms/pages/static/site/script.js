@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initServices();
     initModal();
     initCaseLightbox();
+    initCaseReadMore();
     initCasesTabs();
     initCasesCarousel();
     initAnimations();
@@ -534,6 +535,53 @@ document.addEventListener('DOMContentLoaded', function () {
         lightbox.addEventListener('click', function (e) {
             if (e.target === lightbox) closeLightbox();
         });
+    }
+
+    // ===== КЕЙСЫ: «ЧИТАТЬ ДАЛЕЕ» — МОДАЛКА С ПОЛНЫМ ОПИСАНИЕМ =====
+    function initCaseReadMore() {
+        const section = document.querySelector('.section-cases');
+        const modal = document.getElementById('caseDescriptionModal');
+        if (!section || !modal) return;
+
+        const titleEl = modal.querySelector('.case-description-modal-title');
+        const bodyEl = modal.querySelector('.case-description-modal-body');
+        const overlay = modal.querySelector('.case-description-modal-overlay');
+        const closeBtn = modal.querySelector('.case-description-modal-close');
+
+        function openCaseModal(title, bodyHtml) {
+            titleEl.textContent = title;
+            bodyEl.innerHTML = bodyHtml || '';
+            modal.removeAttribute('hidden');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            document.addEventListener('keydown', handleCaseModalEscape);
+        }
+
+        function closeCaseModal() {
+            modal.setAttribute('hidden', '');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', handleCaseModalEscape);
+        }
+
+        function handleCaseModalEscape(e) {
+            if (e.key === 'Escape') closeCaseModal();
+        }
+
+        section.addEventListener('click', function (e) {
+            const btn = e.target.closest('.case-read-more-btn');
+            if (!btn) return;
+            e.preventDefault();
+            const card = btn.closest('.case-card');
+            if (!card) return;
+            const title = card.querySelector('h3');
+            const template = card.querySelector('template.case-description-full');
+            const bodyHtml = template ? template.innerHTML : '';
+            openCaseModal(title ? title.textContent : 'Кейс', bodyHtml);
+        });
+
+        if (overlay) overlay.addEventListener('click', closeCaseModal);
+        if (closeBtn) closeBtn.addEventListener('click', closeCaseModal);
     }
 
     // ===== ТАБЫ КАТЕГОРИЙ В «НАШИ РАБОТЫ» =====

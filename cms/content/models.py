@@ -65,9 +65,10 @@ class Service(models.Model):
 class Case(models.Model):
     """Кейсы / портфолио."""
     CATEGORY_CHOICES = [
-        ('business', 'Бизнес'),
-        ('education', 'Образование'),
-        ('services', 'Услуги'),
+        ('business', 'Для бизнеса'),
+        ('education', 'Для образования'),
+        ('services', 'Для услуг'),
+        ('startups', 'Для стартапов'),
     ]
     title = models.CharField('Название проекта', max_length=200)
     category = models.CharField('Категория', max_length=20, choices=CATEGORY_CHOICES, default='business')

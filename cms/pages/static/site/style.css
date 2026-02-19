@@ -1973,6 +1973,56 @@ p {
     line-height: 1.5;
 }
 
+.case-description-short {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 4.2em;
+}
+
+.case-view-btn.case-read-more-btn {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+    color: var(--primary);
+    margin-top: auto;
+}
+
+.case-description-modal .modal-content {
+    max-width: 560px;
+    max-height: 85vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.case-description-modal-title {
+    margin: 0 0 16px;
+    font-size: 1.25rem;
+    color: var(--text);
+}
+
+.case-description-modal-body {
+    overflow-y: auto;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.case-description-modal-body p {
+    margin: 0 0 0.75em;
+}
+
+.case-description-modal-body p:last-child {
+    margin-bottom: 0;
+}
+
 .case-meta {
     display: flex;
     flex-wrap: wrap;

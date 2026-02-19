@@ -296,12 +296,13 @@
                             {% if case.kpi_line_1 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_1 }}</span></div>{% endif %}
                             {% if case.kpi_line_2 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_2 }}</span></div>{% endif %}
                         </div>
-                        <p class="case-description">{{ case.description }}</p>
+                        <div class="case-description case-description-short">{{ case.description|linebreaks }}</div>
+                        <template class="case-description-full">{{ case.description|linebreaks }}</template>
                         <div class="case-meta">
                             {% if case.platform %}<span><i class="fas fa-circle fa-xs" aria-hidden="true"></i> Платформа: {{ case.platform }}</span>{% endif %}
                             {% if case.launch_days %}<span>Время запуска {{ case.launch_days }}</span>{% endif %}
                         </div>
-                        <a href="#contact" class="case-view-btn">Посмотреть проект <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        <button type="button" class="case-view-btn case-read-more-btn">Читать далее <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
                     </div>
                 </article>
                 {% empty %}
@@ -310,7 +311,7 @@
                     <div class="case-content">
                         <h3>Организуем похороны «Под ключ»</h3>
                         <div class="case-kpi"><div class="kpi-line"><span class="kpi-value">−55%</span> стоимость заявки</div><div class="kpi-line"><span class="kpi-value">+27 заявок</span> за первый месяц</div></div>
-                        <p class="case-description">Лендинг для похоронного агентства под ключ.</p>
+                        <div class="case-description case-description-short">Лендинг для похоронного агентства под ключ.</div>
                         <div class="case-meta"><span>Платформа: Tilda</span><span>Время запуска 16 дней</span></div>
                         <a href="#contact" class="case-view-btn">Посмотреть проект <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
@@ -451,6 +452,15 @@
                 <h4>11. Контактная информация</h4>
                 <p>По вопросам обработки персональных данных: <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
             </div>
+        </div>
+    </div>
+
+    <div id="caseDescriptionModal" class="modal case-description-modal" role="dialog" aria-labelledby="caseDescriptionModalTitle" aria-modal="true" hidden>
+        <div class="modal-overlay case-description-modal-overlay"></div>
+        <div class="modal-content case-description-modal-content">
+            <button type="button" class="modal-close case-description-modal-close" aria-label="Закрыть">×</button>
+            <h2 id="caseDescriptionModalTitle" class="case-description-modal-title"></h2>
+            <div class="case-description-modal-body"></div>
         </div>
     </div>
 
