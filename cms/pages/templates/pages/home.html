@@ -296,7 +296,7 @@
                             {% if case.kpi_line_1 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_1 }}</span></div>{% endif %}
                             {% if case.kpi_line_2 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_2 }}</span></div>{% endif %}
                         </div>
-                        <div class="case-description case-description-short">{{ case.description|linebreaks }}</div>
+                        <div class="case-description case-description-short">{{ case.description|truncatewords:25 }}</div>
                         <template class="case-description-full">{{ case.description|linebreaks }}</template>
                         <div class="case-meta">
                             {% if case.platform %}<span><i class="fas fa-circle fa-xs" aria-hidden="true"></i> Платформа: {{ case.platform }}</span>{% endif %}
