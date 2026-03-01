@@ -189,7 +189,6 @@
                         <div class="about-differ-card"><div class="about-differ-icon"><i class="far fa-star"></i></div><h3>Честные рекомендации</h3><p>Если можно использовать готовое решение — скажем. Без накруток ради чека.</p></div>
                         <div class="about-differ-card"><div class="about-differ-icon"><i class="fas fa-handshake"></i></div><h3>Партнёрство, не поток</h3><p>У нас нет конвейера. Мы погружаемся в бизнес, понимаем задачу, предлагаем полезное.</p></div>
                     </div>
-                    <div class="about-differ-image"><img src="{% static 'difference.webp' %}" alt="Чем мы отличаемся" loading="lazy"></div>
                 </div>
             </div>
             <div class="about-cta-block">
@@ -260,7 +259,6 @@
                     <p class="offer-disclaimer">Ответим в течение 15 минут. Без навязывания.</p>
                 </div>
                 <div class="offer-right">
-                    <div class="offer-image-wrap"><img src="{% static 'promotion.webp' %}" alt="Акция" loading="lazy"></div>
                     <div class="offer-testimonials">
                         <blockquote class="offer-quote"><span class="quote-mark">"</span><p>Запустили сайт за 12 дней после обращения. Заявки пришли в 3 раза быстрее. Сделали всё под ключ — подсказали, что доработать. Рекомендую.</p><cite>Дмитрий, владелец сервиса</cite></blockquote>
                         <blockquote class="offer-quote"><span class="quote-mark">"</span><p>На старте долго мучилась с контентом и дизайном — помогли структурировать. За 3 недели получила рабочий лендинг и первые заявки.</p><cite>Анна, основатель проекта</cite></blockquote>
@@ -291,7 +289,7 @@
                 {% for case in cases %}
                 <article class="case-card" data-category="{{ case.category }}">
                     <div class="case-visual">
-                        {% if case.image %}<img src="{{ case.image.url }}" alt="Кейс: {{ case.title }}" loading="lazy">{% else %}<img src="{% static 'site/assets/case-after.webp' %}" alt="Кейс: {{ case.title }}" loading="lazy">{% endif %}
+                        {% if case.image %}<img src="{{ case.image.url }}" alt="Кейс: {{ case.title }}" loading="lazy">{% else %}<img src="{% static 'site/assets/case-after.jpg' %}" alt="Кейс: {{ case.title }}" loading="lazy">{% endif %}
                     </div>
                     <div class="case-content">
                         <h3>{{ case.title }}</h3>
@@ -310,7 +308,7 @@
                 </article>
                 {% empty %}
                 <article class="case-card" data-category="business">
-                    <div class="case-visual"><img src="{% static 'site/assets/case-after.webp' %}" alt="Кейс" loading="lazy"></div>
+                    <div class="case-visual"><img src="{% static 'site/assets/case-after.jpg' %}" alt="Кейс" loading="lazy"></div>
                     <div class="case-content">
                         <h3>Организуем похороны «Под ключ»</h3>
                         <div class="case-kpi"><div class="kpi-line"><span class="kpi-value">−55%</span> стоимость заявки</div><div class="kpi-line"><span class="kpi-value">+27 заявок</span> за первый месяц</div></div>
