@@ -925,7 +925,7 @@ p {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
-    align-items: center;
+    align-items: stretch;
 }
 
 .about-differ-content {
@@ -976,13 +976,17 @@ p {
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow);
+    min-height: 280px;
+    height: 100%;
 }
 
 .about-differ-image img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    min-height: 100%;
     display: block;
     object-fit: cover;
+    object-position: center;
 }
 
 .about-cta-block {
