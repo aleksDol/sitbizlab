@@ -982,6 +982,17 @@ p {
     line-height: 1.5;
 }
 
+/* Карусель: на десктопе — обычный блок */
+.about-differ-carousel {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.about-differ-dots {
+    display: none;
+}
+
 .about-differ-image {
     border-radius: 0;
     overflow: hidden;
@@ -1036,6 +1047,70 @@ p {
 
     .about-differ-content {
         padding-right: 0;
+    }
+
+    /* Карусель на планшетах и мобильных */
+    .about-differ-carousel {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 16px;
+        padding-bottom: 8px;
+        margin: 0 -4px;
+    }
+
+    .about-differ-carousel::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .about-differ-carousel::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 2px;
+    }
+
+    .about-differ-carousel .about-differ-card {
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        min-width: 85%;
+        flex-shrink: 0;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        padding: 20px;
+        gap: 14px;
+    }
+
+    .about-differ-carousel .about-differ-card:hover {
+        box-shadow: var(--shadow-md);
+    }
+
+    .about-differ-dots {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 1rem;
+    }
+
+    .about-differ-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: none;
+        padding: 0;
+        background: var(--border);
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+    }
+
+    .about-differ-dot:hover {
+        background: var(--text-secondary);
+    }
+
+    .about-differ-dot.is-active {
+        background: var(--primary);
+        transform: scale(1.2);
     }
 
     .about-differ-image {
@@ -1095,29 +1170,15 @@ p {
     }
 
     .about-differ-content {
-        gap: 20px;
+        gap: 16px;
     }
 
-    /* Минималистичные карточки на мобильных: без тяжёлых границ и теней */
-    .about-differ-card {
-        padding: 16px 0;
-        border: none;
-        border-bottom: 1px solid var(--border);
-        border-radius: 0;
-        box-shadow: none;
-        gap: 14px;
+    .about-differ-carousel .about-differ-card {
+        min-width: 88%;
+        padding: 18px;
     }
 
-    .about-differ-card:last-child {
-        border-bottom: none;
-    }
-
-    .about-differ-card:hover {
-        box-shadow: none;
-        border-color: var(--border);
-    }
-
-    /* Уменьшенные иконки — больше места для текста */
+    /* Уменьшенные иконки в карусели */
     .about-differ-icon {
         width: 40px;
         height: 40px;
@@ -1171,11 +1232,12 @@ p {
     }
 
     .about-differ-content {
-        gap: 24px;
+        gap: 14px;
     }
 
-    .about-differ-card {
-        padding: 14px 0;
+    .about-differ-carousel .about-differ-card {
+        min-width: 90%;
+        padding: 16px;
         gap: 12px;
     }
 
