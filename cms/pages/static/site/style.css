@@ -560,7 +560,7 @@ p {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('assets/team-hero.jpg?v=3.3');
+    background-image: url('assets/team-hero.webp?v=3.3');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -712,6 +712,17 @@ p {
     .hero {
         padding: 100px 0 40px;
         margin-top: 64px;
+    }
+
+    .hero-bg-image {
+        /* На мобильных убираем тяжёлый размазанный фон-картинку,
+           чтобы ускорить первую отрисовку */
+        background-image: none;
+        background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 55%),
+                    radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.12), transparent 55%),
+                    var(--background-alt);
+        opacity: 1;
+        filter: none;
     }
 
     .hero-content {
