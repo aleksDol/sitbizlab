@@ -208,36 +208,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        // О нас: карусель «Чем мы отличаемся» (мобильная версия)
-        const aboutDifferCarousel = document.getElementById('aboutDifferCarousel');
-        const aboutDifferDots = document.getElementById('aboutDifferDots');
-        if (aboutDifferCarousel && aboutDifferDots) {
-            const cards = aboutDifferCarousel.querySelectorAll('.about-differ-card');
-            const dots = aboutDifferDots.querySelectorAll('.about-differ-dot');
-
-            function updateActiveDot() {
-                const scrollLeft = aboutDifferCarousel.scrollLeft;
-                const cardWidth = cards[0] ? cards[0].offsetWidth + 16 : 0; // 16 = gap
-                const index = cardWidth > 0 ? Math.round(scrollLeft / cardWidth) : 0;
-                const i = Math.min(index, dots.length - 1);
-                dots.forEach((d, j) => d.classList.toggle('is-active', j === i));
-            }
-
-            aboutDifferCarousel.addEventListener('scroll', updateActiveDot);
-            window.addEventListener('resize', updateActiveDot);
-
-            dots.forEach(function (dot) {
-                dot.addEventListener('click', function () {
-                    const i = parseInt(dot.getAttribute('data-index'), 10);
-                    const card = cards[i];
-                    if (card) {
-                        const cardWidth = card.offsetWidth + 16;
-                        aboutDifferCarousel.scrollTo({ left: cardWidth * i, behavior: 'smooth' });
-                    }
-                });
-            });
-        }
-
         // Offer CTA -> форма
         if (offerCta) {
             offerCta.addEventListener('click', function (e) {
