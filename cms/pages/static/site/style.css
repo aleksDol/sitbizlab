@@ -915,16 +915,16 @@ p {
 }
 
 .about-differ-title {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     color: var(--text);
     font-size: clamp(1.5rem, 3vw, 2rem);
-    text-align: center;
+    text-align: left;
 }
 
 .about-differ-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: 0;
     align-items: stretch;
 }
 
@@ -932,6 +932,7 @@ p {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding-right: 24px;
 }
 
 .about-differ-card {
@@ -973,9 +974,8 @@ p {
 }
 
 .about-differ-image {
-    border-radius: var(--radius-lg);
+    border-radius: 0;
     overflow: hidden;
-    box-shadow: var(--shadow);
     min-height: 280px;
     height: 100%;
 }
@@ -1022,6 +1022,11 @@ p {
 
     .about-differ-grid {
         grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .about-differ-content {
+        padding-right: 0;
     }
 
     .about-differ-image {
