@@ -780,7 +780,7 @@ p {
 
     .hero-mobile-benefit {
         font-size: 1rem;
-        color: var(--text);
+        color: var(--text-secondary);
         margin: 0 0 1.75rem;
         text-align: center;
         padding: 0 4px;

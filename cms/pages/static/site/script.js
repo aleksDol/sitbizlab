@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Не критично для первого экрана — откладываем
     scheduleIdle(() => {
         initHeroBackground();
+        initSectionBackgrounds();
         initCaseLightbox();
         initCaseReadMore();
         initCasesTabs();
@@ -299,6 +300,16 @@ document.addEventListener('DOMContentLoaded', function () {
             el.style.backgroundImage = `url('${url}')`;
             el.classList.add('has-photo');
         };
+    }
+
+    // Фоны секций: десктоп / мобильный вариант по data-bg и data-bg-mobile
+    function initSectionBackgrounds() {
+        const isDesktop = window.matchMedia && window.matchMedia('(min-width: 769px)').matches;
+        document.querySelectorAll('[data-bg][data-bg-mobile]').forEach(function (el) {
+            if (el.classList.contains('hero-bg-image')) return;
+            const url = isDesktop ? el.getAttribute('data-bg') : el.getAttribute('data-bg-mobile');
+            if (url) el.style.backgroundImage = 'url(' + JSON.stringify(url) + ')';
+        });
     }
 
     function scrollToSection(sectionId) {

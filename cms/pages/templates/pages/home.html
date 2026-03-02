@@ -212,7 +212,12 @@
                         <div class="about-differ-card"><div class="about-differ-icon"><i class="far fa-star"></i></div><div class="about-differ-card-body"><h3>Честные рекомендации</h3><p>Если можно использовать готовое решение — скажем. Без накруток ради чека.</p></div></div>
                         <div class="about-differ-card"><div class="about-differ-icon"><i class="fas fa-handshake"></i></div><div class="about-differ-card-body"><h3>Партнёрство, не поток</h3><p>У нас нет конвейера. Мы погружаемся в бизнес, понимаем задачу, предлагаем полезное.</p></div></div>
                     </div>
-                    <div class="about-differ-image"><img src="{% static 'site/assets/difference.webp' %}" alt="Чем мы отличаемся" loading="lazy" width="600" height="400"></div>
+                    <div class="about-differ-image">
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="{% static 'site/assets/difference-mob.webp' %}">
+                            <img src="{% static 'site/assets/difference.webp' %}" alt="Чем мы отличаемся" loading="lazy" width="600" height="400">
+                        </picture>
+                    </div>
                 </div>
             </div>
             <div class="about-cta-block">
@@ -224,7 +229,7 @@
     </section>
 
     <section class="section section-services" id="services" role="region" aria-labelledby="services-heading">
-        <div class="section-services-bg" style="background-image: url('{% static "site/assets/bg-service.jpg" %}');"></div>
+        <div class="section-services-bg" data-bg="{% static 'site/assets/bg-service.jpg' %}" data-bg-mobile="{% static 'site/assets/bg-service-mob.webp' %}"></div>
         <div class="container">
             <div class="section-header"><h2 id="services-heading">Почему наши проекты приносят заявки</h2></div>
             <div class="services-grid" id="servicesGrid">
@@ -283,7 +288,12 @@
                     <p class="offer-disclaimer">Ответим в течение 15 минут. Без навязывания.</p>
                 </div>
                 <div class="offer-right">
-                    <div class="offer-image-wrap"><img src="{% static 'site/assets/promotion.webp' %}" alt="Акция" loading="lazy" width="400" height="300"></div>
+                    <div class="offer-image-wrap">
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="{% static 'site/assets/promotion-mob.webp' %}">
+                            <img src="{% static 'site/assets/promotion.webp' %}" alt="Акция" loading="lazy" width="400" height="300">
+                        </picture>
+                    </div>
                     <div class="offer-testimonials">
                         <blockquote class="offer-quote"><span class="quote-mark">"</span><p>Запустили сайт за 12 дней после обращения. Заявки пришли в 3 раза быстрее. Сделали всё под ключ — подсказали, что доработать. Рекомендую.</p><cite>Дмитрий, владелец сервиса</cite></blockquote>
                         <blockquote class="offer-quote"><span class="quote-mark">"</span><p>На старте долго мучилась с контентом и дизайном — помогли структурировать. За 3 недели получила рабочий лендинг и первые заявки.</p><cite>Анна, основатель проекта</cite></blockquote>
@@ -364,7 +374,7 @@
     </section>
 
     <section class="section section-cta" id="contact" role="region" aria-labelledby="contact-heading">
-        <div class="section-cta-bg" style="background-image: url('{% static "site/assets/bg-end.webp" %}');"></div>
+        <div class="section-cta-bg" data-bg="{% static 'site/assets/bg-end.webp' %}" data-bg-mobile="{% static 'site/assets/cta-bg-mob.webp' %}"></div>
         <div class="container">
             <div class="cta-card">
                 <div class="cta-content">
