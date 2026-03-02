@@ -1790,16 +1790,11 @@ p {
     display: none;
 }
 
-.team-card:nth-child(1) .team-avatar {
-    background-image: url('assets/avatar-designer.jpg?v=3.3');
-}
-
-.team-card:nth-child(2) .team-avatar {
-    background-image: url('assets/avatar-writer.jpg?v=3.3');
-}
-
+/* Аватары команды: файлов нет в репозитории — нейтральный фон; при добавлении секции «Команда» подставьте свои url() */
+.team-card:nth-child(1) .team-avatar,
+.team-card:nth-child(2) .team-avatar,
 .team-card:nth-child(3) .team-avatar {
-    background-image: url('assets/avatar-developer.jpg?v=3.3');
+    background-image: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
 }
 
 .team-card:hover .team-avatar {
