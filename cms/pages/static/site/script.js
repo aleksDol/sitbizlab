@@ -1,5 +1,13 @@
 // SiteBiz Lab - Основной скрипт с Telegram интеграцией
 document.addEventListener('DOMContentLoaded', function () {
+    function scheduleIdle(cb, timeout = 1200) {
+        if (typeof window.requestIdleCallback === 'function') {
+            window.requestIdleCallback(cb, { timeout });
+        } else {
+            setTimeout(cb, 0);
+        }
+    }
+
     // ===== ПЕРЕМЕННЫЕ =====
     let freeSites = 3;
     let selectedService = '';
@@ -53,12 +61,16 @@ document.addEventListener('DOMContentLoaded', function () {
     initAI();
     initServices();
     initModal();
-    initCaseLightbox();
-    initCaseReadMore();
-    initCasesTabs();
-    initCasesCarousel();
-    initAnimations();
-    initPerformance();
+    // Не критично для первого экрана — откладываем
+    scheduleIdle(() => {
+        initHeroBackground();
+        initCaseLightbox();
+        initCaseReadMore();
+        initCasesTabs();
+        initCasesCarousel();
+        initAnimations();
+        initPerformance();
+    });
 
     // ===== МОБИЛЬНОЕ МЕНЮ =====
     function initMobileMenu() {
@@ -198,6 +210,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 openAiChatFromCta('hero_cta');
             });
         }
+        const heroCtaMobile = document.getElementById('heroCtaMobile');
+        if (heroCtaMobile) {
+            heroCtaMobile.addEventListener('click', function (e) {
+                e.preventDefault();
+                openAiChatFromCta('hero_cta_mobile');
+            });
+        }
 
         // О нас: кнопка «Получить разбор проекта»
         const aboutCta = document.getElementById('aboutCta');
@@ -253,6 +272,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         });
+    }
+
+    // ===== HERO: ЛЕНИВАЯ ЗАГРУЗКА ТЯЖЁЛОГО ФОНА =====
+    function initHeroBackground() {
+        const el = document.querySelector('.hero-bg-image');
+        if (!el) return;
+        const bg = el.getAttribute('data-bg');
+        if (!bg) return;
+
+        // Не тянем тяжёлый фон на мобильных
+        if (window.matchMedia && !window.matchMedia('(min-width: 769px)').matches) return;
+
+        // Уважаем Save-Data / медленные сети
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        const saveData = !!(conn && conn.saveData);
+        const effectiveType = (conn && conn.effectiveType) ? String(conn.effectiveType) : '';
+        const slow = /2g/.test(effectiveType);
+        if (saveData || slow) return;
+
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = bg;
+        img.onload = function () {
+            el.style.backgroundImage = `url('${bg}')`;
+            el.classList.add('has-photo');
+        };
     }
 
     function scrollToSection(sectionId) {
@@ -493,9 +538,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const lightbox = document.getElementById('caseLightbox');
         const lightboxImg = lightbox && lightbox.querySelector('.case-lightbox-img');
         const backdrop = lightbox && lightbox.querySelector('.case-lightbox-backdrop');
-        const caseImages = document.querySelectorAll('.section-cases .case-visual img');
+        const section = document.querySelector('.section-cases');
 
-        if (!lightbox || !lightboxImg || !caseImages.length) return;
+        if (!lightbox || !lightboxImg || !backdrop || !section) return;
 
         function openLightbox(src, alt) {
             lightboxImg.src = src;
@@ -520,12 +565,12 @@ document.addEventListener('DOMContentLoaded', function () {
             if (e.key === 'Escape') closeLightbox();
         }
 
-        caseImages.forEach(function (img) {
-            img.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                openLightbox(this.src, this.alt);
-            });
+        section.addEventListener('click', function (e) {
+            const img = e.target && e.target.closest ? e.target.closest('.case-visual img') : null;
+            if (!img) return;
+            e.preventDefault();
+            e.stopPropagation();
+            openLightbox(img.currentSrc || img.src, img.alt);
         });
 
         backdrop.addEventListener('click', function () {
@@ -1135,19 +1180,28 @@ document.addEventListener('DOMContentLoaded', function () {
     
     function initAnimations() {
         const animatedElements = document.querySelectorAll('.service-card, .process-card, .team-card, .case-card');
+        if (!animatedElements.length || !('IntersectionObserver' in window)) return;
+        const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
                 }
             });
-        });
+        }, { rootMargin: '0px 0px -10% 0px' });
+
         animatedElements.forEach(el => {
-             el.style.opacity = '0';
-             el.style.transform = 'translateY(30px)';
-             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-             observer.observe(el);
+            // Не прячем то, что уже в первом экране (иначе ухудшаем LCP/ощущение загрузки)
+            const rect = el.getBoundingClientRect();
+            if (rect.top < (vh * 1.05)) return;
+
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
         });
     }
 

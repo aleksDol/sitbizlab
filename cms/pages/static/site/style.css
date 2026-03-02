@@ -82,7 +82,7 @@ body {
 
 @media (max-width: 768px) {
     .container {
-        padding: 0 16px;
+        padding: 0 20px;
     }
 }
 
@@ -234,6 +234,11 @@ p {
     .btn-hero::after {
         content: "Разбор проекта";
         display: inline;
+    }
+    /* У мобильного hero своя кнопка с текстом в разметке — не дублируем через ::after */
+    .btn-hero.btn-hero-mobile::after {
+        content: none;
+        display: none;
     }
 }
 
@@ -560,10 +565,18 @@ p {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('assets/team-hero.webp?v=3.3');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    /* По умолчанию — лёгкий градиент, чтобы не тянуть 1MB+ фон до first paint */
+    background-image: radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 55%),
+                      radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.12), transparent 55%),
+                      linear-gradient(180deg, rgba(248, 250, 252, 1), rgba(248, 250, 252, 1));
+    opacity: 1;
+    filter: none;
+}
+
+.hero-bg-image.has-photo {
     opacity: 0.35;
     filter: blur(4px);
 }
@@ -665,6 +678,11 @@ p {
     margin-top: 0.5rem;
 }
 
+/* Мобильный hero (вариант как на макете) — скрыт на десктопе */
+.hero-mobile {
+    display: none;
+}
+
 /* Планшет: hero */
 @media (max-width: 1024px) {
     .hero {
@@ -714,15 +732,206 @@ p {
         margin-top: 64px;
     }
 
+    .hero .container {
+        padding-left: 24px;
+        padding-right: 24px;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
     .hero-bg-image {
-        /* На мобильных убираем тяжёлый размазанный фон-картинку,
-           чтобы ускорить первую отрисовку */
         background-image: none;
         background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 55%),
                     radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.12), transparent 55%),
                     var(--background-alt);
         opacity: 1;
         filter: none;
+    }
+
+    .hero-content {
+        display: none;
+    }
+
+    .hero-mobile {
+        display: block;
+        position: relative;
+        z-index: 1;
+        padding: 0 8px;
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .hero-mobile-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0 0 0.75rem;
+        line-height: 1.35;
+        text-align: center;
+        padding: 0 4px;
+    }
+
+    .hero-mobile-sub {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin: 0 0 0.5rem;
+        text-align: center;
+    }
+
+    .hero-mobile-benefit {
+        font-size: 1rem;
+        color: var(--text);
+        margin: 0 0 1.75rem;
+        text-align: center;
+        padding: 0 4px;
+    }
+
+    .hero-mobile-what {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin: 0 0 14px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    /* Контейнер для хаотичной раскладки кружков */
+    .hero-services-triangle {
+        --tri-padding: 10px;
+        position: relative;
+        width: min(100%, 300px);
+        margin: 0 auto 1.75rem;
+        padding: var(--tri-padding);
+        background: transparent;
+        box-sizing: border-box;
+    }
+
+    /* Хаотичная живая раскладка кружков */
+    .hero-services-triangle .hero-services-circles {
+        position: relative;
+        margin: 0 auto;
+        padding: 0;
+        width: 260px;
+        height: 200px;
+        max-width: 100%;
+    }
+
+    .hero-services-triangle .hero-circle {
+        position: absolute;
+        margin: 0;
+    }
+
+    .hero-services-triangle .hero-circle:nth-child(1) {
+        left: 0;
+        top: 8px;
+        transform: rotate(-4deg);
+    }
+
+    .hero-services-triangle .hero-circle:nth-child(2) {
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%) rotate(3deg);
+    }
+
+    .hero-services-triangle .hero-circle:nth-child(3) {
+        right: 0;
+        top: 18px;
+        transform: rotate(-2deg);
+    }
+
+    .hero-services-triangle .hero-circle:nth-child(4) {
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-45%) rotate(5deg);
+    }
+
+    .hero-services-circles {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px;
+        margin-bottom: 1.75rem;
+        padding: 0 4px;
+    }
+
+    .hero-circle {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        border: none;
+        background: #fff !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+        color: var(--primary);
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-align: center;
+        line-height: 1.2;
+        padding: 8px 4px;
+        box-sizing: border-box;
+    }
+
+    .hero-circle i {
+        font-size: 1.25rem;
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    .hero-circle span {
+        display: block;
+    }
+
+    .hero-mobile-desc {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        text-align: center;
+        margin: 0 0 1.5rem;
+        line-height: 1.5;
+    }
+
+    .hero-mobile-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 1.75rem;
+        padding: 0 4px;
+    }
+
+    .hero-mobile-actions .btn-hero-mobile,
+    .hero-mobile-actions .btn-hero-outline {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 24px;
+        padding-right: 24px;
+        box-sizing: border-box;
+    }
+
+    .hero-social-card {
+        background: #f1f5f9;
+        border-radius: var(--radius-lg);
+        padding: 18px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    .hero-social-line {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .hero-social-line i {
+        font-size: 1rem;
+        opacity: 0.9;
+        color: var(--primary);
     }
 
     .hero-content {
@@ -782,6 +991,18 @@ p {
     padding: var(--section-padding);
     text-align: center;
     position: relative;
+}
+
+/* Ускорение отрисовки: секции ниже первого экрана не рендерим сразу */
+@supports (content-visibility: auto) {
+    .section-services,
+    .section-offer,
+    .section-cases,
+    .section-cta,
+    .footer {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 900px;
+    }
 }
 
 /* ===== О НАС ===== */
@@ -1053,6 +1274,13 @@ p {
 @media (max-width: 768px) {
     .section-about {
         padding: 60px 0;
+    }
+
+    /* На мобильных убираем блок "О нас" (заголовок/текст/табы/метрики),
+       но оставляем блок "Чем мы отличаемся" */
+    .about-header,
+    .about-metrics {
+        display: none !important;
     }
 
     .about-header {

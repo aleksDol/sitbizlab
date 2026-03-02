@@ -66,6 +66,14 @@
     </script>
 </head>
 <body itemscope itemtype="https://schema.org/WebPage">
+    <svg aria-hidden="true" style="position:absolute;width:0;height:0;clip:rect(0,0,0,0);">
+        <defs>
+            <clipPath id="hero-rounded-triangle-clip" clipPathUnits="objectBoundingBox">
+                <!-- Перевёрнутый треугольник: широкая верхняя грань, остриё внизу, лёгкое скругление вершин -->
+                <path d="M 0.03 0.01 L 0.97 0.01 Q 1 0.01 1 0.06 L 1 0.58 Q 1 0.92 0.5 0.98 Q 0 0.92 0 0.58 L 0 0.06 Q 0 0.01 0.03 0.01 Z"/>
+            </clipPath>
+        </defs>
+    </svg>
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
         for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r)return;}
@@ -144,16 +152,31 @@
 
     {% if hero %}
     <section class="hero" role="region" aria-labelledby="hero-heading">
-        <div class="hero-bg"><div class="hero-bg-image"></div></div>
+        <div class="hero-bg">
+            <div class="hero-bg-image" data-bg="{% static 'site/assets/team-hero.webp' %}?v=3.3"></div>
+        </div>
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title" id="hero-heading">{{ hero.title }}<span class="highlight">{{ hero.title_highlight }}</span></h1>
-                <p class="hero-subtitle">{{ hero.subtitle }}</p>
+                <h1 class="hero-title" id="hero-heading">Создаем инструменты, которые принесут <span class="highlight">вам заявки</span></h1>
+                <p class="hero-subtitle">Сайт, Telegram-бот или Mini-app, которые<br>продают, записывают клиентов и автоматизируют процессы.</p>
                 <div class="hero-actions">
                     <button class="btn-primary btn-hero" id="heroCta"><span class="hero-btn-text-desktop">Получить разбор проекта</span><span class="hero-btn-text-mobile">Разбор проекта</span></button>
                     <a href="#cases" class="btn-secondary btn-hero-outline">Смотреть кейсы</a>
                 </div>
                 {% if hero.note %}<p class="hero-note">{{ hero.note }}</p>{% endif %}
+            </div>
+            <div class="hero-mobile">
+                <h1 class="hero-mobile-title" id="hero-heading-mobile">Создаем инструменты, которые принесут <span class="highlight">вам заявки</span></h1>
+                <p class="hero-mobile-benefit">Сайт, Telegram-бот или Mini-app, которые<br>продают, записывают клиентов и автоматизируют процессы.</p>
+                <div class="hero-mobile-actions">
+                    <button type="button" class="btn-primary btn-hero btn-hero-mobile" id="heroCtaMobile"><span>Разбор проекта</span></button>
+                    <a href="#cases" class="btn-secondary btn-hero-outline">Смотреть кейсы</a>
+                </div>
+                <div class="hero-social-card">
+                    <p class="hero-social-line"><i class="fas fa-thumbs-up" aria-hidden="true"></i> 90% клиентов по рекомендациям</p>
+                    <p class="hero-social-line"><i class="fas fa-percent" aria-hidden="true"></i> до 40% заявки дешевле после запуска</p>
+                    <p class="hero-social-line"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 4 года в digital</p>
+                </div>
             </div>
         </div>
     </section>
@@ -179,7 +202,7 @@
                 <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-check-circle"></i></div><span class="about-metric-value">4 года</span><span class="about-metric-label">в digital</span></div>
                 <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-thumbs-up"></i></div><span class="about-metric-value">90%</span><span class="about-metric-label">клиентов по рекомендаций</span></div>
                 <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-rocket"></i></div><span class="about-metric-value">10-14</span><span class="about-metric-label">средний срок запуска</span></div>
-                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-percent"></i></div><span class="about-metric-value">до 50%</span><span class="about-metric-label">заявки дешевле после запуска</span></div>
+                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-percent"></i></div><span class="about-metric-value">до 40%</span><span class="about-metric-label">заявки дешевле после запуска</span></div>
             </div>
             <div class="about-differ">
                 <div class="about-differ-grid">
