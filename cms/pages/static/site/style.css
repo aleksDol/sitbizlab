@@ -542,7 +542,7 @@ p {
 
 /* ===== HERO SECTION ===== */
 .hero {
-    padding: 120px 0 60px;
+    padding: 120px 0 100px;
     position: relative;
     background: var(--background-alt);
     text-align: center;
@@ -686,7 +686,7 @@ p {
 /* Планшет: hero */
 @media (max-width: 1024px) {
     .hero {
-        padding: 100px 0 50px;
+        padding: 100px 0 80px;
         margin-top: 68px;
     }
     .hero-title {
