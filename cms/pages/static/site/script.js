@@ -274,28 +274,29 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ===== HERO: ЛЕНИВАЯ ЗАГРУЗКА ТЯЖЁЛОГО ФОНА =====
+    // ===== HERO: ЛЕНИВАЯ ЗАГРУЗКА ФОНА (десктоп — тяжёлый, мобильный — лёгкий) =====
     function initHeroBackground() {
         const el = document.querySelector('.hero-bg-image');
         if (!el) return;
-        const bg = el.getAttribute('data-bg');
-        if (!bg) return;
+        const bgDesktop = el.getAttribute('data-bg');
+        const bgMobile = el.getAttribute('data-bg-mobile');
+        const isDesktop = window.matchMedia && window.matchMedia('(min-width: 769px)').matches;
+        const url = isDesktop ? bgDesktop : (bgMobile || bgDesktop);
+        if (!url) return;
 
-        // Не тянем тяжёлый фон на мобильных
-        if (window.matchMedia && !window.matchMedia('(min-width: 769px)').matches) return;
-
-        // Уважаем Save-Data / медленные сети
+        // Уважаем Save-Data; на медленных сетях не грузим тяжёлый десктопный фон
         const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
         const saveData = !!(conn && conn.saveData);
         const effectiveType = (conn && conn.effectiveType) ? String(conn.effectiveType) : '';
         const slow = /2g/.test(effectiveType);
-        if (saveData || slow) return;
+        if (saveData) return;
+        if (isDesktop && slow) return;
 
         const img = new Image();
         img.decoding = 'async';
-        img.src = bg;
+        img.src = url;
         img.onload = function () {
-            el.style.backgroundImage = `url('${bg}')`;
+            el.style.backgroundImage = `url('${url}')`;
             el.classList.add('has-photo');
         };
     }
