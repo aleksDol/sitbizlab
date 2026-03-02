@@ -917,6 +917,8 @@ p {
         flex-direction: column;
         gap: 10px;
         margin-top: 14px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
     }
 
     .hero-social-line {
@@ -926,12 +928,17 @@ p {
         display: flex;
         align-items: center;
         gap: 10px;
+        text-align: left;
     }
 
     .hero-social-line i {
         font-size: 1rem;
         opacity: 0.9;
         color: var(--primary);
+        flex-shrink: 0;
+        width: 1.25em;
+        min-width: 1.25em;
+        text-align: center;
     }
 
     .hero-content {
