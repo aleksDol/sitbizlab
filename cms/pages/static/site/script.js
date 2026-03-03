@@ -61,10 +61,10 @@ document.addEventListener('DOMContentLoaded', function () {
     initAI();
     initServices();
     initModal();
-    // Не критично для первого экрана — откладываем
+    // Hero и фоны секций — для LCP грузим сразу, не откладываем
+    initHeroBackground();
+    initSectionBackgrounds();
     scheduleIdle(() => {
-        initHeroBackground();
-        initSectionBackgrounds();
         initCaseLightbox();
         initCaseReadMore();
         initCasesTabs();

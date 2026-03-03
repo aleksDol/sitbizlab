@@ -36,6 +36,10 @@
     <link rel="stylesheet" href="{% static 'site/style.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'site/assets/favicon.ico' %}">
 
+    <!-- Preload LCP image: hero (мобильный / десктоп по media) -->
+    <link rel="preload" as="image" href="{% static 'site/assets/team-hero-mob.webp' %}" media="(max-width: 768px)">
+    <link rel="preload" as="image" href="{% static 'site/assets/team-hero.webp' %}?v=3.3" media="(min-width: 769px)">
+
     <!-- JSON-LD: Organization + WebSite для поисковиков -->
     <script type="application/ld+json">
     {
