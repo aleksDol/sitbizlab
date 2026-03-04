@@ -269,7 +269,7 @@
                 {% csrf_token %}
                 <input type="hidden" name="selectedService" value="{{ page_title }}">
                 <input type="hidden" name="service" value="{{ page_title }}">
-                <input type="hidden" name="source" value="{% block form_source %}Лендинг{% endblock %}">
+                <input type="hidden" name="source" value="Лендинг (мобильная форма)">
                 <div class="form-row contact-method-row">
                     <label class="form-label">Как лучше связаться?</label>
                     <div class="radio-group">
@@ -279,8 +279,7 @@
                 </div>
                 <div class="form-row"><input type="text" placeholder="Ваше имя *" name="name" required></div>
                 <div class="form-row"><input type="tel" placeholder="Телефон *" name="phone" required></div>
-                {% block form_extra_fields %}{% endblock %}
-                <div class="form-row"><textarea placeholder="{% block form_message_placeholder %}Кратко опишите задачу (необязательно){% endblock %}" name="message" rows="2"></textarea></div>
+                <div class="form-row"><textarea placeholder="Кратко опишите задачу (необязательно)" name="message" rows="2"></textarea></div>
                 <div class="form-row privacy-checkbox-row">
                     <label class="privacy-checkbox-label">
                         <input type="checkbox" name="privacy" required>
@@ -288,7 +287,7 @@
                     </label>
                 </div>
                 <div class="form-footer">
-                    <button type="submit" class="btn-primary btn-cta" id="mobileSubmitCtaLanding">{% block form_button %}Получить консультацию{% endblock %}</button>
+                    <button type="submit" class="btn-primary btn-cta" id="mobileSubmitCtaLanding">Получить консультацию</button>
                     <p class="form-note">Ответим в течение 15 минут. Без навязывания.</p>
                 </div>
             </form>
