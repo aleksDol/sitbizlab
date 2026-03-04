@@ -183,23 +183,29 @@
 <section class="section landing-section" id="cases">
     <div class="container">
         <h2 class="section-header">Кейсы по сайтам</h2>
-        <div class="cases-grid cases-grid-static">
-            {% for case in cases_sites %}
-            <article class="case-card">
-                <div class="case-visual">
-                    {% if case.image %}<img src="{{ case.image.url }}" alt="{{ case.title }}" loading="lazy">{% else %}<img src="{% static 'site/assets/case-after.jpg' %}" alt="{{ case.title }}" loading="lazy">{% endif %}
+        <div class="cases-carousel">
+            <button type="button" class="cases-carousel-btn cases-carousel-prev" aria-label="Предыдущий кейс"><i class="fas fa-chevron-left"></i></button>
+            <div class="cases-carousel-inner" id="casesCarouselInner">
+                <div class="cases-grid" id="casesGrid">
+                    {% for case in cases_sites %}
+                    <article class="case-card">
+                        <div class="case-visual">
+                            {% if case.image %}<img src="{{ case.image.url }}" alt="{{ case.title }}" loading="lazy">{% else %}<img src="{% static 'site/assets/case-after.jpg' %}" alt="{{ case.title }}" loading="lazy">{% endif %}
+                        </div>
+                        <div class="case-content">
+                            <h3>{{ case.title }}</h3>
+                            <div class="case-kpi">
+                                {% if case.kpi_line_1 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_1 }}</span></div>{% endif %}
+                                {% if case.kpi_line_2 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_2 }}</span></div>{% endif %}
+                            </div>
+                            <p class="case-description case-description-short">{{ case.description|truncatewords:20 }}</p>
+                            <a href="{% url 'case_detail' case.slug %}" class="case-view-btn">Подробнее <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                    {% endfor %}
                 </div>
-                <div class="case-content">
-                    <h3>{{ case.title }}</h3>
-                    <div class="case-kpi">
-                        {% if case.kpi_line_1 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_1 }}</span></div>{% endif %}
-                        {% if case.kpi_line_2 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_2 }}</span></div>{% endif %}
-                    </div>
-                    <p class="case-description case-description-short">{{ case.description|truncatewords:20 }}</p>
-                    <a href="{% url 'case_detail' case.slug %}" class="case-view-btn">Подробнее <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </article>
-            {% endfor %}
+            </div>
+            <button type="button" class="cases-carousel-btn cases-carousel-next" aria-label="Следующий кейс"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 </section>
