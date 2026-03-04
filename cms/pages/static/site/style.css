@@ -397,17 +397,23 @@ p {
     letter-spacing: 1px;
 }
 
-@media (max-width: 768px) {
-    .header .logo .logo-icon {
-        width: 28px;
-        height: 28px;
-        padding: 4px;
+/* Логотип в шапке меньше на мобильной, всегда слева от заголовка */
+@media (max-width: 992px) {
+    .header .logo .logo-icon,
+    .header-landing .logo .logo-icon {
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        min-height: 26px !important;
+        padding: 4px !important;
     }
-    .header .logo .logo-main {
-        font-size: 1rem;
+    .header .logo .logo-main,
+    .header-landing .logo .logo-main {
+        font-size: 0.95rem !important;
     }
-    .header .logo .logo-sub {
-        font-size: 0.65rem;
+    .header .logo .logo-sub,
+    .header-landing .logo .logo-sub {
+        font-size: 0.6rem !important;
     }
 }
 
@@ -2870,9 +2876,11 @@ p {
     max-width: 300px;
 }
 
-@media (max-width: 768px) {
+/* Скрыть цитату в формах внизу страницы только на мобильной */
+@media (max-width: 992px) {
+    .visual-quote.hide-on-mobile,
     .visual-quote {
-        display: none;
+        display: none !important;
     }
 }
 
