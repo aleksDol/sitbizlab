@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ site.site_name }} — Сайты, которые работают. Доказано делом.</title>
-    <meta name="description" content="{{ site.meta_description|default:'SiteBiz Lab - создаем сайты, которые работают. Лендинги и сайты под ключ. От 25 000 ₽.' }}">
+    <title>{{ site.site_name }} — Сайты, боты и мини-приложения, которые приносят заявки</title>
+    <meta name="description" content="{{ site.meta_description|default:'Создаём сайты, Telegram-ботов и MiniApps под ключ. Автоматизация и рост продаж. Ответим в течение 15 минут.' }}">
     <meta name="keywords" content="разработка сайтов, лендинг, создание сайта под ключ, веб-студия, заказать сайт, лендинг под ключ, сайт для бизнеса">
     <meta name="author" content="{{ site.site_name }}">
     <link rel="canonical" href="{{ canonical_url|default:'' }}">
@@ -137,9 +137,16 @@
                 <a href="/">Главная</a>
                 <a href="#cases">Портфолио</a>
                 <a href="#about">О нас</a>
-                <a href="#services">Услуги</a>
+                <div class="nav-dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="nav-dropdown-trigger">Услуги <i class="fas fa-chevron-down" aria-hidden="true"></i></span>
+                    <ul class="nav-dropdown-menu" role="menu">
+                        <li role="none"><a href="{% url 'landing_sites' %}" role="menuitem">Сайты</a></li>
+                        <li role="none"><a href="{% url 'landing_bots' %}" role="menuitem">Боты</a></li>
+                        <li role="none"><a href="{% url 'landing_miniapps' %}" role="menuitem">MiniApp</a></li>
+                    </ul>
+                </div>
                 <a href="#offer">Акция</a>
-                <a href="#contact" class="nav-cta">Обсудить проект</a>
+                <a href="#contact" class="nav-cta">Контакты</a>
             </div>
             <button class="menu-toggle" id="menuToggle" aria-label="Открыть меню" aria-expanded="false"><i class="fas fa-bars"></i></button>
         </nav>
@@ -147,9 +154,16 @@
             <a href="/">Главная</a>
             <a href="#cases">Портфолио</a>
             <a href="#about">О нас</a>
-            <a href="#services">Услуги</a>
+            <div class="mobile-submenu">
+                <button type="button" class="mobile-submenu-trigger" aria-expanded="false">Услуги <i class="fas fa-chevron-down"></i></button>
+                <div class="mobile-submenu-panel" aria-hidden="true">
+                    <a href="{% url 'landing_sites' %}">Сайты</a>
+                    <a href="{% url 'landing_bots' %}">Боты</a>
+                    <a href="{% url 'landing_miniapps' %}">MiniApp</a>
+                </div>
+            </div>
             <a href="#offer">Акция</a>
-            <a href="#contact" class="nav-cta">Обсудить проект</a>
+            <a href="#contact" class="nav-cta">Контакты</a>
         </div>
     </header>
 
@@ -160,19 +174,19 @@
         </div>
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title" id="hero-heading">Создаем инструменты, которые принесут <span class="highlight">вам заявки</span></h1>
-                <p class="hero-subtitle">Сайт, Telegram-бот или Mini-app, которые<br>продают, записывают клиентов и автоматизируют процессы.</p>
+                <h1 class="hero-title" id="hero-heading">Создаем сайты, ботов и мини-приложения, которые <span class="highlight">работают на вас 24/7</span></h1>
+                <p class="hero-subtitle">Комплексная разработка под ключ с фокусом на автоматизацию и рост продаж.</p>
                 <div class="hero-actions">
-                    <button class="btn-primary btn-hero" id="heroCta"><span class="hero-btn-text-desktop">Получить разбор проекта</span><span class="hero-btn-text-mobile">Разбор проекта</span></button>
+                    <button class="btn-primary btn-hero" id="heroCta"><span class="hero-btn-text-desktop">Рассчитать стоимость проекта</span><span class="hero-btn-text-mobile">Рассчитать проект</span></button>
                     <a href="#cases" class="btn-secondary btn-hero-outline">Смотреть кейсы</a>
                 </div>
                 {% if hero.note %}<p class="hero-note">{{ hero.note }}</p>{% endif %}
             </div>
             <div class="hero-mobile">
-                <h1 class="hero-mobile-title" id="hero-heading-mobile">Создаем инструменты, которые принесут <span class="highlight">вам заявки</span></h1>
-                <p class="hero-mobile-benefit">Сайт, Telegram-бот или Mini-app, которые<br>продают, записывают клиентов и автоматизируют процессы.</p>
+                <h1 class="hero-mobile-title" id="hero-heading-mobile">Создаем сайты, ботов и мини-приложения, которые <span class="highlight">работают на вас 24/7</span></h1>
+                <p class="hero-mobile-benefit">Комплексная разработка под ключ с фокусом на автоматизацию и рост продаж.</p>
                 <div class="hero-mobile-actions">
-                    <button type="button" class="btn-primary btn-hero btn-hero-mobile" id="heroCtaMobile"><span>Разбор проекта</span></button>
+                    <button type="button" class="btn-primary btn-hero btn-hero-mobile" id="heroCtaMobile"><span>Рассчитать проект</span></button>
                     <a href="#cases" class="btn-secondary btn-hero-outline">Смотреть кейсы</a>
                 </div>
                 <div class="hero-social-card">
@@ -189,16 +203,7 @@
         <div class="container">
             <div class="about-header">
                 <h2 id="about-heading">О нас</h2>
-                <p class="about-intro">4 года создаём проекты, которые приносят заявки.</p>
-                <p class="about-intro">Каждый проект — это логика, автоматизация и аналитика.</p>
-                <div class="about-tabs" role="tablist">
-                    <a href="#cases" class="about-tab" role="tab">Все проекты</a>
-                    <a href="#cases" class="about-tab about-tab-active" role="tab">Для бизнеса</a>
-                    <a href="#cases" class="about-tab" role="tab">Для услуг</a>
-                    <a href="#cases" class="about-tab" role="tab">Для стартапов</a>
-                    <a href="#cases" class="about-tab" role="tab">Для образования</a>
-                    <a href="#cases" class="about-tab about-tab-more" role="tab" aria-label="Ещё"><i class="fas fa-chevron-right"></i></a>
-                </div>
+                <p class="about-intro">4 года создаём проекты, которые приносят заявки. Каждый проект — логика, автоматизация и аналитика.</p>
             </div>
             <div class="about-metrics">
                 <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-calendar-alt"></i></div><span class="about-metric-value">28</span><span class="about-metric-label">реализованных проектов</span></div>
@@ -224,7 +229,7 @@
                 </div>
             </div>
             <div class="about-cta-block">
-                <h2 class="about-cta-title">Чем мы отличаемся</h2>
+                <h2 class="about-cta-title">Мы ждём вас</h2>
                 <p class="about-cta-text">Получите разбор вашего проекта и структуру сайта <strong>бесплатно</strong> — ответим в течение 15 минут.</p>
                 <button class="btn-primary about-cta-btn" id="aboutCta"><span>Получить разбор проекта</span></button>
             </div>
@@ -234,35 +239,54 @@
     <section class="section section-services" id="services" role="region" aria-labelledby="services-heading">
         <div class="section-services-bg" data-bg="{% static 'site/assets/bg-service.jpg' %}" data-bg-mobile="{% static 'site/assets/bg-service-mob.webp' %}"></div>
         <div class="container">
-            <div class="section-header"><h2 id="services-heading">Почему наши проекты приносят заявки</h2></div>
-            <div class="services-grid" id="servicesGrid">
-                {% for service in services %}
-                <div class="service-card {% if service.is_featured %}service-card-featured{% endif %}" data-service="{{ service.slug }}">
-                    {% if service.is_featured %}<div class="service-badge">Лидеры рынка</div>{% endif %}
-                    <div class="service-icon">
-                        {% if service.slug == 'launch' %}<i class="fas fa-paper-plane"></i>{% elif service.slug == 'growth' %}<i class="fas fa-chart-bar"></i>{% else %}<i class="fas fa-th-large"></i>{% endif %}
-                    </div>
-                    <h3>{{ service.name }}</h3>
-                    <p class="service-description">{{ service.short_description }}</p>
-                    {% with suitable=service.get_features_suitable included=service.get_features_included %}
-                    {% if suitable %}
-                    <p class="service-sublabel">Подойдет если:</p>
-                    <ul class="service-features">{% for item in suitable %}<li>{{ item }}</li>{% endfor %}</ul>
-                    {% endif %}
-                    {% if included %}
-                    <p class="service-sublabel">Включено:</p>
-                    <ul class="service-features">{% for item in included %}<li>{{ item }}</li>{% endfor %}</ul>
-                    {% endif %}
-                    {% endwith %}
-                    <div class="service-price"><span class="price-value">{{ service.price_from }}</span></div>
-                    <button class="btn-primary btn-service" data-service-type="{{ service.name }}"><span>Обсудить проект</span></button>
-                    <span class="service-note">Ответим в течение 15 минут.</span>
-                </div>
-                {% empty %}
-                <p class="section-subtitle">Услуги настраиваются в админке.</p>
-                {% endfor %}
+            <div class="section-header"><h2 id="services-heading">Выберите ваш инструмент</h2></div>
+            <div class="services-grid products-grid" id="servicesGrid">
+                <a href="{% url 'landing_sites' %}" class="service-card product-card">
+                    <div class="service-icon"><i class="fas fa-globe"></i></div>
+                    <h3>Сайт</h3>
+                    <p class="service-description">Лендинг или каталог, который приносит заявки. Разработаем сайт под ключ: продающая структура, умные формы захвата, аналитика, уведомления о заявках в Telegram.</p>
+                    <ul class="service-features product-card-features">
+                        <li>Продающая структура — чтобы посетитель не ушёл без заказа</li>
+                        <li>Умные формы захвата — заявки, звонки, обратная связь</li>
+                        <li>Аналитика в комплекте — видите, откуда приходят клиенты</li>
+                        <li>Уведомления о заявках в Telegram — не пропустите ни одного лида</li>
+                    </ul>
+                    <p class="product-card-note">Решаем любые бизнес-задачи: увеличить поток клиентов, запустить новый продукт, вывести услуги в онлайн.</p>
+                    <div class="service-price"><span class="price-value">от 15 000 ₽</span></div>
+                    <span class="btn-primary btn-service">Подробнее <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
+                <a href="{% url 'landing_bots' %}" class="service-card product-card">
+                    <div class="service-icon"><i class="fas fa-robot"></i></div>
+                    <h3>Telegram-бот</h3>
+                    <p class="service-description">Продажи и поддержка внутри мессенджера. Бот работает за вас 24/7.</p>
+                    <ul class="service-features product-card-features">
+                        <li>Автоответы на частые вопросы — экономия времени менеджеров</li>
+                        <li>Рассылки по базе клиентов — возвращайте тех, кто забыл купить</li>
+                        <li>Онлайн-запись клиентов</li>
+                        <li>Каталог товаров или услуг с корзиной и оплатой</li>
+                        <li>Интеграция с CRM — все заявки в одной системе</li>
+                        <li>Приём платежей прямо в чате</li>
+                    </ul>
+                    <p class="product-card-note">Ваш личный менеджер, который не спит, не просит зарплату и не ошибается.</p>
+                    <div class="service-price"><span class="price-value">от 10 000 ₽</span></div>
+                    <span class="btn-primary btn-service">Подробнее <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
+                <a href="{% url 'landing_miniapps' %}" class="service-card product-card">
+                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Mini-App</h3>
+                    <p class="service-description">Ваш сервис внутри Telegram. Без модерации App Store. Превратите идею в готовое приложение.</p>
+                    <ul class="service-features product-card-features">
+                        <li>Маркетплейс, каталог, клуб по подписке, игра или дейтинг — любая логика</li>
+                        <li>Встроенные виральные механики — рефералки, рейтинги, задания (бесплатный трафик до 25%)</li>
+                        <li>Платежи из коробки — приём оплат внутри приложения</li>
+                        <li>Быстрый запуск — не нужно ждать модерации в Google Play и App Store</li>
+                    </ul>
+                    <p class="product-card-note">Аудитория Telegram уже ждёт ваш сервис. Осталось его сделать.</p>
+                    <div class="service-price"><span class="price-value">от 30 000 ₽</span></div>
+                    <span class="btn-primary btn-service">Подробнее <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
             </div>
-            <p class="services-footer-text">Любой тариф можно доработать под ваш бизнес.<br>Мы не работаем по шаблону — мы строим систему под задачу.</p>
+            <p class="services-footer-text">Любой проект можно доработать под ваш бизнес.<br>Мы не работаем по шаблону — строим систему под задачу.</p>
         </div>
     </section>
 
@@ -313,19 +337,18 @@
                 <h2 id="cases-heading">Наши работы</h2>
                 <p class="section-subtitle">Показываем реальные примеры: как мы увеличили результаты клиентам</p>
             </div>
-            <div class="cases-tabs" role="tablist" aria-label="Категории проектов">
-                <button type="button" class="cases-tab active" role="tab" data-filter="all" aria-selected="true">Все проекты</button>
-                <button type="button" class="cases-tab" role="tab" data-filter="business" aria-selected="false">Для бизнеса</button>
-                <button type="button" class="cases-tab" role="tab" data-filter="services" aria-selected="false">Для услуг</button>
-                <button type="button" class="cases-tab" role="tab" data-filter="startups" aria-selected="false">Для стартапов</button>
-                <button type="button" class="cases-tab" role="tab" data-filter="education" aria-selected="false">Для образования</button>
+            <div class="cases-tabs" role="tablist" aria-label="Фильтр по продуктам">
+                <button type="button" class="cases-tab active" role="tab" data-filter="all" aria-selected="true">Все</button>
+                <button type="button" class="cases-tab" role="tab" data-filter="sites" aria-selected="false">Сайты</button>
+                <button type="button" class="cases-tab" role="tab" data-filter="bots" aria-selected="false">Боты</button>
+                <button type="button" class="cases-tab" role="tab" data-filter="miniapps" aria-selected="false">MiniApps</button>
             </div>
             <div class="cases-carousel">
                 <button type="button" class="cases-carousel-btn cases-carousel-prev" aria-label="Предыдущий кейс"><i class="fas fa-chevron-left"></i></button>
                 <div class="cases-carousel-inner" id="casesCarouselInner">
                     <div class="cases-grid" id="casesGrid">
                 {% for case in cases %}
-                <article class="case-card" data-category="{{ case.category }}">
+                <article class="case-card" data-category="{{ case.category }}" data-product-type="{{ case.product_type|default:'sites' }}">
                     <div class="case-visual">
                         {% if case.image %}<img src="{{ case.image.url }}" alt="Кейс: {{ case.title }}" loading="lazy">{% else %}<img src="{% static 'site/assets/case-after.jpg' %}" alt="Кейс: {{ case.title }}" loading="lazy">{% endif %}
                     </div>
@@ -341,7 +364,11 @@
                             {% if case.platform %}<span><i class="fas fa-circle fa-xs" aria-hidden="true"></i> Платформа: {{ case.platform }}</span>{% endif %}
                             {% if case.launch_days %}<span>Время запуска {{ case.launch_days }}</span>{% endif %}
                         </div>
+                        {% if case.slug %}
+                        <a href="{% url 'case_detail' case.slug %}" class="case-view-btn">Подробнее <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        {% else %}
                         <button type="button" class="case-view-btn case-read-more-btn">Читать далее <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                        {% endif %}
                     </div>
                 </article>
                 {% empty %}
@@ -381,8 +408,8 @@
         <div class="container">
             <div class="cta-card">
                 <div class="cta-content">
-                    <h2 class="cta-title" id="contact-heading">Готовы запустить проект, который будет работать на вас?</h2>
-                    <p class="cta-text">Оставьте заявку, и мы свяжемся с вами в течение часа для бесплатной консультации.</p>
+                    <h2 class="cta-title" id="contact-heading">Готовы обсудить ваш проект?</h2>
+                    <p class="cta-text">Ответим в течение 15 минут. Без навязывания.</p>
                     <form class="cta-form" id="mainForm" role="form" aria-label="Форма заявки">
                         {% csrf_token %}
                         <input type="hidden" id="selectedService" name="selectedService" value="">
@@ -395,7 +422,7 @@
                         </div>
                         <div class="form-row"><input type="text" placeholder="Ваше имя *" id="ctaName" name="name" required aria-required="true"></div>
                         <div class="form-row"><input type="tel" placeholder="Телефон *" id="ctaPhone" name="phone" required aria-required="true"></div>
-                        <div class="form-row"><textarea placeholder="Опишите ваш проект (необязательно)" id="ctaMessage" name="message" rows="2"></textarea></div>
+                        <div class="form-row"><textarea placeholder="Что нужно создать? (необязательно)" id="ctaMessage" name="message" rows="2"></textarea></div>
                         <div class="form-row privacy-checkbox-row">
                             <label class="privacy-checkbox-label">
                                 <input type="checkbox" id="mainFormPrivacy" name="privacy" required aria-required="true">
@@ -403,8 +430,8 @@
                             </label>
                         </div>
                         <div class="form-footer">
-                            <button type="submit" class="btn-primary btn-cta" id="submitCta"><i class="fas fa-paper-plane" aria-hidden="true"></i><span>Обсудить проект</span></button>
-                            <p class="form-note">Конфиденциально. Никакого спама.</p>
+                            <button type="submit" class="btn-primary btn-cta" id="submitCta"><i class="fas fa-paper-plane" aria-hidden="true"></i><span>Получить консультацию</span></button>
+                            <p class="form-note">Ответим в течение 15 минут, без навязывания.</p>
                         </div>
                     </form>
                 </div>
@@ -435,9 +462,9 @@
                     </div>
                 </div>
                 <div class="footer-links">
-                    <div class="link-group"><h4>Компания</h4><a href="#about">О нас</a><a href="#services">Услуги</a><a href="#offer">Акция</a></div>
-                    <div class="link-group"><h4>Услуги</h4><a href="#services" data-service="launch">СТАРТ</a><a href="#services" data-service="growth">СИСТЕМА РОСТА</a><a href="#services" data-service="scale">МАСШТАБ</a><a href="#contact">Индивидуальный проект</a></div>
-                    <div class="link-group"><h4>Контакты</h4>{% if site.email %}<a href="mailto:{{ site.email }}">{{ site.email }}</a>{% endif %}<a href="https://t.me/sitebiz_lab_manager" target="_blank" rel="noopener">Telegram менеджер</a><a href="#contact" class="schedule-btn">Оставить заявку</a></div>
+                    <div class="link-group"><h4>Услуги</h4><a href="{% url 'landing_sites' %}">Сайты</a><a href="{% url 'landing_bots' %}">Telegram-боты</a><a href="{% url 'landing_miniapps' %}">MiniApps</a></div>
+                    <div class="link-group"><h4>Сайт</h4><a href="#about">О нас</a><a href="#cases">Кейсы</a><a href="#offer">Акция</a><a href="#contact">Контакты</a></div>
+                    <div class="link-group"><h4>Контакты</h4>{% if site.email %}<a href="mailto:{{ site.email }}">{{ site.email }}</a>{% endif %}{% if site.telegram %}<a href="{{ site.telegram }}" target="_blank" rel="noopener">Telegram</a>{% endif %}<a href="#contact" class="schedule-btn">Оставить заявку</a></div>
                 </div>
             </div>
             <div class="footer-bottom">

@@ -22,10 +22,11 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(Case)
 class CaseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'is_published', 'order', 'preview_image')
+    list_display = ('title', 'slug', 'product_type', 'category', 'is_published', 'order', 'preview_image')
     list_editable = ('order', 'is_published')
-    list_filter = ('category', 'is_published')
+    list_filter = ('product_type', 'category', 'is_published')
     search_fields = ('title', 'description')
+    prepopulated_fields = {'slug': ('title',)}
 
     def preview_image(self, obj):
         if obj.image:

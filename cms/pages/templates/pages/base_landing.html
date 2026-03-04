@@ -1,0 +1,293 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }} — {{ site.site_name }}</title>
+    <meta name="description" content="{{ meta_description|default:site.meta_description }}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preload" href="{% static 'site/fonts/inter-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{% static 'site/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'site/assets/favicon.ico' %}">
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    <!-- Yandex.Metrika -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
+        for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r)return;}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=106429374','ym');
+        ym(106429374,'init',{clickmap:true,trackLinks:true,webvisor:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/106429374" style="position:absolute;left:-9999px;" alt="" /></div></noscript>
+
+    <!-- Top.Mail.Ru counter -->
+    <script type="text/javascript">
+    var _tmr = window._tmr || (window._tmr = []);
+    _tmr.push({id: "3737368", type: "pageView", start: (new Date()).getTime()});
+    (function (d, w, id) {
+      if (d.getElementById(id)) return;
+      var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+      ts.src = "https://top-fwz1.mail.ru/js/code.js";
+      var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+      if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+    })(document, window, "tmr-code");
+    </script>
+    <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3737368;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
+    <!-- /Top.Mail.Ru counter -->
+
+    <header class="header header-landing" role="banner">
+        <nav class="nav container" role="navigation" aria-label="Основная навигация">
+            <a href="{% url 'home' %}" class="logo">
+                <div class="logo-icon"><img src="{% static 'site/assets/logo.png' %}" alt="{{ site.site_name }}"></div>
+                <div class="logo-text"><span class="logo-main">SiteBiz</span><span class="logo-sub">Lab</span></div>
+            </a>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Главная</a>
+                <a href="#cases">Портфолио</a>
+                <a href="{% url 'home' %}#about">О нас</a>
+                <div class="nav-dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="nav-dropdown-trigger">Услуги <i class="fas fa-chevron-down" aria-hidden="true"></i></span>
+                    <ul class="nav-dropdown-menu" role="menu">
+                        <li role="none"><a href="{% url 'landing_sites' %}" role="menuitem">Сайты</a></li>
+                        <li role="none"><a href="{% url 'landing_bots' %}" role="menuitem">Боты</a></li>
+                        <li role="none"><a href="{% url 'landing_miniapps' %}" role="menuitem">MiniApp</a></li>
+                    </ul>
+                </div>
+                <a href="#offer">Акция</a>
+                <a href="#contact" class="nav-cta">Контакты</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Открыть меню" aria-expanded="false"><i class="fas fa-bars"></i></button>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+            <a href="{% url 'home' %}">Главная</a>
+            <a href="#cases">Портфолио</a>
+            <a href="{% url 'home' %}#about">О нас</a>
+            <div class="mobile-submenu">
+                <button type="button" class="mobile-submenu-trigger" aria-expanded="false">Услуги <i class="fas fa-chevron-down"></i></button>
+                <div class="mobile-submenu-panel" aria-hidden="true">
+                    <a href="{% url 'landing_sites' %}">Сайты</a>
+                    <a href="{% url 'landing_bots' %}">Боты</a>
+                    <a href="{% url 'landing_miniapps' %}">MiniApp</a>
+                </div>
+            </div>
+            <a href="#offer">Акция</a>
+            <a href="#contact" class="nav-cta">Контакты</a>
+        </div>
+    </header>
+
+    <main role="main">
+        {% block content %}{% endblock %}
+
+        {% block about_section %}
+        <section class="section section-about" id="about" role="region" aria-labelledby="about-heading">
+            <div class="container">
+                <div class="about-header">
+                    <h2 id="about-heading">О нас</h2>
+                    <p class="about-intro">4 года создаём проекты, которые приносят заявки. Каждый проект — логика, автоматизация и аналитика.</p>
+                </div>
+                <div class="about-metrics">
+                    <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-calendar-alt"></i></div><span class="about-metric-value">28</span><span class="about-metric-label">реализованных проектов</span></div>
+                    <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-check-circle"></i></div><span class="about-metric-value">4 года</span><span class="about-metric-label">в digital</span></div>
+                    <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-thumbs-up"></i></div><span class="about-metric-value">90%</span><span class="about-metric-label">клиентов по рекомендациям</span></div>
+                    <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-rocket"></i></div><span class="about-metric-value">10-14</span><span class="about-metric-label">средний срок запуска</span></div>
+                    <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-percent"></i></div><span class="about-metric-value">до 40%</span><span class="about-metric-label">заявки дешевле после запуска</span></div>
+                </div>
+                <div class="about-differ">
+                    <div class="about-differ-grid">
+                        <div class="about-differ-content">
+                            <h2 class="about-differ-title">Чем мы отличаемся</h2>
+                            <div class="about-differ-card"><div class="about-differ-icon"><i class="fas fa-clock"></i></div><div class="about-differ-card-body"><h3>Минимум бюрократии</h3><p>Не тратим время на воду, длительные созвоны, документы на 70 страниц.</p></div></div>
+                            <div class="about-differ-card"><div class="about-differ-icon"><i class="far fa-star"></i></div><div class="about-differ-card-body"><h3>Честные рекомендации</h3><p>Если можно использовать готовое решение — скажем. Без накруток ради чека.</p></div></div>
+                            <div class="about-differ-card"><div class="about-differ-icon"><i class="fas fa-handshake"></i></div><div class="about-differ-card-body"><h3>Партнёрство, не поток</h3><p>У нас нет конвейера. Мы погружаемся в бизнес, понимаем задачу, предлагаем полезное.</p></div></div>
+                        </div>
+                        <div class="about-differ-image">
+                            <picture>
+                                <source media="(max-width: 768px)" srcset="{% static 'site/assets/difference-mob.webp' %}">
+                                <img src="{% static 'site/assets/difference.webp' %}" alt="Чем мы отличаемся" loading="lazy" width="600" height="400">
+                            </picture>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-cta-block">
+                    <h2 class="about-cta-title">Мы ждём вас</h2>
+                    <p class="about-cta-text">Получите разбор вашего проекта и структуру сайта <strong>бесплатно</strong> — ответим в течение 15 минут.</p>
+                    <a href="#contact" class="btn-primary about-cta-btn">Получить разбор проекта</a>
+                </div>
+            </div>
+        </section>
+        {% endblock %}
+
+        {% block cases_section %}
+        <section class="section section-cases" id="cases" role="region" aria-labelledby="cases-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="cases-heading">Наши работы</h2>
+                    <p class="section-subtitle">Показываем реальные примеры: как мы увеличили результаты клиентам</p>
+                </div>
+                <div class="cases-grid cases-grid-static" id="casesGrid">
+                    {% for case in cases %}
+                    <article class="case-card">
+                        <div class="case-visual">
+                            {% if case.image %}<img src="{{ case.image.url }}" alt="Кейс: {{ case.title }}" loading="lazy">{% else %}<img src="{% static 'site/assets/case-after.jpg' %}" alt="Кейс: {{ case.title }}" loading="lazy">{% endif %}
+                        </div>
+                        <div class="case-content">
+                            <h3>{{ case.title }}</h3>
+                            <div class="case-kpi">
+                                {% if case.kpi_line_1 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_1 }}</span></div>{% endif %}
+                                {% if case.kpi_line_2 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_2 }}</span></div>{% endif %}
+                            </div>
+                            <p class="case-description case-description-short">{{ case.description|truncatewords:20 }}</p>
+                            {% if case.slug %}<a href="{% url 'case_detail' case.slug %}" class="case-view-btn">Подробнее <i class="fas fa-arrow-right"></i></a>{% else %}<a href="{% url 'home' %}#cases" class="case-view-btn">Подробнее <i class="fas fa-arrow-right"></i></a>{% endif %}
+                        </div>
+                    </article>
+                    {% empty %}
+                    <p class="section-subtitle">Кейсы можно посмотреть на <a href="{% url 'home' %}#cases">главной странице</a>.</p>
+                    {% endfor %}
+                </div>
+                <p class="cases-more-wrap" style="text-align:center;margin-top:1.5rem;"><a href="{% url 'home' %}#cases" class="btn-primary">Все кейсы на главной</a></p>
+            </div>
+        </section>
+        {% endblock %}
+
+        <section class="section section-cta section-cta-landing" id="contact" role="region">
+            <div class="section-cta-bg" data-bg="{% static 'site/assets/bg-end.webp' %}" data-bg-mobile="{% static 'site/assets/cta-bg-mob.webp' %}"></div>
+            <div class="container">
+                <div class="cta-card">
+                    <div class="cta-content">
+                        <h2 class="cta-title">{% block form_heading %}Готовы обсудить проект?{% endblock %}</h2>
+                        <p class="cta-text">{% block form_subheading %}Ответим в течение 15 минут, без навязывания.{% endblock %}</p>
+                        <form class="cta-form landing-form" id="mainForm" method="post" action="{% url 'contact_submit' %}">
+                            {% csrf_token %}
+                            <input type="hidden" id="selectedService" name="selectedService" value="{{ page_title }}">
+                            <input type="hidden" name="source" value="{% block form_source %}Лендинг{% endblock %}">
+                            <div class="form-row contact-method-row">
+                                <label class="form-label">Как лучше связаться?</label>
+                                <div class="radio-group">
+                                    <label class="radio-label"><input type="radio" name="contactMethod" value="phone" checked><span>Телефон</span></label>
+                                    <label class="radio-label"><input type="radio" name="contactMethod" value="telegram"><span>Telegram</span></label>
+                                </div>
+                            </div>
+                            <div class="form-row"><input type="text" placeholder="Ваше имя *" name="name" required></div>
+                            <div class="form-row"><input type="tel" placeholder="Телефон *" id="ctaPhone" name="phone" required></div>
+                            {% block form_extra_fields %}{% endblock %}
+                            <div class="form-row"><textarea placeholder="{% block form_message_placeholder %}Кратко опишите задачу (необязательно){% endblock %}" name="message" rows="2"></textarea></div>
+                            <div class="form-row privacy-checkbox-row">
+                                <label class="privacy-checkbox-label">
+                                    <input type="checkbox" name="privacy" required>
+                                    <span>Я согласен(а) на <a href="#" class="privacy-link landing-privacy-link">обработку персональных данных</a></span>
+                                </label>
+                            </div>
+                            <div class="form-footer">
+                                <button type="submit" class="btn-primary btn-cta" id="submitCta">{% block form_button %}Получить консультацию{% endblock %}</button>
+                                <p class="form-note">Ответим в течение 15 минут. Без навязывания.</p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="cta-visual">
+                        <div class="visual-element">
+                            <div class="element-circle"><img src="{% static 'site/assets/logo.png' %}" alt="{{ site.site_name }}" class="element-circle-logo"></div>
+                            <div class="element-dots"></div>
+                        </div>
+                        <p class="visual-quote">«Мы не просто делаем сайты. Мы создаем инструменты, которые приносят деньги.»</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer footer-landing" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="{% url 'home' %}" class="logo footer-logo">
+                        <div class="logo-icon"><img src="{% static 'site/assets/logo.png' %}" alt="{{ site.site_name }}"></div>
+                        <div class="logo-text"><span class="logo-main">SiteBiz</span><span class="logo-sub">Lab</span></div>
+                    </a>
+                    <p class="footer-tagline">Сайты, боты и мини-приложения, которые приносят заявки.</p>
+                    <div class="social-links">
+                        {% if site.telegram %}<a href="{{ site.telegram }}" aria-label="Telegram" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>{% endif %}
+                        {% if site.email %}<a href="mailto:{{ site.email }}" aria-label="Email"><i class="fas fa-envelope"></i></a>{% endif %}
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group"><h4>Услуги</h4>
+                        <a href="{% url 'landing_sites' %}">Сайты</a>
+                        <a href="{% url 'landing_bots' %}">Telegram-боты</a>
+                        <a href="{% url 'landing_miniapps' %}">MiniApps</a>
+                    </div>
+                    <div class="link-group"><h4>Сайт</h4>
+                        <a href="{% url 'home' %}">Главная</a>
+                        <a href="{% url 'home' %}#cases">Кейсы</a>
+                        <a href="{% url 'home' %}#contact">Контакты</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© {{ site.site_name }} 2025</p>
+                <div class="footer-legal"><a href="#" class="landing-privacy-link">Политика конфиденциальности</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="ai-agent-wrapper">
+        <button class="ai-agent-trigger" id="aiTrigger" aria-label="Открыть чат с помощником"><i class="fas fa-comments"></i><span class="pulse"></span></button>
+        <div class="ai-agent-container" id="aiAgent">
+            <div class="ai-header">
+                <div class="ai-avatar"><i class="fas fa-bolt"></i></div>
+                <div class="ai-info"><h4>SitBiz Scout</h4><p>AI-помощник</p></div>
+                <button class="ai-close" id="closeAi" aria-label="Закрыть чат">×</button>
+            </div>
+            <div class="ai-chat" id="aiChat">
+                <div class="ai-message"><div class="message-bubble">
+                    <p>👋 <strong>Привет! Я SitBiz Scout.</strong></p>
+                    <p>Помогу за 60 секунд понять, сможем ли мы запустить для вас работающий проект.</p>
+                    <p>Готовы начать?</p>
+                </div></div>
+            </div>
+            <div class="ai-controls">
+                <div class="quick-actions" id="quickActions">
+                    <button class="quick-btn" data-answer="Да, начать">🚀 Да, начать</button>
+                    <button class="quick-btn" data-answer="Расскажите про акцию">🎁 Акция</button>
+                    <button class="quick-btn" data-answer="Показать примеры">💼 Примеры</button>
+                </div>
+                <div class="options-grid" id="optionsGrid" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="privacyModal" role="dialog" aria-hidden="true" hidden>
+        <div class="modal-overlay" id="privacyModalOverlay"></div>
+        <div class="modal-content modal-content-privacy">
+            <button class="modal-close" id="privacyModalClose" aria-label="Закрыть">×</button>
+            <h3>Политика конфиденциальности</h3>
+            <div class="privacy-content">
+                <p>По вопросам обработки персональных данных: <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'site/script.js' %}" defer></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('mainForm');
+        if (form && form.querySelector('input[name="contactMethod"]')) {
+            form.querySelectorAll('input[name="contactMethod"]').forEach(function(r) {
+                r.addEventListener('change', function() {
+                    var ph = form.querySelector('input[name="phone"]');
+                    if (ph) ph.placeholder = this.value === 'telegram' ? 'Ваш Telegram (@username)' : 'Телефон *';
+                });
+            });
+        }
+        document.querySelectorAll('.landing-privacy-link').forEach(function(a) {
+            a.addEventListener('click', function(e) { e.preventDefault(); document.getElementById('privacyModal').removeAttribute('hidden'); });
+        });
+    });
+    </script>
+    {% block script_extra %}{% endblock %}
+</body>
+</html>

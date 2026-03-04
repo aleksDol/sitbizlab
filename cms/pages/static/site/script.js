@@ -95,6 +95,20 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
+        // Подменю «Услуги» в мобильном меню
+        const submenuTrigger = mobileMenu.querySelector('.mobile-submenu-trigger');
+        if (submenuTrigger) {
+            const submenu = submenuTrigger.closest('.mobile-submenu');
+            submenuTrigger.addEventListener('click', function (e) {
+                e.preventDefault();
+                const expanded = this.getAttribute('aria-expanded') === 'true';
+                submenu.classList.toggle('open');
+                this.setAttribute('aria-expanded', !expanded);
+                const panel = submenu.querySelector('.mobile-submenu-panel');
+                if (panel) panel.setAttribute('aria-hidden', expanded);
+            });
+        }
+
         // Закрытие меню при клике вне
         document.addEventListener('click', (e) => {
             if (!mobileMenu.contains(e.target) &&
@@ -467,7 +481,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!serviceBtns.length) return;
 
         serviceBtns.forEach(btn => {
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function (e) {
+                if (this.closest('.product-card') || this.closest('a')) return;
+                e.preventDefault();
                 const serviceType = this.getAttribute('data-service-type');
                 openServiceModal(serviceType);
                 logEvent('service_click', serviceType);
@@ -658,8 +674,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 this.setAttribute('aria-selected', 'true');
 
                 cards.forEach(function (card) {
-                    var cat = card.getAttribute('data-category');
-                    var show = filter === 'all' || cat === filter;
+                    var productType = card.getAttribute('data-product-type') || card.getAttribute('data-category');
+                    var show = filter === 'all' || productType === filter;
                     card.style.display = show ? '' : 'none';
                 });
             });
@@ -962,6 +978,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     e.preventDefault();
                     const privacyModal = document.getElementById('privacyModal');
                     if (privacyModal) {
+                        privacyModal.removeAttribute('hidden');
                         privacyModal.classList.add('active');
                         document.body.style.overflow = 'hidden';
                     }

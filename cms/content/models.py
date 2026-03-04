@@ -70,8 +70,22 @@ class Case(models.Model):
         ('services', 'Для услуг'),
         ('startups', 'Для стартапов'),
     ]
+    PRODUCT_TYPE_CHOICES = [
+        ('sites', 'Сайты'),
+        ('bots', 'Telegram-боты'),
+        ('miniapps', 'MiniApps'),
+    ]
     title = models.CharField('Название проекта', max_length=200)
+    slug = models.SlugField('URL кейса', max_length=120, unique=True, blank=True,
+                           help_text='Для страницы кейса. Оставьте пустым — подставится из названия.')
     category = models.CharField('Категория', max_length=20, choices=CATEGORY_CHOICES, default='business')
+    product_type = models.CharField(
+        'Продукт (фильтр на главной)',
+        max_length=20,
+        choices=PRODUCT_TYPE_CHOICES,
+        default='sites',
+        blank=True,
+    )
     description = models.TextField('Описание', blank=True)
     kpi_line_1 = models.CharField('KPI строка 1', max_length=100, blank=True)
     kpi_line_2 = models.CharField('KPI строка 2', max_length=100, blank=True)
@@ -88,6 +102,17 @@ class Case(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug and self.title:
+            from django.utils.text import slugify
+            base = slugify(self.title)[:100] or 'case'
+            self.slug = base
+            idx = 1
+            while Case.objects.filter(slug=self.slug).exclude(pk=self.pk).exists():
+                self.slug = f'{base}-{idx}'[:120]
+                idx += 1
+        super().save(*args, **kwargs)
 
 
 class Offer(models.Model):

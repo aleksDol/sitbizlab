@@ -1,0 +1,232 @@
+{% extends 'pages/base_landing.html' %}
+{% load static %}
+
+{% block content %}
+<section class="landing-hero landing-hero-miniapps" role="region">
+    <div class="landing-hero-bg-wrap">
+        <div class="landing-hero-bg landing-hero-bg-desktop" style="background-image: url('{% static 'site/assets/hero-img-miniApp.webp' %}');"></div>
+        <div class="landing-hero-bg landing-hero-bg-mobile" style="background-image: url('{% static 'site/assets/hero-img-miniApp-mobile.webp' %}');"></div>
+        <div class="landing-hero-bg-overlay" aria-hidden="true"></div>
+    </div>
+    <div class="landing-hero-inner">
+        <div class="landing-hero-left">
+            <div class="landing-hero-text">
+                <h1 class="landing-hero-title">MiniApps для Telegram<br>приложения внутри мессенджера</h1>
+                <p class="landing-hero-subtitle">Маркетплейсы, сервисы, каталоги, игры. Запуск без модерации App Store и Google Play.</p>
+            </div>
+            <div class="landing-hero-actions">
+                <a href="#contact" class="btn-primary landing-hero-btn">Оставить заявку</a>
+                <a href="#cases" class="btn-hero-outline landing-hero-btn">Смотреть кейсы</a>
+            </div>
+            <div class="landing-hero-stats-wrap">
+                <div class="landing-hero-stats">
+                    <div class="landing-hero-stats-icon"><i class="fas fa-mobile-alt" aria-hidden="true"></i></div>
+                    <p class="landing-hero-stats-text">Делаем Frontend и Backend под ключ: интерфейс в Telegram, логика, базы данных, админка. Вы получаете готовое приложение.</p>
+                </div>
+            </div>
+        </div>
+        <div class="landing-hero-form-wrap">
+            <form class="landing-hero-form" id="heroFormMiniapps" action="{% url 'contact_submit' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="source" value="Лендинг MiniApps: форма в герое">
+                <input type="hidden" name="service" value="MiniApps">
+                <p class="landing-hero-form-title">Оставьте заявку</p>
+                <p class="landing-hero-form-note">Ответим в течение 15 минут</p>
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="tel" name="phone" placeholder="Телефон" required>
+                <textarea name="message" placeholder="Какая идея для MiniApp?" rows="3"></textarea>
+                <button type="submit" class="btn-primary btn-block">Отправить</button>
+            </form>
+        </div>
+    </div>
+    <a href="#why" class="landing-hero-scroll" aria-label="Пролистать вниз">
+        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+    </a>
+</section>
+
+<section class="section landing-section" id="why">
+    <div class="container">
+        <h2 class="section-header">MiniApp — ваш бизнес внутри Telegram</h2>
+        <div class="landing-cards grid-2">
+            <div class="landing-card"><div class="landing-card-icon"><i class="fas fa-users"></i></div><h3>Миллионы клиентов рядом</h3><p>Вся аудитория Telegram в одном месте. Осталось только дать им удобный сервис.</p></div>
+            <div class="landing-card"><div class="landing-card-icon"><i class="fas fa-bolt"></i></div><h3>Запуск без модерации</h3><p>Не нужно ждать неделями App Store. Запустились сразу.</p></div>
+            <div class="landing-card"><div class="landing-card-icon"><i class="fas fa-credit-card"></i></div><h3>Оплата под ключ</h3><p>Telegram Stars, банковские карты, SBP — всё уже работает.</p></div>
+            <div class="landing-card"><div class="landing-card-icon"><i class="fas fa-share-alt"></i></div><h3>Виральность</h3><p>Рефералки и геймификация приносят до 25% трафика бесплатно.</p></div>
+        </div>
+    </div>
+</section>
+
+{% if cases_miniapps %}
+<section class="section landing-section landing-case-featured" id="case-featured">
+    <div class="container">
+        <h2 class="section-header">Наш кейс: MiniApp с виральным эффектом</h2>
+        {% for case in cases_miniapps %}
+        <article class="case-card case-card-featured">
+            <div class="case-visual">
+                {% if case.image %}<img src="{{ case.image.url }}" alt="{{ case.title }}" loading="lazy">{% else %}<img src="{% static 'site/assets/case-after.jpg' %}" alt="{{ case.title }}" loading="lazy">{% endif %}
+            </div>
+            <div class="case-content">
+                <h3>{{ case.title }}</h3>
+                <div class="case-kpi">
+                    {% if case.kpi_line_1 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_1 }}</span></div>{% endif %}
+                    {% if case.kpi_line_2 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_2 }}</span></div>{% endif %}
+                </div>
+                <div class="case-description-full">{{ case.description|linebreaks }}</div>
+                <a href="{% url 'case_detail' case.slug %}" class="btn-primary">Подробнее о кейсе</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section class="section landing-section miniapp-where-section" id="for-what">
+    <div class="miniapp-where-bg-wrap">
+    <div class="miniapp-where-bg miniapp-where-bg-desktop" style="background-image: url('{% static 'site/assets/second-bg-miniApp.webp' %}');"></div>
+    <div class="miniapp-where-bg miniapp-where-bg-mobile" style="background-image: url('{% static 'site/assets/second-bg-miniApp-mobile.webp' %}');"></div>
+    <div class="miniapp-where-bg-overlay" aria-hidden="true"></div>
+</div>
+    <div class="container">
+        <h2 class="section-header">Где уже работает MiniApp</h2>
+        <div class="miniapp-where-grid">
+            <div class="miniapp-where-row">
+                <div class="miniapp-where-label">
+                    <span class="miniapp-where-icon"><i class="fas fa-store"></i></span>
+                    <span>Маркетплейс</span>
+                </div>
+                <blockquote class="miniapp-where-quote">«Сделали доску объявлений для стройматериалов — 150 заявок в первый месяц»</blockquote>
+            </div>
+            <div class="miniapp-where-row">
+                <div class="miniapp-where-label">
+                    <span class="miniapp-where-icon"><i class="fas fa-gamepad"></i></span>
+                    <span>Игры и квесты</span>
+                </div>
+                <blockquote class="miniapp-where-quote">«Промо-игра для скидок — вовлечение выросло в 2 раза»</blockquote>
+            </div>
+            <div class="miniapp-where-row">
+                <div class="miniapp-where-label">
+                    <span class="miniapp-where-icon"><i class="fas fa-heart"></i></span>
+                    <span>Дейтинг-сервисы</span>
+                </div>
+                <blockquote class="miniapp-where-quote">«Запустили приложение знакомств — 25% трафика бесплатно»</blockquote>
+            </div>
+            <div class="miniapp-where-row">
+                <div class="miniapp-where-label">
+                    <span class="miniapp-where-icon"><i class="fas fa-calendar-check"></i></span>
+                    <span>Бронирование</span>
+                </div>
+                <blockquote class="miniapp-where-quote">«Кальянная с бронированием столов — +27 броней за месяц»</blockquote>
+            </div>
+            <div class="miniapp-where-row">
+                <div class="miniapp-where-label">
+                    <span class="miniapp-where-icon"><i class="fas fa-crown"></i></span>
+                    <span>Закрытые клубы</span>
+                </div>
+                <blockquote class="miniapp-where-quote">«Клуб по подписке с эксклюзивным контентом — стабильная выручка»</blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section landing-section section-services" id="tariffs">
+    <div class="container">
+        <h2 class="section-header">Выберите формат под ваши цели</h2>
+        <div class="site-packages-grid">
+            {% for pkg in miniapp_packages %}
+            <div class="service-card site-package-card">
+                {% if pkg.icon %}<div class="site-package-icon"><i class="fas {{ pkg.icon }}" aria-hidden="true"></i></div>{% endif %}
+                <h3 class="site-package-name">{{ pkg.name }}</h3>
+                <p class="site-package-for">{{ pkg.for_who }}</p>
+                <p class="service-sublabel">Что внутри:</p>
+                <ul class="service-features">
+                    {% for item in pkg.features %}<li>{{ item }}</li>{% endfor %}
+                </ul>
+                <div class="service-price"><span class="price-value">{{ pkg.price }}</span></div>
+                <a href="#contact" class="btn-primary btn-service">Обсудить проект</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% if offers %}
+<section class="section section-offer" id="offer" role="region" aria-labelledby="offer-heading">
+    <div class="container">
+        <div class="offer-card">
+            <div class="offer-content">
+                <div class="offer-header">
+                    <span class="offer-icon" aria-hidden="true"><i class="fas fa-gift"></i></span>
+                    <p class="offer-lead">Запуститесь сейчас — получите</p>
+                    <h2 id="offer-heading">{{ offers.0.title }}</h2>
+                </div>
+                <ul class="offer-benefits">
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Исправление технических ошибок</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Небольшие доработки</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Консультации по развитию</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Помощь с аналитикой</li>
+                </ul>
+                <div class="offer-pricing">
+                    <p class="offer-price-label">Ориентировочно:</p>
+                    <p class="offer-price">15 000 – 25 000 ₽</p>
+                    <p class="offer-price-note">Сейчас — бесплатно при запуске до <span class="offer-deadline"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 31 марта 2025</span></p>
+                </div>
+                <a href="#contact" class="btn-primary btn-offer" id="offerCta">{{ offers.0.button_text|default:"Обсудить проект" }}</a>
+                <p class="offer-disclaimer">Ответим в течение 15 минут. Без навязывания.</p>
+            </div>
+            <div class="offer-right">
+                <div class="offer-image-wrap">
+                    <picture>
+                        <source media="(max-width: 768px)" srcset="{% static 'site/assets/promotion-mob.webp' %}">
+                        <img src="{% static 'site/assets/promotion.webp' %}" alt="Акция" loading="lazy" width="400" height="300">
+                    </picture>
+                </div>
+                <div class="offer-testimonials">
+                    <blockquote class="offer-quote"><span class="quote-mark">"</span><p>Запустили сайт за 12 дней после обращения. Заявки пришли в 3 раза быстрее. Сделали всё под ключ — подсказали, что доработать. Рекомендую.</p><cite>Дмитрий, владелец сервиса</cite></blockquote>
+                    <blockquote class="offer-quote"><span class="quote-mark">"</span><p>На старте долго мучилась с контентом и дизайном — помогли структурировать. За 3 недели получила рабочий лендинг и первые заявки.</p><cite>Анна, основатель проекта</cite></blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}
+
+{% block about_section %}{% endblock %}
+
+{% block form_heading %}Придумайте идею — мы её реализуем{% endblock %}
+{% block form_subheading %}Опишите задачу — обсудим возможности и сроки.{% endblock %}
+{% block form_source %}Лендинг: MiniApps{% endblock %}
+{% block form_message_placeholder %}Опишите вашу идею кратко{% endblock %}
+{% block form_button %}Обсудить проект{% endblock %}
+
+{% block script_extra %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('heroFormMiniapps');
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = form.querySelector('button[type="submit"]');
+        var origText = btn ? btn.textContent : '';
+        if (btn) { btn.disabled = true; btn.textContent = 'Отправка…'; }
+        var fd = new FormData(form);
+        fetch(form.action, { method: 'POST', body: fd, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.ok) {
+                    if (btn) { btn.textContent = 'Отправлено!'; }
+                    form.reset();
+                } else {
+                    if (btn) { btn.disabled = false; btn.textContent = origText; }
+                    alert(data.error || 'Ошибка отправки');
+                }
+            })
+            .catch(function() {
+                if (btn) { btn.disabled = false; btn.textContent = origText; }
+                alert('Ошибка сети. Попробуйте ещё раз.');
+            });
+    });
+});
+</script>
+{% endblock %}

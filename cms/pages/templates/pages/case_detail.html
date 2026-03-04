@@ -1,0 +1,36 @@
+{% extends 'pages/base_landing.html' %}
+{% load static %}
+
+{% block content %}
+<article class="case-detail-page">
+    <div class="container">
+        <a href="{% url 'home' %}#cases" class="case-detail-back"><i class="fas fa-arrow-left"></i> Все кейсы</a>
+        <header class="case-detail-header">
+            <h1>{{ case.title }}</h1>
+            {% if case.platform or case.launch_days %}
+            <div class="case-detail-meta">
+                {% if case.platform %}<span>Платформа: {{ case.platform }}</span>{% endif %}
+                {% if case.launch_days %}<span>Срок запуска: {{ case.launch_days }}</span>{% endif %}
+            </div>
+            {% endif %}
+        </header>
+        <div class="case-detail-visual">
+            {% if case.image %}<img src="{{ case.image.url }}" alt="{{ case.title }}" loading="eager">{% else %}<img src="{% static 'site/assets/case-after.jpg' %}" alt="{{ case.title }}">{% endif %}
+        </div>
+        <div class="case-detail-kpi">
+            {% if case.kpi_line_1 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_1 }}</span></div>{% endif %}
+            {% if case.kpi_line_2 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_2 }}</span></div>{% endif %}
+        </div>
+        <div class="case-detail-body">
+            {{ case.description|linebreaks }}
+        </div>
+        <div class="case-detail-cta">
+            <p>Хотите такой же результат?</p>
+            <a href="#contact" class="btn-primary">Обсудить проект</a>
+        </div>
+    </div>
+</article>
+{% endblock %}
+
+{% block form_heading %}Обсудить ваш проект{% endblock %}
+{% block form_source %}Страница кейса: {{ case.title }}{% endblock %}

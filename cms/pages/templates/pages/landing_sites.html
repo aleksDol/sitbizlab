@@ -1,0 +1,402 @@
+{% extends 'pages/base_landing.html' %}
+{% load static %}
+
+{% block content %}
+<section class="landing-hero landing-hero-sites" role="region">
+    <div class="landing-hero-bg-wrap">
+        <div class="landing-hero-bg landing-hero-bg-desktop" style="background-image: url('{% static 'site/assets/hero-img-site.webp' %}');"></div>
+        <div class="landing-hero-bg landing-hero-bg-mobile" style="background-image: url('{% static 'site/assets/hero-img-site-mobile.webp' %}');"></div>
+        <div class="landing-hero-bg-overlay" aria-hidden="true"></div>
+    </div>
+    <div class="landing-hero-inner">
+        <div class="landing-hero-left">
+            <div class="landing-hero-text">
+                <h1 class="landing-hero-title">Разработка сайтов,<br>которые продают за вас</h1>
+                <p class="landing-hero-subtitle">От лендинга до многостраничного сайта с CRM и аналитикой. Под ключ за 5–10 дней.</p>
+            </div>
+            <div class="landing-hero-actions">
+                <a href="#contact" class="btn-primary landing-hero-btn">Оставить заявку</a>
+                <a href="#cases" class="btn-hero-outline landing-hero-btn">Смотреть кейсы</a>
+            </div>
+            <div class="landing-hero-stats-wrap">
+                <div class="landing-hero-stats">
+                    <div class="landing-hero-stats-icon"><i class="fas fa-globe" aria-hidden="true"></i></div>
+                    <p class="landing-hero-stats-text">За 4 года мы запустили больше 20 сайтов — от простых лендингов до сложных каталогов с CRM. Каждый из них приносит заявки.</p>
+                </div>
+            </div>
+        </div>
+        <div class="landing-hero-form-wrap">
+            <form class="landing-hero-form" id="heroFormSites" action="{% url 'contact_submit' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="source" value="Лендинг сайтов: форма в герое">
+                <input type="hidden" name="service" value="Сайты">
+                <p class="landing-hero-form-title">Оставьте заявку</p>
+                <p class="landing-hero-form-note">Ответим в течение 15 минут</p>
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="tel" name="phone" placeholder="Телефон" required>
+                <textarea name="message" placeholder="Какой сайт нужен?" rows="3"></textarea>
+                <button type="submit" class="btn-primary btn-block">Отправить</button>
+            </form>
+        </div>
+    </div>
+    <a href="#tasks" class="landing-hero-scroll" aria-label="Пролистать вниз">
+        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+    </a>
+</section>
+
+<section class="section landing-section site-type-section" id="tasks">
+    <div class="container">
+        <h2 class="site-type-title">Какой сайт принесёт <span class="site-type-title-highlight">вам клиентов?</span></h2>
+        <div class="site-type-cards">
+            <article class="site-type-card">
+                <span class="site-type-card-badge"><i class="fas fa-fire" aria-hidden="true"></i> Чаще всего выбирают</span>
+                <div class="site-type-card-icon"><i class="fas fa-file-alt" aria-hidden="true"></i></div>
+                <h3 class="site-type-card-title">Лендинг</h3>
+                <p class="site-type-card-desc">Быстрый запуск продаж</p>
+                <p class="site-type-card-desc-secondary">1 страница для заявок и рекламы.</p>
+                <p class="site-type-launch">Запуск за <span class="site-type-launch-num">3-4</span> дня</p>
+                <button type="button" class="site-type-btn" data-site-type="Лендинг">Выбрать <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+            </article>
+            <article class="site-type-card">
+                <div class="site-type-card-icon"><i class="fas fa-building" aria-hidden="true"></i></div>
+                <h3 class="site-type-card-title">Сайт компании</h3>
+                <p class="site-type-card-desc">Презентация бизнеса</p>
+                <p class="site-type-card-desc-secondary">Услуги, команда, кейсы.</p>
+                <p class="site-type-launch">Запуск за <span class="site-type-launch-num">7-14</span> дней</p>
+                <button type="button" class="site-type-btn" data-site-type="Сайт компании">Выбрать <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+            </article>
+            <article class="site-type-card">
+                <div class="site-type-card-icon"><i class="fas fa-shopping-cart" aria-hidden="true"></i></div>
+                <h3 class="site-type-card-title">Магазин</h3>
+                <p class="site-type-card-desc">Онлайн-продажи 24/7</p>
+                <p class="site-type-card-desc-secondary">Каталог, корзина, оплата.</p>
+                <p class="site-type-launch">Запуск за <span class="site-type-launch-num">7-14</span> дней</p>
+                <button type="button" class="site-type-btn" data-site-type="Магазин">Выбрать <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+            </article>
+            <article class="site-type-card">
+                <div class="site-type-card-icon"><i class="fas fa-concierge-bell" aria-hidden="true"></i></div>
+                <h3 class="site-type-card-title">Сайт услуги</h3>
+                <p class="site-type-card-desc">Автоматизация онлайн-записей</p>
+                <p class="site-type-card-desc-secondary">Запись, калькуляторы, личный кабинет.</p>
+                <p class="site-type-launch">Запуск за <span class="site-type-launch-num">7-14</span> дней</p>
+                <button type="button" class="site-type-btn" data-site-type="Сайт услуги">Выбрать <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+            </article>
+        </div>
+    </div>
+</section>
+
+<div class="modal" id="siteTypeFormModal" role="dialog" aria-labelledby="siteTypeFormModalTitle" aria-hidden="true" hidden>
+    <div class="modal-overlay site-type-modal-overlay"></div>
+    <div class="modal-content site-type-modal-content">
+        <button type="button" class="modal-close site-type-modal-close" id="siteTypeFormModalClose" aria-label="Закрыть">×</button>
+        <h3 id="siteTypeFormModalTitle">Готовы запустить проект, который будет работать на вас?</h3>
+        <p class="site-type-modal-lead">Оставьте заявку, и мы свяжемся с вами в течение часа для бесплатной консультации.</p>
+        <form class="cta-form site-type-modal-form" id="siteTypeForm" method="post" action="{% url 'contact_submit' %}">
+            {% csrf_token %}
+            <input type="hidden" name="source" value="Лендинг сайтов: выбор типа сайта">
+            <input type="hidden" name="service" value="Сайты">
+            <input type="hidden" id="siteTypeFormSiteType" name="selectedService" value="">
+            <div class="form-row contact-method-row">
+                <label class="form-label">Как лучше связаться?</label>
+                <div class="radio-group">
+                    <label class="radio-label"><input type="radio" name="contactMethod" value="phone" checked><span>Телефон</span></label>
+                    <label class="radio-label"><input type="radio" name="contactMethod" value="telegram"><span>Telegram</span></label>
+                </div>
+            </div>
+            <div class="form-row"><input type="text" placeholder="Ваше имя *" name="name" required></div>
+            <div class="form-row"><input type="tel" placeholder="Телефон *" id="siteTypeFormContact" name="phone" required></div>
+            <div class="form-row"><textarea placeholder="Опишите ваш проект (необязательно)" name="message" rows="2"></textarea></div>
+            <div class="form-row privacy-checkbox-row">
+                <label class="privacy-checkbox-label">
+                    <input type="checkbox" name="privacy" required>
+                    <span>Я согласен(а) на <a href="#" class="landing-privacy-link site-type-privacy-link">обработку персональных данных</a></span>
+                </label>
+            </div>
+            <button type="submit" class="btn-primary btn-cta" id="siteTypeFormSubmit"><i class="fas fa-paper-plane" aria-hidden="true"></i> Обсудить проект</button>
+        </form>
+    </div>
+</div>
+
+<section class="section landing-section section-services" id="tariffs">
+    <div class="container">
+        <h2 class="section-header">Выберите формат под ваши цели</h2>
+        <div class="site-packages-grid">
+            {% for pkg in site_packages %}
+            <div class="service-card site-package-card">
+                {% if pkg.icon %}<div class="site-package-icon"><i class="fas {{ pkg.icon }}" aria-hidden="true"></i></div>{% endif %}
+                <h3 class="site-package-name">{{ pkg.name }}</h3>
+                <p class="site-package-for">{{ pkg.for_who }}</p>
+                <p class="service-sublabel">Что внутри:</p>
+                <ul class="service-features">
+                    {% for item in pkg.features %}<li>{{ item }}</li>{% endfor %}
+                </ul>
+                <div class="service-price"><span class="price-value">{{ pkg.price }}</span></div>
+                <a href="#contact" class="btn-primary btn-service">Обсудить проект</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% if offers %}
+<section class="section section-offer" id="offer" role="region" aria-labelledby="offer-heading">
+    <div class="container">
+        <div class="offer-card">
+            <div class="offer-content">
+                <div class="offer-header">
+                    <span class="offer-icon" aria-hidden="true"><i class="fas fa-gift"></i></span>
+                    <p class="offer-lead">Запуститесь сейчас — получите</p>
+                    <h2 id="offer-heading">{{ offers.0.title }}</h2>
+                </div>
+                <ul class="offer-benefits">
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Исправление технических ошибок</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Небольшие доработки</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Консультации по развитию</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Помощь с аналитикой</li>
+                </ul>
+                <div class="offer-pricing">
+                    <p class="offer-price-label">Ориентировочно:</p>
+                    <p class="offer-price">15 000 – 25 000 ₽</p>
+                    <p class="offer-price-note">Сейчас — бесплатно при запуске до <span class="offer-deadline"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 31 марта 2025</span></p>
+                </div>
+                <a href="#contact" class="btn-primary btn-offer" id="offerCta">{{ offers.0.button_text|default:"Обсудить проект" }}</a>
+                <p class="offer-disclaimer">Ответим в течение 15 минут. Без навязывания.</p>
+            </div>
+            <div class="offer-right">
+                <div class="offer-image-wrap">
+                    <picture>
+                        <source media="(max-width: 768px)" srcset="{% static 'site/assets/promotion-mob.webp' %}">
+                        <img src="{% static 'site/assets/promotion.webp' %}" alt="Акция" loading="lazy" width="400" height="300">
+                    </picture>
+                </div>
+                <div class="offer-testimonials">
+                    <blockquote class="offer-quote"><span class="quote-mark">"</span><p>Запустили сайт за 12 дней после обращения. Заявки пришли в 3 раза быстрее. Сделали всё под ключ — подсказали, что доработать. Рекомендую.</p><cite>Дмитрий, владелец сервиса</cite></blockquote>
+                    <blockquote class="offer-quote"><span class="quote-mark">"</span><p>На старте долго мучилась с контентом и дизайном — помогли структурировать. За 3 недели получила рабочий лендинг и первые заявки.</p><cite>Анна, основатель проекта</cite></blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if cases_sites %}
+<section class="section landing-section" id="cases">
+    <div class="container">
+        <h2 class="section-header">Кейсы по сайтам</h2>
+        <div class="cases-grid cases-grid-static">
+            {% for case in cases_sites %}
+            <article class="case-card">
+                <div class="case-visual">
+                    {% if case.image %}<img src="{{ case.image.url }}" alt="{{ case.title }}" loading="lazy">{% else %}<img src="{% static 'site/assets/case-after.jpg' %}" alt="{{ case.title }}" loading="lazy">{% endif %}
+                </div>
+                <div class="case-content">
+                    <h3>{{ case.title }}</h3>
+                    <div class="case-kpi">
+                        {% if case.kpi_line_1 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_1 }}</span></div>{% endif %}
+                        {% if case.kpi_line_2 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_2 }}</span></div>{% endif %}
+                    </div>
+                    <p class="case-description case-description-short">{{ case.description|truncatewords:20 }}</p>
+                    <a href="{% url 'case_detail' case.slug %}" class="case-view-btn">Подробнее <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="section landing-section how-we-build-section" id="process">
+    <div class="container">
+        <h2 class="section-header">Как мы делаем сайты</h2>
+        <div class="how-we-build">
+            <article class="how-we-build-step">
+                <div class="how-we-build-step-box"><span class="how-we-build-step-num">1</span></div>
+                <div class="how-we-build-step-body">
+                    <h3 class="how-we-build-step-title">Знакомимся и копаем</h3>
+                    <p class="how-we-build-step-text">Вы рассказываете о бизнесе, мы — о том, как сделать сайт, который реально принесёт заявки. Без воды и сложных терминов.</p>
+                </div>
+                <span class="how-we-build-arrow" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
+            </article>
+            <div class="how-we-build-dot-cell" aria-hidden="true">
+                <div class="how-we-build-progress-dot"><i class="fas fa-handshake"></i></div>
+            </div>
+            <article class="how-we-build-step">
+                <div class="how-we-build-step-box"><span class="how-we-build-step-num">2</span></div>
+                <div class="how-we-build-step-body">
+                    <h3 class="how-we-build-step-title">Рисуем структуру</h3>
+                    <p class="how-we-build-step-text">Показываем, как будет выглядеть сайт и как клиент будет по нему двигаться. Вы смотрите, мы правим.</p>
+                </div>
+                <span class="how-we-build-arrow" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
+            </article>
+            <div class="how-we-build-dot-cell" aria-hidden="true">
+                <div class="how-we-build-progress-dot"><i class="fas fa-sitemap"></i></div>
+            </div>
+            <article class="how-we-build-step">
+                <div class="how-we-build-step-box"><span class="how-we-build-step-num">3</span></div>
+                <div class="how-we-build-step-body">
+                    <h3 class="how-we-build-step-title">Делаем дизайн</h3>
+                    <p class="how-we-build-step-text">Отрисовываем макеты, которые будут работать на ваш бренд и нравиться вашим клиентам.</p>
+                </div>
+                <span class="how-we-build-arrow" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
+            </article>
+            <div class="how-we-build-dot-cell" aria-hidden="true">
+                <div class="how-we-build-progress-dot"><i class="fas fa-palette"></i></div>
+            </div>
+            <article class="how-we-build-step">
+                <div class="how-we-build-step-box"><span class="how-we-build-step-num">4</span></div>
+                <div class="how-we-build-step-body">
+                    <h3 class="how-we-build-step-title">Собираем сайт</h3>
+                    <p class="how-we-build-step-text">Программируем, настраиваем формы, подключаем аналитику. Вы уже видите, как всё растёт.</p>
+                </div>
+                <span class="how-we-build-arrow" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
+            </article>
+            <div class="how-we-build-dot-cell" aria-hidden="true">
+                <div class="how-we-build-progress-dot"><i class="fas fa-code"></i></div>
+            </div>
+            <article class="how-we-build-step">
+                <div class="how-we-build-step-box"><span class="how-we-build-step-num">5</span></div>
+                <div class="how-we-build-step-body">
+                    <h3 class="how-we-build-step-title">Запускаем и не бросаем</h3>
+                    <p class="how-we-build-step-text">Первые 3 месяца помогаем бесплатно: доработки, консультации, правки.</p>
+                </div>
+            </article>
+            <div class="how-we-build-dot-cell" aria-hidden="true">
+                <div class="how-we-build-progress-dot"><i class="fas fa-rocket"></i></div>
+            </div>
+            <div class="how-we-build-progress-line" aria-hidden="true"></div>
+        </div>
+        <div class="how-we-build-after">
+            <a href="#contact" class="how-we-build-scroll" aria-label="К форме заявки">
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block about_section %}{% endblock %}
+{% block cases_section %}{% endblock %}
+
+{% block form_heading %}Рассчитать стоимость вашего сайта{% endblock %}
+{% block form_subheading %}Оставьте контакты — пришлём расчёт и сроки в течение 15 минут.{% endblock %}
+{% block form_source %}Лендинг: Сайты{% endblock %}
+{% block form_extra_fields %}<div class="form-row"><input type="text" placeholder="Бюджет (опционально)" name="budget"></div>{% endblock %}
+{% block form_message_placeholder %}Опишите задачу (необязательно){% endblock %}
+{% block form_button %}Получить расчёт{% endblock %}
+
+{% block script_extra %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var heroForm = document.getElementById('heroFormSites');
+    if (heroForm) {
+        heroForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var btn = heroForm.querySelector('button[type="submit"]');
+            var origText = btn ? btn.textContent : '';
+            if (btn) { btn.disabled = true; btn.textContent = 'Отправка…'; }
+            var fd = new FormData(heroForm);
+            fetch(heroForm.action, { method: 'POST', body: fd, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    if (data.ok) {
+                        if (btn) { btn.textContent = 'Отправлено!'; }
+                        heroForm.reset();
+                    } else {
+                        if (btn) { btn.disabled = false; btn.textContent = origText; }
+                        alert(data.error || 'Ошибка отправки');
+                    }
+                })
+                .catch(function() {
+                    if (btn) { btn.disabled = false; btn.textContent = origText; }
+                    alert('Ошибка сети. Попробуйте ещё раз.');
+                });
+        });
+    }
+
+    var siteTypeModal = document.getElementById('siteTypeFormModal');
+    var siteTypeForm = document.getElementById('siteTypeForm');
+    var siteTypeInput = document.getElementById('siteTypeFormSiteType');
+    var siteTypeClose = document.getElementById('siteTypeFormModalClose');
+    var siteTypeOverlay = document.querySelector('.site-type-modal-overlay');
+
+    document.querySelectorAll('.site-type-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var type = this.getAttribute('data-site-type') || '';
+            if (siteTypeInput) siteTypeInput.value = type;
+            if (siteTypeModal) {
+                siteTypeModal.removeAttribute('hidden');
+                siteTypeModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    function closeSiteTypeModal() {
+        if (siteTypeModal) {
+            siteTypeModal.classList.remove('active');
+            siteTypeModal.setAttribute('hidden', '');
+            document.body.style.overflow = '';
+        }
+    }
+    if (siteTypeClose) siteTypeClose.addEventListener('click', closeSiteTypeModal);
+    if (siteTypeOverlay) siteTypeOverlay.addEventListener('click', closeSiteTypeModal);
+
+    if (siteTypeForm && siteTypeForm.querySelector('input[name="contactMethod"]')) {
+        siteTypeForm.querySelectorAll('input[name="contactMethod"]').forEach(function(r) {
+            r.addEventListener('change', function() {
+                var ph = document.getElementById('siteTypeFormContact');
+                if (ph) ph.placeholder = this.value === 'telegram' ? 'Ваш Telegram (@username)' : 'Телефон *';
+            });
+        });
+    }
+
+    if (siteTypeForm) {
+        siteTypeForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var submitBtn = document.getElementById('siteTypeFormSubmit');
+            var origText = submitBtn ? submitBtn.textContent : '';
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправка…'; }
+
+            var fd = new FormData(siteTypeForm);
+            var method = (siteTypeForm.querySelector('input[name="contactMethod"]:checked') || {}).value;
+            var contactVal = (document.getElementById('siteTypeFormContact') || {}).value;
+            var siteType = (document.getElementById('siteTypeFormSiteType') || {}).value;
+            fd.delete('phone');
+            fd.set('service', siteType ? 'Сайты: ' + siteType : 'Сайты');
+            if (method === 'telegram') {
+                fd.append('telegram', contactVal);
+            } else {
+                fd.append('phone', contactVal);
+            }
+
+            fetch(siteTypeForm.action, { method: 'POST', body: fd, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    if (data.ok) {
+                        closeSiteTypeModal();
+                        siteTypeForm.reset();
+                        if (siteTypeInput) siteTypeInput.value = '';
+                        alert('Заявка отправлена! Мы свяжемся с вами в течение часа.');
+                    } else {
+                        alert(data.error || 'Ошибка отправки');
+                    }
+                    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origText; }
+                })
+                .catch(function() {
+                    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origText; }
+                    alert('Ошибка сети. Попробуйте ещё раз.');
+                });
+        });
+    }
+
+    document.querySelectorAll('.site-type-privacy-link').forEach(function(a) {
+        a.addEventListener('click', function(e) {
+            e.preventDefault();
+            var pm = document.getElementById('privacyModal');
+            if (pm) { pm.removeAttribute('hidden'); pm.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        });
+    });
+});
+</script>
+{% endblock %}

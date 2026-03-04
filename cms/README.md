@@ -221,3 +221,35 @@ cms/
 По желанию:
 - **Картинки** — сжать `difference.png`, `promotion.png`, `bg-service.jpg` (например через [TinyPNG](https://tinypng.com/) или `cwebp`), затем снова выполнить `collectstatic` на сервере.
 - **Шрифты** — в шаблоне подключены не все начертания Inter; если оставить только 400 и 600, запрос к Google Fonts станет легче (сейчас: 300;400;500;600;700).
+
+---
+
+## Как запустить сайт на ПК (кратко)
+
+1. Откройте терминал и перейдите в папку проекта:  
+   `cd путь\к\sitbizlab\cms`
+
+2. Создайте и активируйте виртуальное окружение:  
+   `python -m venv venv`  
+   Затем: **Windows** — `.\venv\Scripts\Activate.ps1` или `venv\Scripts\activate.bat`; **macOS/Linux** — `source venv/bin/activate`
+
+3. Установите зависимости:  
+   `pip install -r requirements.txt`
+
+4. Примените миграции и создайте учётную запись админки:  
+   `python manage.py migrate`  
+   `python manage.py createsuperuser`  
+   (введите логин, email и пароль)
+
+5. Запустите сервер:  
+   `python manage.py runserver`
+
+6. Откройте в браузере:
+   - **Главная:** http://127.0.0.1:8000/
+   - **Сайты:** http://127.0.0.1:8000/razrabotka-saitov/
+   - **Telegram-боты:** http://127.0.0.1:8000/telegram-boty/
+   - **MiniApps:** http://127.0.0.1:8000/mini-apps/
+   - **Админка:** http://127.0.0.1:8000/admin/
+
+Кейсы с заполненным полем «URL кейса» (slug) открываются по адресу вида:  
+http://127.0.0.1:8000/cases/имя-kejsa/
