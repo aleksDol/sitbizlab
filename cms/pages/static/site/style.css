@@ -354,6 +354,7 @@ p {
     gap: 12px;
     text-decoration: none;
     flex-shrink: 0;
+    order: -1; /* логотип слева от заголовка */
 }
 
 .logo-icon {
@@ -369,6 +370,24 @@ p {
     padding: 6px;
     box-sizing: border-box;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* В шапке логотип меньше и строго слева от названия на мобильной */
+@media (max-width: 768px) {
+    .header .nav .logo {
+        gap: 8px;
+    }
+    .header .nav .logo-icon {
+        width: 28px;
+        height: 28px;
+        padding: 4px;
+    }
+    .header .nav .logo-main {
+        font-size: 1rem;
+    }
+    .header .nav .logo-sub {
+        font-size: 0.65rem;
+    }
 }
 
 .logo-icon img {
@@ -1602,6 +1621,15 @@ p {
 
 .section-offer {
     background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #e0f2fe 100%);
+}
+
+/* Отступ при скролле к якорям, чтобы блок не уходил под фиксированную шапку (мобильная и десктоп) */
+#cases,
+#contact,
+#about,
+#offer,
+#services {
+    scroll-margin-top: 80px;
 }
 
 .section-cases {
@@ -2855,6 +2883,13 @@ p {
     max-width: 300px;
 }
 
+/* В формах внизу страницы — скрыть цитату только на мобильной версии */
+@media (max-width: 768px) {
+    .cta-visual .visual-quote {
+        display: none !important;
+    }
+}
+
 /* ===== FOOTER ===== */
 .footer {
     background: var(--text);
@@ -3026,6 +3061,12 @@ p {
 .copyright {
     color: rgba(255, 255, 255, 0.6);
     font-size: 0.875rem;
+}
+
+.footer-legal-sep {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875rem;
+    pointer-events: none;
 }
 
 .footer-legal a {
@@ -3844,6 +3885,12 @@ input:checked + .slider:before {
 .modal-content-privacy {
     max-width: 800px;
     max-height: 90vh;
+}
+
+.modal-content-landing-form {
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .privacy-content {
@@ -4961,6 +5008,12 @@ a.product-card .btn-service {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(8px); }
 }
+/* На мобильной скрыть две иконки (рука и схема) между шагами 1–2 и 2–3 в блоке «Как мы делаем сайты» */
+@media (max-width: 768px) {
+    .how-we-build-section .how-we-build-dot-cell-hide-mobile {
+        display: none !important;
+    }
+}
 @media (max-width: 900px) {
     .how-we-build {
         grid-template-columns: 1fr;
@@ -5109,5 +5162,18 @@ a.product-card .btn-service {
     .landing-cards.grid-4,
     .landing-cards.grid-3 { grid-template-columns: 1fr; }
     .cases-grid-static { grid-template-columns: 1fr; }
+}
+
+/* Поочерёдное появление карточек при скролле (только мобильная) */
+@media (max-width: 768px) {
+    .landing-cards-reveal-mobile .landing-card {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+    }
+    .landing-cards-reveal-mobile .landing-card.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 

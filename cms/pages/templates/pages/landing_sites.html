@@ -109,7 +109,7 @@
             <div class="form-row privacy-checkbox-row">
                 <label class="privacy-checkbox-label">
                     <input type="checkbox" name="privacy" required>
-                    <span>Я согласен(а) на <a href="#" class="landing-privacy-link site-type-privacy-link">обработку персональных данных</a></span>
+                    <span>Я согласен(а) на <a href="#" class="landing-privacy-link site-type-privacy-link consent-link">обработку персональных данных</a></span>
                 </label>
             </div>
             <button type="submit" class="btn-primary btn-cta" id="siteTypeFormSubmit"><i class="fas fa-paper-plane" aria-hidden="true"></i> Обсудить проект</button>
@@ -223,7 +223,7 @@
                 </div>
                 <span class="how-we-build-arrow" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
             </article>
-            <div class="how-we-build-dot-cell" aria-hidden="true">
+            <div class="how-we-build-dot-cell how-we-build-dot-cell-hide-mobile" aria-hidden="true">
                 <div class="how-we-build-progress-dot"><i class="fas fa-handshake"></i></div>
             </div>
             <article class="how-we-build-step">
@@ -234,7 +234,7 @@
                 </div>
                 <span class="how-we-build-arrow" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
             </article>
-            <div class="how-we-build-dot-cell" aria-hidden="true">
+            <div class="how-we-build-dot-cell how-we-build-dot-cell-hide-mobile" aria-hidden="true">
                 <div class="how-we-build-progress-dot"><i class="fas fa-sitemap"></i></div>
             </div>
             <article class="how-we-build-step">
@@ -399,8 +399,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.site-type-privacy-link').forEach(function(a) {
         a.addEventListener('click', function(e) {
             e.preventDefault();
-            var pm = document.getElementById('privacyModal');
-            if (pm) { pm.removeAttribute('hidden'); pm.classList.add('active'); document.body.style.overflow = 'hidden'; }
+            var cm = document.getElementById('consentModal');
+            if (cm) { cm.removeAttribute('hidden'); cm.classList.add('active'); document.body.style.overflow = 'hidden'; }
         });
     });
 });

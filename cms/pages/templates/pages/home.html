@@ -426,7 +426,7 @@
                         <div class="form-row privacy-checkbox-row">
                             <label class="privacy-checkbox-label">
                                 <input type="checkbox" id="mainFormPrivacy" name="privacy" required aria-required="true">
-                                <span>Я согласен(а) на <a href="#" id="privacyPolicyMainForm" class="privacy-link">обработку персональных данных</a></span>
+                                <span>Я согласен(а) на <a href="#" id="privacyPolicyMainForm" class="privacy-link consent-link">обработку персональных данных</a></span>
                             </label>
                         </div>
                         <div class="form-footer">
@@ -469,7 +469,7 @@
             </div>
             <div class="footer-bottom">
                 <p class="copyright">© {{ site.site_name }} 2023. Проекты, которые работают. Доказано делом.</p>
-                <div class="footer-legal"><a href="#" id="privacyPolicy">Политика конфиденциальности</a></div>
+                <div class="footer-legal"><a href="#" id="privacyPolicy">Политика обработки персональных данных</a><span class="footer-legal-sep"> · </span><a href="#" id="termsLink">Пользовательское соглашение</a></div>
             </div>
         </div>
     </footer>
@@ -499,7 +499,7 @@
                 <div class="form-row"><input type="text" placeholder="Телефон *" id="modalContact" name="contact" required></div>
                 <div class="form-row"><textarea placeholder="Дополнительные пожелания" id="modalMessage" name="message" rows="3"></textarea></div>
                 <div class="form-row privacy-checkbox-row">
-                    <label class="privacy-checkbox-label"><input type="checkbox" id="modalFormPrivacy" name="privacy" required aria-required="true"><span>Я согласен(а) на <a href="#" id="privacyPolicyModalForm" class="privacy-link">обработку персональных данных</a></span></label>
+                    <label class="privacy-checkbox-label"><input type="checkbox" id="modalFormPrivacy" name="privacy" required aria-required="true"><span>Я согласен(а) на <a href="#" id="privacyPolicyModalForm" class="privacy-link consent-link">обработку персональных данных</a></span></label>
                 </div>
                 <button type="submit" class="btn-primary" id="modalSubmit"><i class="fas fa-paper-plane"></i><span>Отправить заявку</span></button>
             </form>
@@ -510,13 +510,145 @@
         <div class="modal-overlay" id="privacyModalOverlay"></div>
         <div class="modal-content modal-content-privacy">
             <button class="modal-close" id="privacyModalClose" aria-label="Закрыть окно">×</button>
-            <h3 id="privacyModalTitle">Политика конфиденциальности</h3>
+            <h3 id="privacyModalTitle">Политика обработки персональных данных</h3>
             <div class="privacy-content">
-                <p class="privacy-date">Дата вступления в силу: 21.01.2026</p>
+                <p>Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных.</p>
+
+                <h4>1. Оператор персональных данных</h4>
+                <p>Оператором персональных данных является:</p>
+                <p>ФИО: Безделев Алексей Сергеевич<br>Статус: самозанятый<br>Email: <a href="mailto:sitebiz-lab@yandex.ru">sitebiz-lab@yandex.ru</a><br>Сайт: <a href="https://sitebiz-lab.ru" target="_blank" rel="noopener">https://sitebiz-lab.ru</a></p>
+
+                <h4>2. Персональные данные, которые обрабатываются</h4>
+                <p>Оператор может обрабатывать следующие персональные данные пользователей:</p>
+                <ul>
+                    <li>имя;</li>
+                    <li>номер телефона;</li>
+                    <li>адрес электронной почты;</li>
+                    <li>информация, указанная пользователем в форме сообщения;</li>
+                    <li>технические данные (IP-адрес, cookies, данные браузера).</li>
+                </ul>
+
+                <h4>3. Цели обработки персональных данных</h4>
+                <p>Персональные данные обрабатываются в следующих целях:</p>
+                <ul>
+                    <li>обработка заявок пользователей;</li>
+                    <li>предоставление консультаций по услугам;</li>
+                    <li>подготовка коммерческих предложений;</li>
+                    <li>заключение и исполнение договоров;</li>
+                    <li>обратная связь с пользователями сайта;</li>
+                    <li>улучшение качества работы сайта.</li>
+                </ul>
+
+                <h4>4. Правовые основания обработки</h4>
+                <p>Правовыми основаниями обработки персональных данных являются:</p>
+                <ul>
+                    <li>согласие пользователя на обработку персональных данных;</li>
+                    <li>положения Федерального закона №152-ФЗ.</li>
+                </ul>
+
+                <h4>5. Порядок обработки персональных данных</h4>
+                <p>Обработка персональных данных осуществляется с соблюдением принципов законности, минимизации и безопасности.</p>
+                <p>Оператор может выполнять следующие действия:</p>
+                <ul>
+                    <li>сбор;</li>
+                    <li>запись;</li>
+                    <li>систематизацию;</li>
+                    <li>хранение;</li>
+                    <li>уточнение;</li>
+                    <li>использование;</li>
+                    <li>удаление и уничтожение персональных данных.</li>
+                </ul>
+                <p>Обработка может осуществляться как с использованием автоматизированных средств, так и без них.</p>
+
+                <h4>6. Передача персональных данных</h4>
+                <p>Персональные данные не передаются третьим лицам, за исключением случаев, предусмотренных законодательством Российской Федерации.</p>
+
+                <h4>7. Срок хранения данных</h4>
+                <p>Персональные данные хранятся не дольше, чем это требуется для достижения целей обработки, либо до момента отзыва согласия пользователем.</p>
+
+                <h4>8. Права пользователя</h4>
+                <p>Пользователь имеет право:</p>
+                <ul>
+                    <li>получать информацию об обработке своих персональных данных;</li>
+                    <li>требовать уточнения, блокирования или удаления своих данных;</li>
+                    <li>отозвать согласие на обработку персональных данных.</li>
+                </ul>
+
+                <h4>9. Отзыв согласия</h4>
+                <p>Отзыв согласия осуществляется путем направления письма на электронную почту: <a href="mailto:sitebiz-lab@yandex.ru">sitebiz-lab@yandex.ru</a>.</p>
+
+                <h4>10. Заключительные положения</h4>
+                <p>Актуальная версия политики всегда доступна на сайте <a href="https://sitebiz-lab.ru" target="_blank" rel="noopener">https://sitebiz-lab.ru</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="consentModal" role="dialog" aria-labelledby="consentModalTitle" aria-hidden="true">
+        <div class="modal-overlay" id="consentModalOverlay"></div>
+        <div class="modal-content modal-content-privacy">
+            <button class="modal-close" id="consentModalClose" aria-label="Закрыть окно">×</button>
+            <h3 id="consentModalTitle">Согласие на обработку персональных данных</h3>
+            <div class="privacy-content">
+                <p>Пользователь, отправляя данные через формы на сайте <a href="https://sitebiz-lab.ru" target="_blank" rel="noopener">https://sitebiz-lab.ru</a>, дает согласие на обработку своих персональных данных.</p>
+                <p><strong>Оператор персональных данных:</strong><br>ФИО: Безделев Алексей Сергеевич<br>Статус: самозанятый<br>Email: <a href="mailto:sitebiz-lab@yandex.ru">sitebiz-lab@yandex.ru</a></p>
+                <p>Пользователь предоставляет следующие данные:</p>
+                <ul>
+                    <li>имя;</li>
+                    <li>номер телефона;</li>
+                    <li>адрес Telegram;</li>
+                    <li>адрес электронной почты;</li>
+                    <li>информация, указанная в сообщении.</li>
+                </ul>
+                <p><strong>Цели обработки:</strong></p>
+                <ul>
+                    <li>связь с пользователем;</li>
+                    <li>консультация по услугам;</li>
+                    <li>подготовка коммерческого предложения;</li>
+                    <li>заключение договора.</li>
+                </ul>
+                <p>Согласие действует до достижения целей обработки либо до его отзыва пользователем.</p>
+                <p>Пользователь может отозвать согласие путем направления письма на email: <a href="mailto:sitebiz-lab@yandex.ru">sitebiz-lab@yandex.ru</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="termsModal" role="dialog" aria-labelledby="termsModalTitle" aria-hidden="true">
+        <div class="modal-overlay" id="termsModalOverlay"></div>
+        <div class="modal-content modal-content-privacy">
+            <button class="modal-close" id="termsModalClose" aria-label="Закрыть окно">×</button>
+            <h3 id="termsModalTitle">Пользовательское соглашение</h3>
+            <div class="privacy-content">
+                <p>Настоящее пользовательское соглашение регулирует использование сайта <a href="https://sitebiz-lab.ru" target="_blank" rel="noopener">https://sitebiz-lab.ru</a>.</p>
+
                 <h4>1. Общие положения</h4>
-                <p>Настоящая Политика конфиденциальности определяет порядок сбора, хранения, передачи и иных видов обработки персональных данных пользователей сайта {{ site.site_name }}.</p>
-                <h4>11. Контактная информация</h4>
-                <p>По вопросам обработки персональных данных: <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+                <p>Используя сайт, пользователь подтверждает согласие с условиями настоящего соглашения.</p>
+                <p>Если пользователь не согласен с условиями, он должен прекратить использование сайта.</p>
+
+                <h4>2. Услуги</h4>
+                <p>На сайте размещена информация об услугах разработки:</p>
+                <ul>
+                    <li>сайтов;</li>
+                    <li>веб-приложений;</li>
+                    <li>чат-ботов;</li>
+                    <li>автоматизации бизнес-процессов.</li>
+                </ul>
+                <p>Информация на сайте носит ознакомительный характер и не является публичной офертой.</p>
+
+                <h4>3. Обратная связь</h4>
+                <p>Пользователь может отправить заявку через формы сайта.</p>
+                <p>Отправляя заявку, пользователь подтверждает достоверность предоставленных данных.</p>
+
+                <h4>4. Ограничение ответственности</h4>
+                <p>Администрация сайта не несет ответственности за:</p>
+                <ul>
+                    <li>возможные ошибки или неточности информации;</li>
+                    <li>временную недоступность сайта;</li>
+                    <li>действия третьих лиц.</li>
+                </ul>
+
+                <h4>5. Изменение условий</h4>
+                <p>Администрация сайта вправе изменять условия соглашения без предварительного уведомления пользователей.</p>
+                <p>Актуальная версия всегда размещается на сайте.</p>
             </div>
         </div>
     </div>

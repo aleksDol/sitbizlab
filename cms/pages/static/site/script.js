@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
         initCaseReadMore();
         initCasesTabs();
         initCasesCarousel();
+        initLandingCardsRevealMobile();
         initAnimations();
         initPerformance();
     });
@@ -328,10 +329,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function scrollToSection(sectionId) {
         const section = document.getElementById(sectionId);
-        if (section) {
-            const headerHeight = document.querySelector('.header').offsetHeight;
-            const sectionPosition = section.offsetTop - headerHeight - 20;
-            window.scrollTo({ top: sectionPosition, behavior: 'smooth' });
+        if (!section) return;
+        const header = document.querySelector('.header');
+        const headerHeight = header ? header.offsetHeight : 0;
+        // Позиция относительно документа (offsetTop может быть некорректен внутри контейнеров)
+        const rect = section.getBoundingClientRect();
+        const sectionPosition = rect.top + window.pageYOffset - headerHeight - 20;
+        // Отложенный скролл: на мобильных первый тап надёжно срабатывает после кадра
+        const doScroll = function () {
+            window.scrollTo({ top: Math.max(0, sectionPosition), behavior: 'smooth' });
             if (sectionId === 'contact') {
                 setTimeout(() => {
                     const nameInput = document.getElementById('ctaName');
@@ -339,6 +345,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 500);
             }
             logEvent('scroll', sectionId);
+        };
+        if (typeof requestAnimationFrame !== 'undefined') {
+            requestAnimationFrame(function () { requestAnimationFrame(doScroll); });
+        } else {
+            doScroll();
         }
     }
 
@@ -561,6 +572,26 @@ document.addEventListener('DOMContentLoaded', function () {
         modalClose.addEventListener('click', window.closeModal);
     }
 
+    // На мобильной: клик по «Контакты» / «Оставить заявку» (href="#contact") открывает форму в модалке, а не скролл вниз
+    (function initMobileContactOpensModal() {
+        var MOBILE_MAX = 768;
+        function isMobile() { return window.innerWidth <= MOBILE_MAX; }
+        function isContactLink(a) {
+            if (!a || a.tagName !== 'A') return false;
+            var h = (a.getAttribute('href') || '').trim();
+            return h === '#contact' || h === '/#contact' || a.hash === '#contact';
+        }
+        document.body.addEventListener('click', function(e) {
+            if (!isMobile()) return;
+            var a = e.target && e.target.closest ? e.target.closest('a') : null;
+            if (!isContactLink(a)) return;
+            e.preventDefault();
+            if (typeof window.openServiceModal === 'function') {
+                window.openServiceModal('Оставить заявку');
+            }
+        });
+    })();
+
     // ===== ЛАЙТБОКС ФОТО В КЕЙСАХ =====
     function initCaseLightbox() {
         const lightbox = document.getElementById('caseLightbox');
@@ -706,6 +737,25 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // ===== ПООЧЕРЁДНОЕ ПОЯВЛЕНИЕ КАРТОЧЕК ПРИ СКРОЛЛЕ (ТОЛЬКО МОБИЛЬНАЯ) =====
+    function initLandingCardsRevealMobile() {
+        if (!window.matchMedia || !window.matchMedia('(max-width: 768px)').matches) return;
+        const containers = document.querySelectorAll('.landing-cards-reveal-mobile');
+        if (!containers.length) return;
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { rootMargin: '0px 0px -40px 0px', threshold: 0.1 });
+        containers.forEach(function (container) {
+            container.querySelectorAll('.landing-card').forEach(function (card) {
+                observer.observe(card);
+            });
+        });
+    }
+
     // ===== МОДАЛЬНОЕ ОКНО ПОЛИТИКИ КОНФИДЕНЦИАЛЬНОСТИ =====
     function initPrivacyModal() {
         const privacyLink = document.getElementById('privacyPolicy');
@@ -747,18 +797,91 @@ document.addEventListener('DOMContentLoaded', function () {
 
     initPrivacyModal();
 
-    // Обработчики ссылок на политику конфиденциальности в формах
-    const privacyLinks = document.querySelectorAll('.privacy-link');
-    privacyLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+    // ===== МОДАЛЬНОЕ ОКНО ПОЛЬЗОВАТЕЛЬСКОГО СОГЛАШЕНИЯ =====
+    function initTermsModal() {
+        const termsLink = document.getElementById('termsLink');
+        const termsModal = document.getElementById('termsModal');
+        const termsModalOverlay = document.getElementById('termsModalOverlay');
+        const termsModalClose = document.getElementById('termsModalClose');
+
+        if (!termsLink || !termsModal) return;
+
+        function openTermsModal() {
+            termsModal.classList.add('active');
+            termsModal.removeAttribute('hidden');
+            document.body.style.overflow = 'hidden';
+            document.addEventListener('keydown', handleTermsEscape);
+        }
+
+        function closeTermsModal() {
+            termsModal.classList.remove('active');
+            termsModal.setAttribute('hidden', '');
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', handleTermsEscape);
+        }
+
+        function handleTermsEscape(e) {
+            if (e.key === 'Escape') closeTermsModal();
+        }
+
+        termsLink.addEventListener('click', function(e) {
             e.preventDefault();
-            const privacyModal = document.getElementById('privacyModal');
-            if (privacyModal) {
-                privacyModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            openTermsModal();
+        });
+
+        if (termsModalOverlay) {
+            termsModalOverlay.addEventListener('click', closeTermsModal);
+        }
+        if (termsModalClose) {
+            termsModalClose.addEventListener('click', closeTermsModal);
+        }
+    }
+
+    initTermsModal();
+
+    // ===== МОДАЛЬНОЕ ОКНО СОГЛАСИЯ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ (в формах) =====
+    function initConsentModal() {
+        const consentModal = document.getElementById('consentModal');
+        const consentModalOverlay = document.getElementById('consentModalOverlay');
+        const consentModalClose = document.getElementById('consentModalClose');
+
+        if (!consentModal) return;
+
+        function openConsentModal() {
+            consentModal.classList.add('active');
+            consentModal.removeAttribute('hidden');
+            document.body.style.overflow = 'hidden';
+            document.addEventListener('keydown', handleConsentEscape);
+        }
+
+        function closeConsentModal() {
+            consentModal.classList.remove('active');
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', handleConsentEscape);
+        }
+
+        function handleConsentEscape(e) {
+            if (e.key === 'Escape') closeConsentModal();
+        }
+
+        if (consentModalOverlay) {
+            consentModalOverlay.addEventListener('click', closeConsentModal);
+        }
+        if (consentModalClose) {
+            consentModalClose.addEventListener('click', closeConsentModal);
+        }
+
+        // Открытие по клику на ссылку согласия в формах (в т.ч. динамически добавленных)
+        document.body.addEventListener('click', function(e) {
+            const link = e.target.closest('.consent-link');
+            if (link) {
+                e.preventDefault();
+                openConsentModal();
             }
         });
-    });
+    }
+
+    initConsentModal();
 
     function updateModalPrice() {
         // Определяем ключ сервиса по имени
