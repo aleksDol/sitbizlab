@@ -3528,6 +3528,28 @@ p {
     color: var(--text-secondary);
 }
 
+/* Модалка формы заявки: заголовок, подзаголовок, кнопка и текст под кнопкой по центру */
+.modal-content-cta h3 {
+    text-align: center;
+    padding-right: 30px;
+}
+.modal-content-cta .modal-cta-subtitle {
+    text-align: center;
+    margin-bottom: 1.25rem;
+    color: var(--text-secondary);
+}
+.modal-content-cta .form-footer {
+    text-align: center;
+}
+.modal-content-cta .form-footer .btn-primary {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+.modal-content-cta .form-note {
+    text-align: center;
+    margin-bottom: 0;
+}
+
 .modal-form .form-row {
     margin-bottom: 20px;
 }

@@ -843,20 +843,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!contactFormModal || !mobileContactForm) return;
 
+        let contactFormScrollY = 0;
+
         function openContactFormModal() {
+            contactFormScrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = '-' + contactFormScrollY + 'px';
+            document.body.style.left = '0';
+            document.body.style.right = '0';
+            document.body.style.overflow = 'hidden';
             const sel = document.getElementById('mobileSelectedService');
             const mainSel = document.getElementById('selectedService');
             if (sel && mainSel) sel.value = mainSel.value || '';
             contactFormModal.classList.add('active');
             contactFormModal.removeAttribute('hidden');
-            document.body.style.overflow = 'hidden';
             document.addEventListener('keydown', handleContactFormEscape);
         }
 
         function closeContactFormModal() {
             contactFormModal.classList.remove('active');
             contactFormModal.setAttribute('hidden', '');
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
             document.body.style.overflow = '';
+            window.scrollTo(0, contactFormScrollY);
             document.removeEventListener('keydown', handleContactFormEscape);
         }
 

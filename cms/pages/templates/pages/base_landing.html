@@ -265,6 +265,7 @@
         <div class="modal-content modal-content-cta">
             <button class="modal-close" id="contactFormModalClose" aria-label="Закрыть">×</button>
             <h3>Оставить заявку</h3>
+            <p class="cta-text modal-cta-subtitle">Ответим в течение 15 минут. Без навязывания.</p>
             <form class="cta-form landing-form" id="mobileContactFormLanding" method="post" action="{% url 'contact_submit' %}">
                 {% csrf_token %}
                 <input type="hidden" name="selectedService" value="{{ page_title }}">
@@ -459,10 +460,16 @@
             var overlay = document.getElementById('contactFormModalOverlay');
             var closeBtn = document.getElementById('contactFormModalClose');
             var mobileForm = document.getElementById('mobileContactFormLanding');
+            var contactFormScrollY = 0;
             function closeContactFormModal() {
                 cfm.classList.remove('active');
                 cfm.setAttribute('hidden', '');
+                document.body.style.position = '';
+                document.body.style.top = '';
+                document.body.style.left = '';
+                document.body.style.right = '';
                 document.body.style.overflow = '';
+                window.scrollTo(0, contactFormScrollY);
                 document.removeEventListener('keydown', onContactFormEscape);
             }
             function onContactFormEscape(e) { if (e.key === 'Escape' && cfm.classList.contains('active')) closeContactFormModal(); }
@@ -473,9 +480,14 @@
                 el.addEventListener('click', function(e) {
                     if (!mobileMQ.matches) return;
                     e.preventDefault();
+                    contactFormScrollY = window.scrollY;
+                    document.body.style.position = 'fixed';
+                    document.body.style.top = '-' + contactFormScrollY + 'px';
+                    document.body.style.left = '0';
+                    document.body.style.right = '0';
+                    document.body.style.overflow = 'hidden';
                     cfm.removeAttribute('hidden');
                     cfm.classList.add('active');
-                    document.body.style.overflow = 'hidden';
                     document.addEventListener('keydown', onContactFormEscape);
                 });
             });
