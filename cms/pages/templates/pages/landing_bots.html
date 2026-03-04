@@ -67,7 +67,7 @@
     </div>
 </section>
 
-<section class="section landing-section" id="cases">
+<section class="section landing-section section-cases" id="cases">
     <div class="container">
         <h2 class="section-header">Кейсы по ботам</h2>
         <div class="cases-carousel">
@@ -86,7 +86,8 @@
                                 {% if case.kpi_line_2 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_2 }}</span></div>{% endif %}
                             </div>
                             <p class="case-description case-description-short">{{ case.description|truncatewords:20 }}</p>
-                            <a href="{% url 'case_detail' case.slug %}" class="case-view-btn">Подробнее <i class="fas fa-arrow-right"></i></a>
+                            <template class="case-description-full">{{ case.description|linebreaks }}</template>
+                            <button type="button" class="case-view-btn case-read-more-btn">Подробнее <i class="fas fa-arrow-right"></i></button>
                         </div>
                     </article>
                     {% empty %}

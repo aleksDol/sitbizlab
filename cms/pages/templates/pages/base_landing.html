@@ -142,7 +142,8 @@
                                 {% if case.kpi_line_2 %}<div class="kpi-line"><span class="kpi-value">{{ case.kpi_line_2 }}</span></div>{% endif %}
                             </div>
                             <p class="case-description case-description-short">{{ case.description|truncatewords:20 }}</p>
-                            {% if case.slug %}<a href="{% url 'case_detail' case.slug %}" class="case-view-btn">Подробнее <i class="fas fa-arrow-right"></i></a>{% else %}<a href="{% url 'home' %}#cases" class="case-view-btn">Подробнее <i class="fas fa-arrow-right"></i></a>{% endif %}
+                            <template class="case-description-full">{{ case.description|linebreaks }}</template>
+                            <button type="button" class="case-view-btn case-read-more-btn">Подробнее <i class="fas fa-arrow-right"></i></button>
                         </div>
                     </article>
                     {% empty %}
@@ -442,6 +443,15 @@
         </div>
     </div>
 
+    <div id="caseDescriptionModal" class="modal case-description-modal" role="dialog" aria-labelledby="caseDescriptionModalTitle" aria-modal="true" hidden>
+        <div class="modal-overlay case-description-modal-overlay"></div>
+        <div class="modal-content case-description-modal-content">
+            <button type="button" class="modal-close case-description-modal-close" aria-label="Закрыть">×</button>
+            <h2 id="caseDescriptionModalTitle" class="case-description-modal-title"></h2>
+            <div class="case-description-modal-body"></div>
+        </div>
+    </div>
+
     <script src="{% static 'site/script.js' %}" defer></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -462,6 +472,7 @@
             var mobileForm = document.getElementById('mobileContactFormLanding');
             var contactFormScrollY = 0;
             function closeContactFormModal() {
+                var scrollY = contactFormScrollY;
                 cfm.classList.remove('active');
                 cfm.setAttribute('hidden', '');
                 document.body.style.position = '';
@@ -469,8 +480,10 @@
                 document.body.style.left = '';
                 document.body.style.right = '';
                 document.body.style.overflow = '';
-                window.scrollTo(0, contactFormScrollY);
                 document.removeEventListener('keydown', onContactFormEscape);
+                requestAnimationFrame(function() {
+                    window.scrollTo(0, scrollY);
+                });
             }
             function onContactFormEscape(e) { if (e.key === 'Escape' && cfm.classList.contains('active')) closeContactFormModal(); }
             if (overlay) overlay.addEventListener('click', closeContactFormModal);

@@ -861,6 +861,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function closeContactFormModal() {
+            const scrollY = contactFormScrollY;
             contactFormModal.classList.remove('active');
             contactFormModal.setAttribute('hidden', '');
             document.body.style.position = '';
@@ -868,8 +869,10 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.style.left = '';
             document.body.style.right = '';
             document.body.style.overflow = '';
-            window.scrollTo(0, contactFormScrollY);
             document.removeEventListener('keydown', handleContactFormEscape);
+            requestAnimationFrame(function() {
+                window.scrollTo(0, scrollY);
+            });
         }
 
         function handleContactFormEscape(e) {

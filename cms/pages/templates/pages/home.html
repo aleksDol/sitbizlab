@@ -364,11 +364,7 @@
                             {% if case.platform %}<span><i class="fas fa-circle fa-xs" aria-hidden="true"></i> Платформа: {{ case.platform }}</span>{% endif %}
                             {% if case.launch_days %}<span>Время запуска {{ case.launch_days }}</span>{% endif %}
                         </div>
-                        {% if case.slug %}
-                        <a href="{% url 'case_detail' case.slug %}" class="case-view-btn">Подробнее <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                        {% else %}
-                        <button type="button" class="case-view-btn case-read-more-btn">Читать далее <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
-                        {% endif %}
+                        <button type="button" class="case-view-btn case-read-more-btn">Подробнее <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
                     </div>
                 </article>
                 {% empty %}
