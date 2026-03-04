@@ -684,23 +684,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ===== КАРУСЕЛЬ КЕЙСОВ =====
     function initCasesCarousel() {
-        const inner = document.getElementById('casesCarouselInner');
-        const prevBtn = document.querySelector('.cases-carousel-prev');
-        const nextBtn = document.querySelector('.cases-carousel-next');
-        const grid = document.getElementById('casesGrid');
-        if (!inner || !prevBtn || !nextBtn || !grid) return;
+        document.querySelectorAll('.cases-carousel').forEach(function (carousel) {
+            const inner = carousel.querySelector('.cases-carousel-inner');
+            const prevBtn = carousel.querySelector('.cases-carousel-prev');
+            const nextBtn = carousel.querySelector('.cases-carousel-next');
+            const grid = carousel.querySelector('.cases-grid');
+            if (!inner || !prevBtn || !nextBtn || !grid) return;
 
-        function getScrollStep() {
-            const firstCard = grid.querySelector('.case-card');
-            if (!firstCard) return inner.clientWidth * 0.8;
-            return firstCard.offsetWidth + 24;
-        }
+            function getScrollStep() {
+                const firstCard = grid.querySelector('.case-card');
+                if (!firstCard) return inner.clientWidth * 0.8;
+                return firstCard.offsetWidth + 24;
+            }
 
-        prevBtn.addEventListener('click', function () {
-            inner.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
-        });
-        nextBtn.addEventListener('click', function () {
-            inner.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+            prevBtn.addEventListener('click', function () {
+                inner.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+            });
+            nextBtn.addEventListener('click', function () {
+                inner.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+            });
         });
     }
 
