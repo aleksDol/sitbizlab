@@ -833,6 +833,79 @@ document.addEventListener('DOMContentLoaded', function () {
 
     initConsentModal();
 
+    // ===== МОДАЛЬНОЕ ОКНО ФОРМЫ ЗАЯВКИ НА МОБИЛЬНОЙ (вместо скролла к #contact) =====
+    function initContactFormModal() {
+        const contactFormModal = document.getElementById('contactFormModal');
+        const contactFormModalOverlay = document.getElementById('contactFormModalOverlay');
+        const contactFormModalClose = document.getElementById('contactFormModalClose');
+        const mobileContactForm = document.getElementById('mobileContactForm');
+        const mobileSubmitCta = document.getElementById('mobileSubmitCta');
+
+        if (!contactFormModal || !mobileContactForm) return;
+
+        function openContactFormModal() {
+            const sel = document.getElementById('mobileSelectedService');
+            const mainSel = document.getElementById('selectedService');
+            if (sel && mainSel) sel.value = mainSel.value || '';
+            contactFormModal.classList.add('active');
+            contactFormModal.removeAttribute('hidden');
+            document.body.style.overflow = 'hidden';
+            document.addEventListener('keydown', handleContactFormEscape);
+        }
+
+        function closeContactFormModal() {
+            contactFormModal.classList.remove('active');
+            contactFormModal.setAttribute('hidden', '');
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', handleContactFormEscape);
+        }
+
+        function handleContactFormEscape(e) {
+            if (e.key === 'Escape') closeContactFormModal();
+        }
+
+        if (contactFormModalOverlay) contactFormModalOverlay.addEventListener('click', closeContactFormModal);
+        if (contactFormModalClose) contactFormModalClose.addEventListener('click', closeContactFormModal);
+
+        const mobileMQ = window.matchMedia('(max-width: 992px)');
+        document.body.addEventListener('click', function(e) {
+            const a = e.target.closest('a[href="#contact"], a[href="/#contact"]');
+            if (!a || !mobileMQ.matches) return;
+            e.preventDefault();
+            openContactFormModal();
+        });
+
+        mobileContactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('mobileCtaName');
+            const contactInput = document.getElementById('mobileCtaPhone');
+            const messageInput = document.getElementById('mobileCtaMessage');
+            const contactMethod = mobileContactForm.querySelector('input[name="mobileContactMethod"]:checked')?.value || 'phone';
+            const privacyCheckbox = document.getElementById('mobileMainFormPrivacy');
+            const selectedServiceInput = document.getElementById('selectedService');
+
+            if (!privacyCheckbox || !privacyCheckbox.checked) {
+                showNotification('⚠️ Необходимо согласие на обработку персональных данных', 'warning');
+                if (privacyCheckbox) privacyCheckbox.focus();
+                return;
+            }
+            if (!validateContact(nameInput, contactInput, contactMethod)) return;
+
+            const formData = {
+                name: nameInput.value.trim(),
+                phone: contactMethod === 'phone' ? contactInput.value.trim() : '',
+                telegram: contactMethod === 'telegram' ? contactInput.value.trim() : '',
+                message: messageInput ? messageInput.value.trim() : '',
+                service: (selectedServiceInput && selectedServiceInput.value) || 'Общая заявка',
+                source: 'Основная форма (мобильная)',
+                timestamp: new Date().toISOString()
+            };
+            submitFormData(formData, mobileSubmitCta, [nameInput, contactInput, messageInput, privacyCheckbox], closeContactFormModal);
+        });
+    }
+
+    initContactFormModal();
+
     function updateModalPrice() {
         // Определяем ключ сервиса по имени
         let serviceKey = '';

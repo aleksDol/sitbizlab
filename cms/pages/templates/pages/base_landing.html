@@ -260,6 +260,41 @@
         </div>
     </div>
 
+    <div class="modal" id="contactFormModal" role="dialog" aria-hidden="true" hidden>
+        <div class="modal-overlay" id="contactFormModalOverlay"></div>
+        <div class="modal-content modal-content-cta">
+            <button class="modal-close" id="contactFormModalClose" aria-label="Закрыть">×</button>
+            <h3>Оставить заявку</h3>
+            <form class="cta-form landing-form" id="mobileContactFormLanding" method="post" action="{% url 'contact_submit' %}">
+                {% csrf_token %}
+                <input type="hidden" name="selectedService" value="{{ page_title }}">
+                <input type="hidden" name="service" value="{{ page_title }}">
+                <input type="hidden" name="source" value="{% block form_source %}Лендинг{% endblock %}">
+                <div class="form-row contact-method-row">
+                    <label class="form-label">Как лучше связаться?</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="contactMethod" value="phone" checked><span>Телефон</span></label>
+                        <label class="radio-label"><input type="radio" name="contactMethod" value="telegram"><span>Telegram</span></label>
+                    </div>
+                </div>
+                <div class="form-row"><input type="text" placeholder="Ваше имя *" name="name" required></div>
+                <div class="form-row"><input type="tel" placeholder="Телефон *" name="phone" required></div>
+                {% block form_extra_fields %}{% endblock %}
+                <div class="form-row"><textarea placeholder="{% block form_message_placeholder %}Кратко опишите задачу (необязательно){% endblock %}" name="message" rows="2"></textarea></div>
+                <div class="form-row privacy-checkbox-row">
+                    <label class="privacy-checkbox-label">
+                        <input type="checkbox" name="privacy" required>
+                        <span>Я согласен(а) на <a href="#" class="privacy-link landing-privacy-link consent-link">обработку персональных данных</a></span>
+                    </label>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="btn-primary btn-cta" id="mobileSubmitCtaLanding">{% block form_button %}Получить консультацию{% endblock %}</button>
+                    <p class="form-note">Ответим в течение 15 минут. Без навязывания.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="modal" id="privacyModal" role="dialog" aria-hidden="true" hidden>
         <div class="modal-overlay" id="privacyModalOverlay"></div>
         <div class="modal-content modal-content-privacy">
@@ -419,6 +454,62 @@
                 });
             });
         }
+        (function() {
+            var cfm = document.getElementById('contactFormModal');
+            if (!cfm) return;
+            var overlay = document.getElementById('contactFormModalOverlay');
+            var closeBtn = document.getElementById('contactFormModalClose');
+            var mobileForm = document.getElementById('mobileContactFormLanding');
+            function closeContactFormModal() {
+                cfm.classList.remove('active');
+                cfm.setAttribute('hidden', '');
+                document.body.style.overflow = '';
+                document.removeEventListener('keydown', onContactFormEscape);
+            }
+            function onContactFormEscape(e) { if (e.key === 'Escape' && cfm.classList.contains('active')) closeContactFormModal(); }
+            if (overlay) overlay.addEventListener('click', closeContactFormModal);
+            if (closeBtn) closeBtn.addEventListener('click', closeContactFormModal);
+            var mobileMQ = window.matchMedia('(max-width: 992px)');
+            document.querySelectorAll('a[href="#contact"]').forEach(function(el) {
+                el.addEventListener('click', function(e) {
+                    if (!mobileMQ.matches) return;
+                    e.preventDefault();
+                    cfm.removeAttribute('hidden');
+                    cfm.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    document.addEventListener('keydown', onContactFormEscape);
+                });
+            });
+            if (mobileForm) {
+                mobileForm.querySelectorAll('input[name="contactMethod"]').forEach(function(r) {
+                    r.addEventListener('change', function() {
+                        var ph = mobileForm.querySelector('input[name="phone"]');
+                        if (ph) ph.placeholder = this.value === 'telegram' ? 'Ваш Telegram (@username)' : 'Телефон *';
+                    });
+                });
+                mobileForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    var btn = document.getElementById('mobileSubmitCtaLanding');
+                    var origHtml = btn ? btn.innerHTML : '';
+                    if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправляем...'; }
+                    fetch(mobileForm.action, { method: 'POST', body: new FormData(mobileForm), headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                        .then(function(r) { return r.json().then(function(data) { return { ok: r.ok, data: data }; }); })
+                        .then(function(result) {
+                            if (btn) { btn.disabled = false; btn.innerHTML = origHtml; }
+                            if (result.ok) {
+                                closeContactFormModal();
+                                alert('Заявка отправлена! Мы свяжемся с вами в течение часа.');
+                            } else {
+                                alert(result.data.error || 'Ошибка отправки. Попробуйте ещё раз.');
+                            }
+                        })
+                        .catch(function() {
+                            if (btn) { btn.disabled = false; btn.innerHTML = origHtml; }
+                            alert('Ошибка отправки. Попробуйте ещё раз.');
+                        });
+                });
+            }
+        })();
         (function() {
             var cm = document.getElementById('consentModal');
             if (!cm) return;

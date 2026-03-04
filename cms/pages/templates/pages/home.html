@@ -506,6 +506,38 @@
         </div>
     </div>
 
+    <div class="modal" id="contactFormModal" role="dialog" aria-labelledby="contactFormModalTitle" aria-hidden="true">
+        <div class="modal-overlay" id="contactFormModalOverlay"></div>
+        <div class="modal-content modal-content-cta">
+            <button class="modal-close" id="contactFormModalClose" aria-label="Закрыть">×</button>
+            <h3 id="contactFormModalTitle">Оставить заявку</h3>
+            <form class="cta-form" id="mobileContactForm" role="form" aria-label="Форма заявки (мобильная)">
+                {% csrf_token %}
+                <input type="hidden" id="mobileSelectedService" name="selectedService" value="">
+                <div class="form-row contact-method-row">
+                    <label class="form-label">Как лучше связаться?</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="mobileContactMethod" value="phone" checked><span>Телефон</span></label>
+                        <label class="radio-label"><input type="radio" name="mobileContactMethod" value="telegram"><span>Telegram</span></label>
+                    </div>
+                </div>
+                <div class="form-row"><input type="text" placeholder="Ваше имя *" id="mobileCtaName" name="name" required aria-required="true"></div>
+                <div class="form-row"><input type="tel" placeholder="Телефон *" id="mobileCtaPhone" name="phone" required aria-required="true"></div>
+                <div class="form-row"><textarea placeholder="Что нужно создать? (необязательно)" id="mobileCtaMessage" name="message" rows="2"></textarea></div>
+                <div class="form-row privacy-checkbox-row">
+                    <label class="privacy-checkbox-label">
+                        <input type="checkbox" id="mobileMainFormPrivacy" name="privacy" required aria-required="true">
+                        <span>Я согласен(а) на <a href="#" class="privacy-link consent-link">обработку персональных данных</a></span>
+                    </label>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="btn-primary btn-cta" id="mobileSubmitCta"><i class="fas fa-paper-plane" aria-hidden="true"></i><span>Получить консультацию</span></button>
+                    <p class="form-note">Ответим в течение 15 минут, без навязывания.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="modal" id="privacyModal" role="dialog" aria-labelledby="privacyModalTitle" aria-hidden="true">
         <div class="modal-overlay" id="privacyModalOverlay"></div>
         <div class="modal-content modal-content-privacy">
