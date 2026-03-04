@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
         initCaseReadMore();
         initCasesTabs();
         initCasesCarousel();
-        initLandingCardsRevealMobile();
         initAnimations();
         initPerformance();
     });
@@ -329,15 +328,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function scrollToSection(sectionId) {
         const section = document.getElementById(sectionId);
-        if (!section) return;
-        const header = document.querySelector('.header');
-        const headerHeight = header ? header.offsetHeight : 0;
-        // Позиция относительно документа (offsetTop может быть некорректен внутри контейнеров)
-        const rect = section.getBoundingClientRect();
-        const sectionPosition = rect.top + window.pageYOffset - headerHeight - 20;
-        // Отложенный скролл: на мобильных первый тап надёжно срабатывает после кадра
-        const doScroll = function () {
-            window.scrollTo({ top: Math.max(0, sectionPosition), behavior: 'smooth' });
+        if (section) {
+            const headerHeight = document.querySelector('.header').offsetHeight;
+            const sectionPosition = section.offsetTop - headerHeight - 20;
+            window.scrollTo({ top: sectionPosition, behavior: 'smooth' });
             if (sectionId === 'contact') {
                 setTimeout(() => {
                     const nameInput = document.getElementById('ctaName');
@@ -345,11 +339,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 500);
             }
             logEvent('scroll', sectionId);
-        };
-        if (typeof requestAnimationFrame !== 'undefined') {
-            requestAnimationFrame(function () { requestAnimationFrame(doScroll); });
-        } else {
-            doScroll();
         }
     }
 
@@ -572,26 +561,6 @@ document.addEventListener('DOMContentLoaded', function () {
         modalClose.addEventListener('click', window.closeModal);
     }
 
-    // На мобильной: клик по «Контакты» / «Оставить заявку» (href="#contact") открывает форму в модалке, а не скролл вниз
-    (function initMobileContactOpensModal() {
-        var MOBILE_MAX = 768;
-        function isMobile() { return window.innerWidth <= MOBILE_MAX; }
-        function isContactLink(a) {
-            if (!a || a.tagName !== 'A') return false;
-            var h = (a.getAttribute('href') || '').trim();
-            return h === '#contact' || h === '/#contact' || a.hash === '#contact';
-        }
-        document.body.addEventListener('click', function(e) {
-            if (!isMobile()) return;
-            var a = e.target && e.target.closest ? e.target.closest('a') : null;
-            if (!isContactLink(a)) return;
-            e.preventDefault();
-            if (typeof window.openServiceModal === 'function') {
-                window.openServiceModal('Оставить заявку');
-            }
-        });
-    })();
-
     // ===== ЛАЙТБОКС ФОТО В КЕЙСАХ =====
     function initCaseLightbox() {
         const lightbox = document.getElementById('caseLightbox');
@@ -733,25 +702,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             nextBtn.addEventListener('click', function () {
                 inner.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
-            });
-        });
-    }
-
-    // ===== ПООЧЕРЁДНОЕ ПОЯВЛЕНИЕ КАРТОЧЕК ПРИ СКРОЛЛЕ (ТОЛЬКО МОБИЛЬНАЯ) =====
-    function initLandingCardsRevealMobile() {
-        if (!window.matchMedia || !window.matchMedia('(max-width: 768px)').matches) return;
-        const containers = document.querySelectorAll('.landing-cards-reveal-mobile');
-        if (!containers.length) return;
-        const observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                }
-            });
-        }, { rootMargin: '0px 0px -40px 0px', threshold: 0.1 });
-        containers.forEach(function (container) {
-            container.querySelectorAll('.landing-card').forEach(function (card) {
-                observer.observe(card);
             });
         });
     }

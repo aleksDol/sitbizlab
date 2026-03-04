@@ -407,14 +407,6 @@
         </div>
     </div>
 
-    <div class="modal" id="landingFormModal" role="dialog" aria-labelledby="landingFormModalTitle" aria-hidden="true" hidden>
-        <div class="modal-overlay" id="landingFormModalOverlay"></div>
-        <div class="modal-content modal-content-landing-form">
-            <button class="modal-close" id="landingFormModalClose" aria-label="Закрыть">×</button>
-            <div id="landingFormModalBody"></div>
-        </div>
-    </div>
-
     <script src="{% static 'site/script.js' %}" defer></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -480,57 +472,6 @@
                     tm.classList.add('active');
                     document.body.style.overflow = 'hidden';
                     document.addEventListener('keydown', onTermsEscape);
-                });
-            });
-        })();
-
-        (function() {
-            var modal = document.getElementById('landingFormModal');
-            var body = document.getElementById('landingFormModalBody');
-            var contactSection = document.getElementById('contact');
-            var overlay = document.getElementById('landingFormModalOverlay');
-            var closeBtn = document.getElementById('landingFormModalClose');
-            if (!modal || !body || !contactSection) return;
-            function openFormModal() {
-                if (body.children.length === 0) {
-                    var source = contactSection.querySelector('.cta-content');
-                    if (source) {
-                        var clone = source.cloneNode(true);
-                        var form = clone.querySelector('form');
-                        if (form) form.id = 'mainFormModal';
-                        clone.querySelectorAll('[id]').forEach(function(el) {
-                            if (el.id && el.id !== 'mainFormModal') el.id = el.id + 'Modal';
-                        });
-                        body.appendChild(clone);
-                        var modalForm = document.getElementById('mainFormModal');
-                        if (modalForm && modalForm.querySelector('input[name="contactMethod"]')) {
-                            modalForm.querySelectorAll('input[name="contactMethod"]').forEach(function(r) {
-                                r.addEventListener('change', function() {
-                                    var ph = modalForm.querySelector('input[name="phone"]');
-                                    if (ph) ph.placeholder = this.value === 'telegram' ? 'Ваш Telegram (@username)' : 'Телефон *';
-                                });
-                            });
-                        }
-                    }
-                }
-                modal.removeAttribute('hidden');
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                document.addEventListener('keydown', onFormModalEscape);
-            }
-            function closeFormModal() {
-                modal.classList.remove('active');
-                modal.setAttribute('hidden', '');
-                document.body.style.overflow = '';
-                document.removeEventListener('keydown', onFormModalEscape);
-            }
-            function onFormModalEscape(e) { if (e.key === 'Escape' && modal.classList.contains('active')) closeFormModal(); }
-            if (overlay) overlay.addEventListener('click', closeFormModal);
-            if (closeBtn) closeBtn.addEventListener('click', closeFormModal);
-            document.querySelectorAll('.section-services a[href="#contact"], .section-offer a[href="#contact"]').forEach(function(a) {
-                a.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openFormModal();
                 });
             });
         })();
