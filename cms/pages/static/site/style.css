@@ -4526,6 +4526,25 @@ a.product-card .btn-service {
 .landing-cards.grid-4 { grid-template-columns: repeat(4, 1fr); }
 .landing-cards-stack { grid-template-columns: 1fr; max-width: 640px; margin: 0 auto; }
 
+/* Плавное появление карточек при скролле — только на мобильной (блок «Что умеют наши боты» на странице Ботов) */
+@media (max-width: 768px) {
+    .landing-cards-reveal-mobile .landing-card {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .landing-cards-reveal-mobile.is-in-view .landing-card {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .landing-cards-reveal-mobile.is-in-view .landing-card:nth-child(1) { transition-delay: 0.05s; }
+    .landing-cards-reveal-mobile.is-in-view .landing-card:nth-child(2) { transition-delay: 0.1s; }
+    .landing-cards-reveal-mobile.is-in-view .landing-card:nth-child(3) { transition-delay: 0.15s; }
+    .landing-cards-reveal-mobile.is-in-view .landing-card:nth-child(4) { transition-delay: 0.2s; }
+    .landing-cards-reveal-mobile.is-in-view .landing-card:nth-child(5) { transition-delay: 0.25s; }
+    .landing-cards-reveal-mobile.is-in-view .landing-card:nth-child(6) { transition-delay: 0.3s; }
+}
+
 /* Блок «Где уже работает MiniApp» — две колонки: категории слева, цитаты справа */
 .miniapp-where-section {
     position: relative;
@@ -5057,6 +5076,14 @@ a.product-card .btn-service {
         margin: 0.5rem auto 0;
     }
 }
+
+/* На мобильной в блоке «Как мы делаем сайты» (страница Сайты) — только цифровые иконки */
+@media (max-width: 768px) {
+    .how-we-build-section .how-we-build-dot-cell {
+        display: none !important;
+    }
+}
+
 .faq-list { max-width: 640px; margin: 0 auto; }
 .faq-item { margin-bottom: 2rem; }
 .faq-item h4 { margin-bottom: 0.5rem; font-size: 1.1rem; }

@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
         initCasesTabs();
         initCasesCarousel();
         initAnimations();
+        initLandingCardsRevealMobile();
         initPerformance();
     });
 
@@ -1395,6 +1396,21 @@ document.addEventListener('DOMContentLoaded', function () {
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(el);
         });
+    }
+
+    // ===== ПЛАВНОЕ ПОЯВЛЕНИЕ КАРТОЧЕК ПРИ СКРОЛЛЕ (мобильная: блок «Что умеют наши боты») =====
+    function initLandingCardsRevealMobile() {
+        const blocks = document.querySelectorAll('.landing-cards-reveal-mobile');
+        if (!blocks.length || !('IntersectionObserver' in window)) return;
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: '0px 0px -5% 0px', threshold: 0.1 });
+        blocks.forEach(function(block) { observer.observe(block); });
     }
 
     // ===== CAROUSEL =====
