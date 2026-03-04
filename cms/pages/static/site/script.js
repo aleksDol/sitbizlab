@@ -510,6 +510,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function initModal() {
         if (!serviceModal) return;
 
+        let serviceModalScrollY = 0;
+
         // Переключатель Phone/Telegram в модалке
         const modalMethods = document.querySelectorAll('input[name="modalContactMethod"]');
         modalMethods.forEach(radio => {
@@ -532,6 +534,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         window.openServiceModal = function(serviceName) {
+            serviceModalScrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = '-' + serviceModalScrollY + 'px';
+            document.body.style.left = '0';
+            document.body.style.right = '0';
+            document.body.style.overflow = 'hidden';
+
             selectedService = serviceName;
             selectedServiceName.textContent = serviceName;
             selectedServiceInput.value = serviceName;
@@ -547,14 +556,21 @@ document.addEventListener('DOMContentLoaded', function () {
             updateModalPrice();
 
             serviceModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
             document.addEventListener('keydown', handleEscape);
         };
 
         window.closeModal = function() {
+            const scrollY = serviceModalScrollY;
             serviceModal.classList.remove('active');
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
             document.body.style.overflow = '';
             document.removeEventListener('keydown', handleEscape);
+            requestAnimationFrame(function() {
+                window.scrollTo(0, scrollY);
+            });
         };
 
         function handleEscape(e) { if (e.key === 'Escape') window.closeModal(); }
@@ -1398,10 +1414,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ===== ПЛАВНОЕ ПОЯВЛЕНИЕ КАРТОЧЕК ПРИ СКРОЛЛЕ (мобильная: блок «Что умеют наши боты») =====
+    // ===== ПЛАВНОЕ ПОЯВЛЕНИЕ КАРТОЧЕК ПО ОДНОЙ ПРИ СКРОЛЛЕ (мобильная: блок «Что умеют наши боты») =====
     function initLandingCardsRevealMobile() {
         const blocks = document.querySelectorAll('.landing-cards-reveal-mobile');
         if (!blocks.length || !('IntersectionObserver' in window)) return;
+        const cards = [];
+        blocks.forEach(function(block) { cards.push.apply(cards, block.querySelectorAll('.landing-card')); });
+        if (!cards.length) return;
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
@@ -1409,8 +1428,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     observer.unobserve(entry.target);
                 }
             });
-        }, { rootMargin: '0px 0px -5% 0px', threshold: 0.1 });
-        blocks.forEach(function(block) { observer.observe(block); });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
+        cards.forEach(function(card) { observer.observe(card); });
     }
 
     // ===== CAROUSEL =====
