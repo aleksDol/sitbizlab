@@ -638,11 +638,18 @@ document.addEventListener('DOMContentLoaded', function () {
         const overlay = modal.querySelector('.case-description-modal-overlay');
         const closeBtn = modal.querySelector('.case-description-modal-close');
 
+        let caseModalScrollY = 0;
+
         function openCaseModal(title, bodyHtml) {
             titleEl.textContent = title;
             bodyEl.innerHTML = bodyHtml || '';
+            caseModalScrollY = window.scrollY || window.pageYOffset;
             modal.removeAttribute('hidden');
             modal.classList.add('active');
+            document.body.style.position = 'fixed';
+            document.body.style.top = '-' + caseModalScrollY + 'px';
+            document.body.style.left = '0';
+            document.body.style.right = '0';
             document.body.style.overflow = 'hidden';
             document.addEventListener('keydown', handleCaseModalEscape);
         }
@@ -650,8 +657,13 @@ document.addEventListener('DOMContentLoaded', function () {
         function closeCaseModal() {
             modal.setAttribute('hidden', '');
             modal.classList.remove('active');
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
             document.body.style.overflow = '';
             document.removeEventListener('keydown', handleCaseModalEscape);
+            window.scrollTo(0, caseModalScrollY);
         }
 
         function handleCaseModalEscape(e) {

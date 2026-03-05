@@ -48,12 +48,21 @@ class OfferAdmin(admin.ModelAdmin):
 
 @admin.register(Lead)
 class LeadAdmin(admin.ModelAdmin):
-    list_display = ('name', 'contact', 'contact_method', 'service_type', 'is_processed', 'created_at')
+    list_display = ('name', 'contact', 'contact_method', 'source', 'service_type', 'is_processed', 'created_at')
     list_editable = ('is_processed',)
     list_filter = ('contact_method', 'is_processed', 'created_at')
-    search_fields = ('name', 'contact', 'message')
-    readonly_fields = ('name', 'contact', 'contact_method', 'message', 'service_type', 'created_at')
+    search_fields = ('name', 'contact', 'message', 'source', 'service_type')
+    readonly_fields = ('name', 'contact', 'contact_method', 'message', 'source', 'service_type', 'created_at')
     date_hierarchy = 'created_at'
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'contact', 'contact_method', 'message', 'is_processed', 'created_at')
+        }),
+        ('Откуда заявка', {
+            'fields': ('source', 'service_type'),
+            'description': 'С какой страницы пришла заявка и на какую услугу/тариф (если выбирали в разделе услуг или на странице Сайты).'
+        }),
+    )
 
 
 @admin.register(SiteSetting)

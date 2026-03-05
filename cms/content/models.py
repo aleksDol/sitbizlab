@@ -144,7 +144,10 @@ class Lead(models.Model):
     contact = models.CharField('Телефон или Telegram', max_length=200)
     contact_method = models.CharField('Способ связи', max_length=20, choices=CONTACT_CHOICES, default='phone')
     message = models.TextField('Сообщение', blank=True)
-    service_type = models.CharField('Тип услуги', max_length=100, blank=True)
+    service_type = models.CharField('Услуга / пакет', max_length=200, blank=True,
+                                   help_text='На какую услугу или тариф оставили заявку (раздел услуг, выбор на странице Сайты и т.д.)')
+    source = models.CharField('Источник (страница)', max_length=200, blank=True,
+                              help_text='С какой страницы пришла заявка (лендинг, главная, форма в герое и т.д.)')
     created_at = models.DateTimeField('Дата заявки', auto_now_add=True)
     is_processed = models.BooleanField('Обработано', default=False)
 

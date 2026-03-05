@@ -295,7 +295,7 @@ def contact_submit(request):
         phone = (data.get('phone') or '').strip()
         telegram = (data.get('telegram') or '').strip()
         message = (data.get('message') or '').strip()
-        service = (data.get('service') or 'Не указано').strip()
+        service = (data.get('service') or data.get('selectedService') or 'Не указано').strip()
         source = (data.get('source') or 'Форма на сайте').strip()
         contact_method = 'telegram' if telegram else 'phone'
         contact = telegram if contact_method == 'telegram' else phone
@@ -307,6 +307,7 @@ def contact_submit(request):
             contact_method=contact_method,
             message=message,
             service_type=service,
+            source=source,
         )
         # Экранируем пользовательский ввод для Telegram (parse_mode=HTML)
         safe = lambda s: html.escape(str(s), quote=True)
