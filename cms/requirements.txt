@@ -1,6 +1,7 @@
 Django>=5.0,<6
 django-jazzmin>=3.0
 Pillow>=10.0
+pillow-avif-plugin>=1.5
 python-dotenv>=1.0
 gunicorn>=21.0
 whitenoise>=6.0

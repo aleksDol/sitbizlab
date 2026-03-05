@@ -2,15 +2,18 @@
 {% load static %}
 
 {% block head_extra %}
-<link rel="preload" as="image" href="{% static 'site/assets/hero-img-miniApp-mobile.webp' %}" media="(max-width: 768px)" fetchpriority="high">
-<link rel="preload" as="image" href="{% static 'site/assets/hero-img-miniApp.webp' %}" media="(min-width: 769px)" fetchpriority="high">
+<link rel="preload" as="image" href="{% static 'site/assets/hero-img-miniApp-mobile.avif' %}" media="(max-width: 768px)" type="image/avif" fetchpriority="high">
+<link rel="preload" as="image" href="{% static 'site/assets/hero-img-miniApp.avif' %}" media="(min-width: 769px)" type="image/avif" fetchpriority="high">
 {% endblock %}
 
 {% block content %}
 <section class="landing-hero landing-hero-miniapps" role="region">
     <div class="landing-hero-bg-wrap">
         <picture class="landing-hero-bg-picture" aria-hidden="true">
-            <source media="(max-width: 768px)" srcset="{% static 'site/assets/hero-img-miniApp-mobile.webp' %}">
+            <source media="(max-width: 768px)" type="image/avif" srcset="{% static 'site/assets/hero-img-miniApp-mobile.avif' %}">
+            <source media="(max-width: 768px)" type="image/webp" srcset="{% static 'site/assets/hero-img-miniApp-mobile.webp' %}">
+            <source media="(min-width: 769px)" type="image/avif" srcset="{% static 'site/assets/hero-img-miniApp.avif' %}">
+            <source media="(min-width: 769px)" type="image/webp" srcset="{% static 'site/assets/hero-img-miniApp.webp' %}">
             <img src="{% static 'site/assets/hero-img-miniApp.webp' %}" alt="" decoding="async" fetchpriority="high" loading="eager">
         </picture>
         <div class="landing-hero-bg-overlay" aria-hidden="true"></div>
