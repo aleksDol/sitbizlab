@@ -1,11 +1,18 @@
 {% extends 'pages/base_landing.html' %}
 {% load static %}
 
+{% block head_extra %}
+<link rel="preload" as="image" href="{% static 'site/assets/hero-img-miniApp-mobile.webp' %}" media="(max-width: 768px)" fetchpriority="high">
+<link rel="preload" as="image" href="{% static 'site/assets/hero-img-miniApp.webp' %}" media="(min-width: 769px)" fetchpriority="high">
+{% endblock %}
+
 {% block content %}
 <section class="landing-hero landing-hero-miniapps" role="region">
     <div class="landing-hero-bg-wrap">
-        <div class="landing-hero-bg landing-hero-bg-desktop" style="background-image: url('{% static 'site/assets/hero-img-miniApp.webp' %}');"></div>
-        <div class="landing-hero-bg landing-hero-bg-mobile" style="background-image: url('{% static 'site/assets/hero-img-miniApp-mobile.webp' %}');"></div>
+        <picture class="landing-hero-bg-picture" aria-hidden="true">
+            <source media="(max-width: 768px)" srcset="{% static 'site/assets/hero-img-miniApp-mobile.webp' %}">
+            <img src="{% static 'site/assets/hero-img-miniApp.webp' %}" alt="" decoding="async" fetchpriority="high" loading="eager">
+        </picture>
         <div class="landing-hero-bg-overlay" aria-hidden="true"></div>
     </div>
     <div class="landing-hero-inner">
