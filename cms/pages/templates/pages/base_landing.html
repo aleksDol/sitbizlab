@@ -488,10 +488,29 @@
             if (overlay) overlay.addEventListener('click', closeContactFormModal);
             if (closeBtn) closeBtn.addEventListener('click', closeContactFormModal);
             var mobileMQ = window.matchMedia('(max-width: 992px)');
+            var isFromServicesBlock = function(link) {
+                return link.closest('.site-package-card') || link.closest('#tariffs') || link.closest('.site-packages-grid') || link.closest('.section-services');
+            };
             document.querySelectorAll('a[href="#contact"]').forEach(function(el) {
                 el.addEventListener('click', function(e) {
-                    if (!mobileMQ.matches) return;
+                    var openModal = mobileMQ.matches || isFromServicesBlock(this);
+                    if (!openModal) return;
                     e.preventDefault();
+                    if (mobileForm && this.closest('.site-package-card')) {
+                        var card = this.closest('.site-package-card');
+                        var nameEl = card ? card.querySelector('.site-package-name') : null;
+                        if (nameEl) {
+                            var pkgName = nameEl.textContent.trim();
+                            var sel = mobileForm.querySelector('input[name="selectedService"]');
+                            var svc = mobileForm.querySelector('input[name="service"]');
+                            if (sel) sel.value = pkgName;
+                            if (svc) svc.value = pkgName;
+                        }
+                    }
+                    if (mobileForm && !mobileMQ.matches) {
+                        var srcInput = mobileForm.querySelector('input[name="source"]');
+                        if (srcInput) srcInput.value = 'Лендинг: блок услуг';
+                    }
                     contactFormScrollY = window.scrollY;
                     document.body.style.position = 'fixed';
                     document.body.style.top = '-' + contactFormScrollY + 'px';
