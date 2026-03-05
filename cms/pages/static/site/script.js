@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initAI();
     initServices();
     initModal();
+    initPackageCardService();
     // Hero и фоны секций — для LCP грузим сразу, не откладываем
     initHeroBackground();
     initSectionBackgrounds();
@@ -148,56 +149,70 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('sitbizFreeSites', freeSites);
     }
 
-    // ===== МАСКА ТЕЛЕФОНА =====
+    // ===== МАСКА ТЕЛЕФОНА (только цифры, формат +7 (999) 999-99-99) =====
+    function applyPhoneMaskToInput(input, getIsPhoneMode) {
+        if (!input) return;
+        getIsPhoneMode = getIsPhoneMode || function () { return true; };
+
+        input.addEventListener('input', function () {
+            if (!getIsPhoneMode()) return;
+            var value = this.value.replace(/\D/g, '');
+            if (value.length === 0) {
+                this.value = '';
+                return;
+            }
+            if (value.startsWith('8')) value = '7' + value.slice(1);
+            if (!value.startsWith('7')) value = '7' + value;
+            if (value.length > 11) value = value.substring(0, 11);
+
+            var formatted = '+7';
+            if (value.length > 1) {
+                var phoneNumber = value.substring(1);
+                if (phoneNumber.length > 0) formatted += ' (' + phoneNumber.substring(0, 3);
+                if (phoneNumber.length >= 4) formatted += ') ' + phoneNumber.substring(3, 6);
+                if (phoneNumber.length >= 7) formatted += '-' + phoneNumber.substring(6, 8);
+                if (phoneNumber.length >= 9) formatted += '-' + phoneNumber.substring(8, 10);
+            }
+            this.value = formatted;
+        });
+
+        input.addEventListener('keydown', function (e) {
+            if (!getIsPhoneMode()) return;
+            if (e.key === 'Backspace' || e.key === 'Tab' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') return;
+            if (e.key.length === 1 && !/\d/.test(e.key)) e.preventDefault();
+        });
+
+        input.addEventListener('focus', function () {
+            if (!getIsPhoneMode()) return;
+            if (!this.value || this.value.replace(/\D/g, '').length < 2) {
+                this.value = '+7';
+                var t = this;
+                setTimeout(function () { t.setSelectionRange(2, 2); }, 0);
+            }
+        });
+    }
+
     function initPhoneMask() {
-        const inputs = [ctaPhone, modalContact]; // Применяем маску ко всем полям телефона
-        
-        inputs.forEach(input => {
-            if (!input) return;
+        var inputs = [ctaPhone, modalContact].filter(Boolean);
+        inputs.forEach(function (input) {
+            var getIsPhoneMode = function () {
+                if (input.id === 'modalContact' && input.getAttribute('type') === 'text') return false;
+                if (input.id === 'ctaPhone' && (document.querySelector('input[name="contactMethod"]:checked') || {}).value === 'telegram') return false;
+                return true;
+            };
+            applyPhoneMaskToInput(input, getIsPhoneMode);
+        });
 
-            input.addEventListener('input', function (e) {
-                // Если выбран Telegram (для модалки), маска не нужна
-                if (input.id === 'modalContact' && input.getAttribute('type') === 'text' && !input.placeholder.includes('Телефон')) {
-                    return;
-                }
-                
-                // Для основной формы проверяем выбранный метод
-                if (input.id === 'ctaPhone') {
-                   const method = document.querySelector('input[name="contactMethod"]:checked')?.value;
-                   if (method === 'telegram') return;
-                }
-
-                let value = this.value.replace(/\D/g, '');
-                if (value.length === 0) {
-                    this.value = '';
-                    return;
-                }
-                if (!value.startsWith('7') && !value.startsWith('8')) {
-                    value = '7' + value;
-                }
-                if (value.length > 11) value = value.substring(0, 11);
-
-                let formatted = '+7';
-                if (value.length > 1) {
-                    const phoneNumber = value.substring(1);
-                    if (phoneNumber.length > 0) formatted += ' (' + phoneNumber.substring(0, 3);
-                    if (phoneNumber.length >= 4) formatted += ') ' + phoneNumber.substring(3, 6);
-                    if (phoneNumber.length >= 7) formatted += '-' + phoneNumber.substring(6, 8);
-                    if (phoneNumber.length >= 9) formatted += '-' + phoneNumber.substring(8, 10);
-                }
-                this.value = formatted;
-            });
-
-            input.addEventListener('focus', function () {
-                 // Логика placeholder для телефона
-                const isPhoneMode = (input.id === 'modalContact' && input.placeholder.includes('Телефон')) ||
-                                   (input.id === 'ctaPhone' && document.querySelector('input[name="contactMethod"]:checked')?.value !== 'telegram');
-
-                if (isPhoneMode && (!this.value || this.value.trim() === '')) {
-                    this.value = '+7';
-                    setTimeout(() => this.setSelectionRange(2, 2), 0);
-                }
-            });
+        document.querySelectorAll('input[type="tel"], input[name="phone"]').forEach(function (input) {
+            if (inputs.indexOf(input) !== -1) return;
+            var form = input.closest('form');
+            var getIsPhoneMode = function () {
+                if (!form) return true;
+                var method = form.querySelector('input[name="contactMethod"]:checked') || form.querySelector('input[name="contactMethod"]');
+                if (method && method.value === 'telegram') return false;
+                return true;
+            };
+            applyPhoneMaskToInput(input, getIsPhoneMode);
         });
     }
 
@@ -363,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const nameInput = document.getElementById('ctaName');
         const contactInput = document.getElementById('ctaPhone'); // Может быть телефоном или TG
         const messageInput = document.getElementById('ctaMessage');
-        const contactMethod = document.querySelector('input[name="contactMethod"]:checked')?.value || 'phone';
+        const contactMethod = document.querySelector('input[name="contactMethod"]:checked')?.value || 'telegram';
         const privacyCheckbox = document.getElementById('mainFormPrivacy');
 
         if (!privacyCheckbox || !privacyCheckbox.checked) {
@@ -390,7 +405,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleServiceFormSubmit() {
         const nameInput = document.getElementById('modalName');
         const contactInput = document.getElementById('modalContact');
-        const contactMethod = document.querySelector('input[name="modalContactMethod"]:checked')?.value || 'phone';
+        const contactMethod = document.querySelector('input[name="modalContactMethod"]:checked')?.value || 'telegram';
         const privacyCheckbox = document.getElementById('modalFormPrivacy');
         
         // Данные о дизайне
@@ -501,6 +516,26 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // На лендингах: при клике «Обсудить проект» на карточке пакета подставляем название пакета в форму
+    function initPackageCardService() {
+        document.querySelectorAll('.site-package-card .btn-service, .site-package-card a[href="#contact"]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const card = this.closest('.site-package-card');
+                if (!card) return;
+                const nameEl = card.querySelector('.site-package-name');
+                if (!nameEl) return;
+                const pkgName = nameEl.textContent.trim();
+                const sel = document.getElementById('selectedService');
+                if (sel) sel.value = pkgName;
+                const form = document.getElementById('mainForm') || document.querySelector('form[action*="contact"]');
+                if (form) {
+                    const serviceInput = form.querySelector('input[name="service"]');
+                    if (serviceInput) serviceInput.value = pkgName;
+                }
+            });
+        });
+    }
+
     function getServiceName(serviceKey) {
         const map = { 'launch': 'Запуск', 'growth': 'Рост', 'scale': 'Масштаб', 'landing': 'Лендинг', 'business': 'БИЗНЕС', 'sales': 'ПРОДАЖНИК' };
         return map[serviceKey] || serviceKey || 'Индивидуальный проект';
@@ -549,7 +584,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Сброс полей
             modalContact.value = '';
             document.getElementById('modalName').value = '';
-            document.querySelector('input[name="modalContactMethod"][value="phone"]').checked = true;
+            document.querySelector('input[name="modalContactMethod"][value="telegram"]').checked = true;
             modalContact.placeholder = 'Телефон *';
             if (hasDesignToggle) hasDesignToggle.checked = true; // По умолчанию дизайн есть
 
@@ -924,7 +959,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const nameInput = document.getElementById('mobileCtaName');
             const contactInput = document.getElementById('mobileCtaPhone');
             const messageInput = document.getElementById('mobileCtaMessage');
-            const contactMethod = mobileContactForm.querySelector('input[name="mobileContactMethod"]:checked')?.value || 'phone';
+            const contactMethod = mobileContactForm.querySelector('input[name="mobileContactMethod"]:checked')?.value || 'telegram';
             const privacyCheckbox = document.getElementById('mobileMainFormPrivacy');
             const selectedServiceInput = document.getElementById('selectedService');
 
@@ -1347,6 +1382,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function showSuccess(text) { showNotification(text, 'success'); }
     function showError(text) { showNotification(text, 'error'); }
+
+    window.showSuccess = showSuccess;
+    window.showError = showError;
+    window.launchConfetti = launchConfetti;
 
     function launchConfetti() {
         const colors = ['#2563eb', '#059669', '#f59e0b', '#8b5cf6'];

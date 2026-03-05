@@ -237,6 +237,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.ok) {
                     if (btn) { btn.textContent = 'Отправлено!'; }
                     form.reset();
+                    if (window.showSuccess) window.showSuccess('Заявка отправлена! Мы свяжемся с вами в течение часа.');
+                    if (window.launchConfetti) window.launchConfetti();
                 } else {
                     if (btn) { btn.disabled = false; btn.textContent = origText; }
                     alert(data.error || 'Ошибка отправки');
