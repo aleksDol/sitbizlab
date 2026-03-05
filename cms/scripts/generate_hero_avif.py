@@ -10,32 +10,42 @@ import pillow_avif  # noqa: F401 - registers AVIF with Pillow
 from PIL import Image
 
 ASSETS_DIR = Path(__file__).resolve().parent.parent / "pages" / "static" / "site" / "assets"
-HERO_FILES = [
-    "hero-img-miniApp.webp",
-    "hero-img-miniApp-mobile.webp",
+# (filename, max_width or None, quality_avif, quality_webp for resized)
+# max_width = resize for LCP (mobile viewport); None = no resize
+HERO_CONFIG = [
+    ("hero-img-miniApp.webp", None, 75, None),           # desktop
+    ("hero-img-miniApp-mobile.webp", 828, 65, 78),       # mobile: resize + lower size for LCP
 ]
 
-AVIF_QUALITY = 75  # balance size/quality
-AVIF_SPEED = 6    # 0=slower/better, 10=faster
+AVIF_SPEED = 6  # 0=slower/better, 10=faster
 
 
 def main():
     if not ASSETS_DIR.is_dir():
         print(f"Assets dir not found: {ASSETS_DIR}")
         return 1
-    for name in HERO_FILES:
+    for item in HERO_CONFIG:
+        name = item[0]
+        max_width, q_avif, q_webp = item[1], item[2], item[3]
         src = ASSETS_DIR / name
         if not src.is_file():
             print(f"Skip (missing): {src}")
             continue
-        out_name = name.replace(".webp", ".avif")
-        dst = ASSETS_DIR / out_name
         try:
-            img = Image.open(src)
-            img.save(dst, "AVIF", quality=AVIF_QUALITY, speed=AVIF_SPEED)
-            a, b = src.stat().st_size, dst.stat().st_size
-            pct = (1 - b / a) * 100 if a else 0
-            print(f"OK: {name} -> {out_name}  ({a // 1024} KB -> {b // 1024} KB, -{pct:.0f}%)")
+            img = Image.open(src).convert("RGB")
+            orig_size = src.stat().st_size
+            if max_width and img.width > max_width:
+                ratio = max_width / img.width
+                new_h = int(img.height * ratio)
+                img = img.resize((max_width, new_h), Image.Resampling.LANCZOS)
+                print(f"Resized to {max_width}px width")
+            out_avif = ASSETS_DIR / name.replace(".webp", ".avif")
+            img.save(out_avif, "AVIF", quality=q_avif, speed=AVIF_SPEED)
+            size_avif = out_avif.stat().st_size
+            print(f"OK: {name} -> {out_avif.name}  ({orig_size // 1024} KB -> {size_avif // 1024} KB)")
+            if q_webp is not None and max_width:
+                img.save(src, "WEBP", quality=q_webp, method=6)
+                print(f"    WebP overwritten at quality {q_webp}  ({src.stat().st_size // 1024} KB)")
         except Exception as e:
             print(f"Error {name}: {e}")
             return 1
