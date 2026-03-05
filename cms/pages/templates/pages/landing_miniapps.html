@@ -1,7 +1,7 @@
 {% extends 'pages/base_landing.html' %}
 {% load static %}
 
-{% block head_extra %}
+{% block head_preload_first %}
 <link rel="preload" as="image" href="{% static 'site/assets/hero-img-miniApp-mobile.avif' %}" media="(max-width: 768px)" type="image/avif" fetchpriority="high">
 <link rel="preload" as="image" href="{% static 'site/assets/hero-img-miniApp.avif' %}" media="(min-width: 769px)" type="image/avif" fetchpriority="high">
 {% endblock %}
