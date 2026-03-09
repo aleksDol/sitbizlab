@@ -36,7 +36,6 @@
     <link rel="icon" type="image/x-icon" href="{% static 'site/assets/favicon.ico' %}">
 
     <!-- Preload LCP image: hero (мобильный / десктоп по media) -->
-    <link rel="preload" as="image" href="{% static 'site/assets/team-hero-mob.webp' %}" media="(max-width: 768px)">
     <link rel="preload" as="image" href="{% static 'site/assets/team-hero.webp' %}?v=3.3" media="(min-width: 769px)">
 
     <!-- JSON-LD: Organization + WebSite для поисковиков -->
@@ -68,7 +67,7 @@
     }
     </script>
 </head>
-<body itemscope itemtype="https://schema.org/WebPage">
+<body class="page-home-product" itemscope itemtype="https://schema.org/WebPage">
     <svg aria-hidden="true" style="position:absolute;width:0;height:0;clip:rect(0,0,0,0);">
         <defs>
             <clipPath id="hero-rounded-triangle-clip" clipPathUnits="objectBoundingBox">
@@ -167,58 +166,132 @@
         </div>
     </header>
 
-    {% if hero %}
-    <section class="hero" role="region" aria-labelledby="hero-heading">
-        <div class="hero-bg">
-            <div class="hero-bg-image" data-bg="{% static 'site/assets/team-hero.webp' %}?v=3.3" data-bg-mobile="{% static 'site/assets/team-hero-mob.webp' %}"></div>
+    <!-- Hero: продукт — система бронирования -->
+    <section class="hero-product" id="hero" role="region" aria-labelledby="hero-heading">
+        <div class="hero-product-bg" aria-hidden="true">
+            <div class="hero-product-bg-image" data-bg="{% static 'site/assets/team-hero.webp' %}?v=3.3" data-bg-mobile="{% static 'site/assets/team-hero-mob.webp' %}"></div>
+            <div class="hero-product-bg-overlay" aria-hidden="true"></div>
         </div>
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title" id="hero-heading">Создаем сайты, ботов и мини-приложения, которые <span class="highlight">работают на вас 24/7</span></h1>
-                <p class="hero-subtitle">Комплексная разработка под ключ с фокусом на автоматизацию и рост продаж.</p>
-                <div class="hero-actions">
-                    <button class="btn-primary btn-hero" id="heroCta"><span class="hero-btn-text-desktop">Рассчитать стоимость проекта</span><span class="hero-btn-text-mobile">Рассчитать проект</span></button>
-                    <a href="#cases" class="btn-secondary btn-hero-outline">Смотреть кейсы</a>
-                </div>
-                {% if hero.note %}<p class="hero-note">{{ hero.note }}</p>{% endif %}
-            </div>
-            <div class="hero-mobile">
-                <h1 class="hero-mobile-title" id="hero-heading-mobile">Создаем сайты, ботов и мини-приложения, которые <span class="highlight">работают на вас 24/7</span></h1>
-                <p class="hero-mobile-benefit">Комплексная разработка под ключ с фокусом на автоматизацию и рост продаж.</p>
-                <div class="hero-mobile-actions">
-                    <button type="button" class="btn-primary btn-hero btn-hero-mobile" id="heroCtaMobile"><span>Рассчитать проект</span></button>
-                    <a href="#cases" class="btn-secondary btn-hero-outline">Смотреть кейсы</a>
-                </div>
-                <div class="hero-social-card">
-                    <p class="hero-social-line"><i class="fas fa-thumbs-up" aria-hidden="true"></i> 90% клиентов по рекомендациям</p>
-                    <p class="hero-social-line"><i class="fas fa-percent" aria-hidden="true"></i> до 40% заявки дешевле после запуска</p>
-                    <p class="hero-social-line"><i class="fas fa-calendar-alt" aria-hidden="true"></i> 4 года в digital</p>
+        <div class="container hero-product-inner">
+            <div class="hero-product-content">
+                <h1 class="hero-product-title" id="hero-heading">Система онлайн-бронирования для кальянных и ресторанов</h1>
+                <p class="hero-product-subtitle">Гости записываются через Telegram, сайт или MiniApp, а все бронирования и база клиентов находятся в одной системе.</p>
+                <ul class="hero-product-bullets">
+                    <li><i class="fas fa-check" aria-hidden="true"></i> автоматическая запись гостей</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> напоминания о визите</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> база постоянных клиентов</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> рост отзывов в Яндекс Картах</li>
+                </ul>
+                <div class="hero-product-actions">
+                    <a href="https://t.me/test_bot_for_servis_bot" class="btn-primary btn-hero-product" id="heroDemoBtn" target="_blank" rel="noopener noreferrer">Посмотреть демо</a>
+                    <a href="#contact" class="btn-hero-product-outline" id="heroCta">Узнать стоимость</a>
                 </div>
             </div>
         </div>
     </section>
-    {% endif %}
+
+    <!-- С какими проблемами сталкиваются заведения -->
+    <section class="section section-problems-dark" id="problems" role="region" aria-labelledby="problems-heading">
+        <div class="container">
+            <h2 class="section-problems-dark-title" id="problems-heading">С какими проблемами сталкиваются заведения</h2>
+            <div class="problems-grid">
+                <div class="problems-grid-cell">
+                    <div class="problems-cell-icon"><i class="fas fa-comments" aria-hidden="true"></i></div>
+                    <h3 class="problems-cell-title">Переписка вместо системы</h3>
+                    <p class="problems-cell-text">Администратор тратит часы на ответы в Telegram, WhatsApp и соцсетях вместо работы с гостями.</p>
+                </div>
+                <div class="problems-grid-cell">
+                    <div class="problems-cell-icon"><i class="fas fa-bookmark" aria-hidden="true"></i></div>
+                    <h3 class="problems-cell-title">Потерянные брони</h3>
+                    <p class="problems-cell-text">Записи приходят в разные чаты, часть из них теряется, гости не получают подтверждения.</p>
+                </div>
+                <div class="problems-grid-cell">
+                    <div class="problems-cell-icon"><i class="fas fa-user-clock" aria-hidden="true"></i></div>
+                    <h3 class="problems-cell-title">Гости не приходят</h3>
+                    <p class="problems-cell-text">Без напоминаний люди забывают о визите — столики простаивают, а выручка теряется.</p>
+                </div>
+                <div class="problems-grid-cell">
+                    <div class="problems-cell-icon"><i class="fas fa-address-book" aria-hidden="true"></i></div>
+                    <h3 class="problems-cell-title">Нет базы клиентов</h3>
+                    <p class="problems-cell-text">Контакты гостей нигде не сохраняются, невозможно вернуть клиента или сделать рассылку.</p>
+                </div>
+                <div class="problems-grid-cell">
+                    <div class="problems-cell-icon"><i class="fas fa-chart-bar" aria-hidden="true"></i></div>
+                    <h3 class="problems-cell-title">Нет понимания загрузки</h3>
+                    <p class="problems-cell-text">Сложно понять, какие дни и часы приносят больше всего гостей.</p>
+                </div>
+                <div class="problems-grid-cell">
+                    <div class="problems-cell-icon"><i class="fas fa-phone-alt" aria-hidden="true"></i></div>
+                    <h3 class="problems-cell-title">Потерянные звонки</h3>
+                    <p class="problems-cell-text">Гости не могут дозвониться, администратор пропускает звонки и заведение теряет клиентов.</p>
+                </div>
+            </div>
+            <p class="problems-cta-wrap"><a href="#contact" class="problems-cta-btn">Подробнее <i class="fas fa-chevron-right" aria-hidden="true"></i></a></p>
+        </div>
+    </section>
+
+    <!-- Как система решает эти проблемы -->
+    <section class="section section-solutions-light" id="solutions" role="region" aria-labelledby="solutions-heading">
+        <div class="container">
+            <h2 class="section-solutions-light-title" id="solutions-heading">Как система решает эти проблемы</h2>
+            <p class="section-solutions-light-subtitle">Автоматизация работы и рост повторных гостей</p>
+            <div class="solutions-grid">
+                <div class="solutions-grid-cell">
+                    <div class="solutions-cell-icon"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
+                    <h3 class="solutions-cell-title">Автоматизация записи</h3>
+                    <p class="solutions-cell-text">Гости записываются сами онлайн. Администратору больше не нужно отвечать каждому.</p>
+                </div>
+                <div class="solutions-grid-cell">
+                    <div class="solutions-cell-icon"><i class="fas fa-chart-bar" aria-hidden="true"></i></div>
+                    <h3 class="solutions-cell-title">Видно загрузку заведения</h3>
+                    <p class="solutions-cell-text">Понятно, какие часы и дни загружены сильнее всего.</p>
+                </div>
+                <div class="solutions-grid-cell">
+                    <div class="solutions-cell-icon"><i class="fas fa-database" aria-hidden="true"></i></div>
+                    <h3 class="solutions-cell-title">База постоянных гостей</h3>
+                    <p class="solutions-cell-text">Все посетители сохраняются в системе с историей визитов.</p>
+                </div>
+                <div class="solutions-grid-cell">
+                    <div class="solutions-cell-icon"><i class="fas fa-paper-plane" aria-hidden="true"></i></div>
+                    <h3 class="solutions-cell-title">Возврат клиентов</h3>
+                    <p class="solutions-cell-text">Напоминания и рассылки помогают возвращать гостей.</p>
+                </div>
+                <div class="solutions-grid-cell">
+                    <div class="solutions-cell-icon"><i class="fas fa-star" aria-hidden="true"></i></div>
+                    <h3 class="solutions-cell-title">Рост отзывов</h3>
+                    <p class="solutions-cell-text">Бот собирает отзывы и отправляет гостей в Яндекс Карты.</p>
+                </div>
+                <div class="solutions-grid-cell">
+                    <div class="solutions-cell-icon"><i class="fas fa-ruble-sign" aria-hidden="true"></i></div>
+                    <h3 class="solutions-cell-title">Рост выручки</h3>
+                    <p class="solutions-cell-text">Больше повторных визитов и выше средний чек.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="section section-about" id="about" role="region" aria-labelledby="about-heading">
         <div class="container">
             <div class="about-header">
-                <h2 id="about-heading">О нас</h2>
-                <p class="about-intro">4 года создаём проекты, которые приносят заявки. Каждый проект — логика, автоматизация и аналитика.</p>
+                <h2 id="about-heading">Почему нам доверяют</h2>
+                <p class="about-intro-lead">О проекте</p>
+                <p class="about-intro">Мы создаём цифровые решения для бизнеса уже 4 года. Наш фокус — автоматизация процессов, рост заявок и понятная аналитика.</p>
+                <p class="about-intro">Каждый проект — это не просто разработка, а система, которая помогает бизнесу работать эффективнее и зарабатывать больше.</p>
             </div>
             <div class="about-metrics">
-                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-calendar-alt"></i></div><span class="about-metric-value">28</span><span class="about-metric-label">реализованных проектов</span></div>
-                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-check-circle"></i></div><span class="about-metric-value">4 года</span><span class="about-metric-label">в digital</span></div>
-                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-thumbs-up"></i></div><span class="about-metric-value">90%</span><span class="about-metric-label">клиентов по рекомендаций</span></div>
-                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-rocket"></i></div><span class="about-metric-value">10-14</span><span class="about-metric-label">средний срок запуска</span></div>
-                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-percent"></i></div><span class="about-metric-value">до 40%</span><span class="about-metric-label">заявки дешевле после запуска</span></div>
+                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-folder-open" aria-hidden="true"></i></div><span class="about-metric-value">28</span><span class="about-metric-label">реализованных проектов</span></div>
+                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></div><span class="about-metric-value">4 года</span><span class="about-metric-label">опыта в digital</span></div>
+                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-thumbs-up" aria-hidden="true"></i></div><span class="about-metric-value">90%</span><span class="about-metric-label">клиентов приходят по рекомендациям</span></div>
+                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-rocket" aria-hidden="true"></i></div><span class="about-metric-value">10–14 дней</span><span class="about-metric-label">средний срок запуска</span></div>
+                <div class="about-metric-card"><div class="about-metric-icon"><i class="fas fa-percent" aria-hidden="true"></i></div><span class="about-metric-value">до 40%</span><span class="about-metric-label">прироста выручки после внедрения</span></div>
             </div>
             <div class="about-differ">
                 <div class="about-differ-grid">
                     <div class="about-differ-content">
                         <h2 class="about-differ-title">Чем мы отличаемся</h2>
-                        <div class="about-differ-card"><div class="about-differ-icon"><i class="fas fa-clock"></i></div><div class="about-differ-card-body"><h3>Минимум бюрократии</h3><p>Не тратим время на воду, длительные созвоны, документы на 70 страниц.</p></div></div>
-                        <div class="about-differ-card"><div class="about-differ-icon"><i class="far fa-star"></i></div><div class="about-differ-card-body"><h3>Честные рекомендации</h3><p>Если можно использовать готовое решение — скажем. Без накруток ради чека.</p></div></div>
-                        <div class="about-differ-card"><div class="about-differ-icon"><i class="fas fa-handshake"></i></div><div class="about-differ-card-body"><h3>Партнёрство, не поток</h3><p>У нас нет конвейера. Мы погружаемся в бизнес, понимаем задачу, предлагаем полезное.</p></div></div>
+                        <div class="about-differ-card"><div class="about-differ-icon"><i class="fas fa-clock" aria-hidden="true"></i></div><div class="about-differ-card-body"><h3>Минимум бюрократии</h3><p>Работаем без лишних созвонов, длинных документов и сложных процессов. Фокус — на результате.</p></div></div>
+                        <div class="about-differ-card"><div class="about-differ-icon"><i class="far fa-star" aria-hidden="true"></i></div><div class="about-differ-card-body"><h3>Честные рекомендации</h3><p>Если задачу можно решить проще — предложим готовое решение, а не будем усложнять проект.</p></div></div>
+                        <div class="about-differ-card"><div class="about-differ-icon"><i class="fas fa-handshake" aria-hidden="true"></i></div><div class="about-differ-card-body"><h3>Партнёрство, а не поток</h3><p>Мы не делаем проекты «на конвейере». Погружаемся в задачу бизнеса и предлагаем решения, которые действительно работают.</p></div></div>
                     </div>
                     <div class="about-differ-image">
                         <picture>
@@ -228,65 +301,70 @@
                     </div>
                 </div>
             </div>
-            <div class="about-cta-block">
-                <h2 class="about-cta-title">Мы ждём вас</h2>
-                <p class="about-cta-text">Получите разбор вашего проекта и структуру сайта <strong>бесплатно</strong> — ответим в течение 15 минут.</p>
-                <button class="btn-primary about-cta-btn" id="aboutCta"><span>Получить разбор проекта</span></button>
-            </div>
         </div>
     </section>
 
-    <section class="section section-services" id="services" role="region" aria-labelledby="services-heading">
-        <div class="section-services-bg" data-bg="{% static 'site/assets/bg-service.jpg' %}" data-bg-mobile="{% static 'site/assets/bg-service-mob.webp' %}"></div>
+    <section class="section section-tariffs-product" id="tariffs" role="region" aria-labelledby="tariffs-heading">
         <div class="container">
-            <div class="section-header"><h2 id="services-heading">Выберите ваш инструмент</h2></div>
-            <div class="services-grid products-grid" id="servicesGrid">
-                <a href="{% url 'landing_sites' %}" class="service-card product-card">
-                    <div class="service-icon"><i class="fas fa-globe"></i></div>
-                    <h3>Сайт</h3>
-                    <p class="service-description">Лендинг или каталог, который приносит заявки. Разработаем сайт под ключ: продающая структура, умные формы захвата, аналитика, уведомления о заявках в Telegram.</p>
-                    <ul class="service-features product-card-features">
-                        <li>Продающая структура — чтобы посетитель не ушёл без заказа</li>
-                        <li>Умные формы захвата — заявки, звонки, обратная связь</li>
-                        <li>Аналитика в комплекте — видите, откуда приходят клиенты</li>
-                        <li>Уведомления о заявках в Telegram — не пропустите ни одного лида</li>
-                    </ul>
-                    <p class="product-card-note">Решаем любые бизнес-задачи: увеличить поток клиентов, запустить новый продукт, вывести услуги в онлайн.</p>
-                    <div class="service-price"><span class="price-value">от 15 000 ₽</span></div>
-                    <span class="btn-primary btn-service">Подробнее <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-                </a>
-                <a href="{% url 'landing_bots' %}" class="service-card product-card">
-                    <div class="service-icon"><i class="fas fa-robot"></i></div>
-                    <h3>Telegram-бот</h3>
-                    <p class="service-description">Продажи и поддержка внутри мессенджера. Бот работает за вас 24/7.</p>
-                    <ul class="service-features product-card-features">
-                        <li>Автоответы на частые вопросы — экономия времени менеджеров</li>
-                        <li>Рассылки по базе клиентов — возвращайте тех, кто забыл купить</li>
-                        <li>Онлайн-запись клиентов</li>
-                        <li>Каталог товаров или услуг с корзиной и оплатой</li>
-                        <li>Интеграция с CRM — все заявки в одной системе</li>
-                        <li>Приём платежей прямо в чате</li>
-                    </ul>
-                    <p class="product-card-note">Ваш личный менеджер, который не спит, не просит зарплату и не ошибается.</p>
-                    <div class="service-price"><span class="price-value">от 10 000 ₽</span></div>
-                    <span class="btn-primary btn-service">Подробнее <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-                </a>
-                <a href="{% url 'landing_miniapps' %}" class="service-card product-card">
-                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h3>Mini-App</h3>
-                    <p class="service-description">Ваш сервис внутри Telegram. Без модерации App Store. Превратите идею в готовое приложение.</p>
-                    <ul class="service-features product-card-features">
-                        <li>Маркетплейс, каталог, клуб по подписке, игра или дейтинг — любая логика</li>
-                        <li>Встроенные виральные механики — рефералки, рейтинги, задания (бесплатный трафик до 25%)</li>
-                        <li>Платежи из коробки — приём оплат внутри приложения</li>
-                        <li>Быстрый запуск — не нужно ждать модерации в Google Play и App Store</li>
-                    </ul>
-                    <p class="product-card-note">Аудитория Telegram уже ждёт ваш сервис. Осталось его сделать.</p>
-                    <div class="service-price"><span class="price-value">от 30 000 ₽</span></div>
-                    <span class="btn-primary btn-service">Подробнее <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-                </a>
+            <h2 class="section-header" id="tariffs-heading">Тарифы</h2>
+            <div class="tariffs-product-grid">
+                <article class="tariff-product-card">
+                    <h3 class="tariff-product-name">Старт</h3>
+                    <p class="tariff-product-tagline">Автоматизация записи гостей</p>
+                    <p class="tariff-product-for">Подходит для заведений, где сейчас запись идёт в переписках.</p>
+                    <p class="tariff-product-what">Что входит</p>
+                    <div class="tariff-product-features">
+                        <h4>Telegram-бот для бронирования</h4>
+                        <p>Гости могут: выбрать дату и время, указать количество гостей, подтвердить бронь.</p>
+                        <h4>Напоминание о визите</h4>
+                        <p>За час до записи бот уточняет, придёт ли гость. Это уменьшает количество забытых визитов.</p>
+                        <h4>Список всех броней</h4>
+                        <p>Администратор видит: записи на сегодня, будущие брони, переносы и отмены.</p>
+                        <h4>Сбор отзывов</h4>
+                        <p>После визита бот спрашивает оценку. Положительным гостям предлагается оставить отзыв в Яндекс Картах.</p>
+                    </div>
+                    <div class="tariff-product-price"><span class="tariff-product-price-label">Цена</span><span class="tariff-product-price-value">19 000 ₽</span></div>
+                    <a href="#contact" class="btn-primary btn-tariff-product">Узнать подробнее</a>
+                </article>
+                <article class="tariff-product-card tariff-product-card-featured">
+                    <span class="tariff-product-badge">Популярный</span>
+                    <h3 class="tariff-product-name">Управление</h3>
+                    <p class="tariff-product-tagline">Контроль загрузки и база гостей</p>
+                    <p class="tariff-product-for">Подходит для заведений с большим количеством гостей.</p>
+                    <p class="tariff-product-what">Всё из тарифа Старт +</p>
+                    <div class="tariff-product-features">
+                        <h4>Веб-админка</h4>
+                        <p>Удобная панель управления через браузер.</p>
+                        <h4>База гостей</h4>
+                        <p>Все посетители сохраняются в системе. Можно видеть: историю визитов, когда был последний визит, сколько раз приходил гость.</p>
+                        <h4>Аналитика загрузки</h4>
+                        <p>Показывает: пиковые часы, загрузку по дням, сравнение недель.</p>
+                        <h4>Учёт среднего чека</h4>
+                        <p>Можно фиксировать сумму визита и видеть: средний чек, самых прибыльных гостей.</p>
+                    </div>
+                    <div class="tariff-product-price"><span class="tariff-product-price-label">Цена</span><span class="tariff-product-price-value">39 000 ₽</span></div>
+                    <a href="#contact" class="btn-primary btn-tariff-product">Узнать подробнее</a>
+                </article>
+                <article class="tariff-product-card">
+                    <h3 class="tariff-product-name">Рост</h3>
+                    <p class="tariff-product-tagline">Увеличение выручки и возврат гостей</p>
+                    <p class="tariff-product-for">Подходит для заведений, которые хотят активно работать с клиентской базой.</p>
+                    <p class="tariff-product-what">Всё из тарифа Управление +</p>
+                    <div class="tariff-product-features">
+                        <h4>Сегментированная база гостей</h4>
+                        <p>Можно фильтровать клиентов: новые гости, постоянные, давно не были, высокий средний чек.</p>
+                        <h4>Сегментированные рассылки</h4>
+                        <p>Можно отправлять предложения: акции, специальные предложения, приглашения. Например: гости, которые не были 30 дней.</p>
+                        <h4>Реферальная система</h4>
+                        <p>Гости могут приглашать друзей и получать бонусы.</p>
+                        <h4>Интеграция с сайтом</h4>
+                        <p>Запись можно добавить прямо на сайт. Все брони синхронизируются.</p>
+                    </div>
+                    <div class="tariff-product-price"><span class="tariff-product-price-label">Цена</span><span class="tariff-product-price-value">59 000 ₽</span></div>
+                    <a href="#contact" class="btn-primary btn-tariff-product">Узнать подробнее</a>
+                </article>
             </div>
-            <p class="services-footer-text">Любой проект можно доработать под ваш бизнес.<br>Мы не работаем по шаблону — строим систему под задачу.</p>
+            <p class="tariffs-product-footer">Также делаем <a href="{% url 'landing_sites' %}">сайты</a>, <a href="{% url 'landing_bots' %}">Telegram-ботов</a> и <a href="{% url 'landing_miniapps' %}">MiniApp</a> под другие задачи.</p>
         </div>
     </section>
 
@@ -322,8 +400,8 @@
                         </picture>
                     </div>
                     <div class="offer-testimonials">
-                        <blockquote class="offer-quote"><span class="quote-mark">"</span><p>Запустили сайт за 12 дней после обращения. Заявки пришли в 3 раза быстрее. Сделали всё под ключ — подсказали, что доработать. Рекомендую.</p><cite>Дмитрий, владелец сервиса</cite></blockquote>
-                        <blockquote class="offer-quote"><span class="quote-mark">"</span><p>На старте долго мучилась с контентом и дизайном — помогли структурировать. За 3 недели получила рабочий лендинг и первые заявки.</p><cite>Анна, основатель проекта</cite></blockquote>
+                        <blockquote class="offer-quote"><span class="quote-mark">"</span><p>После внедрения системы гости стали чаще возвращаться. Напоминания о визите и сбор отзывов реально помогают. Плюс стало больше отзывов в Яндекс Картах.</p><cite>Мария, владелец lounge-бара</cite></blockquote>
+                        <blockquote class="offer-quote"><span class="quote-mark">"</span><p>Раньше все записи были в переписках и часто что-то терялось. Теперь вся бронь в одной системе, видно загрузку столиков и базу гостей. Очень удобно управлять бронями.</p><cite>Игорь, управляющий рестораном</cite></blockquote>
                     </div>
                 </div>
             </div>
@@ -436,7 +514,7 @@
                         <div class="element-circle"><img src="{% static 'site/assets/logo.png' %}" alt="{{ site.site_name }}" class="element-circle-logo"></div>
                         <div class="element-dots"></div>
                     </div>
-                    <p class="visual-quote hide-on-mobile">«Мы не просто делаем сайты. Мы создаем инструменты, которые приносят деньги.»</p>
+                    <p class="visual-quote hide-on-mobile">Создаём системы бронирования, которые упрощают работу и увеличивают поток гостей.</p>
                 </div>
             </div>
         </div>

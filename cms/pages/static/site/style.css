@@ -1194,6 +1194,14 @@ p {
     color: var(--text);
 }
 
+.about-intro-lead {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    text-align: center;
+}
+
 .about-intro {
     margin-bottom: 0.5rem;
     color: var(--text-secondary);
@@ -5200,5 +5208,528 @@ a.product-card .btn-service {
     .landing-cards.grid-4,
     .landing-cards.grid-3 { grid-template-columns: 1fr; }
     .cases-grid-static { grid-template-columns: 1fr; }
+}
+
+/* ===== ГЛАВНАЯ: ПРОДУКТ — СИСТЕМА БРОНИРОВАНИЯ (dark, премиум) ===== */
+.page-home-product .hero-product {
+    margin-top: 72px;
+    padding: 80px 0 100px;
+    position: relative;
+    background: #0f172a;
+    color: #f1f5f9;
+    min-height: 0;
+}
+.page-home-product .hero-product-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+.page-home-product .hero-product-bg-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+.page-home-product .hero-product-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.85) 50%, rgba(15, 23, 42, 0.9) 100%);
+    z-index: 1;
+}
+.page-home-product .hero-product .container {
+    margin-left: 0;
+    margin-right: auto;
+    padding-left: 1cm;
+}
+.page-home-product .hero-product-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    text-align: left;
+}
+.page-home-product .hero-product-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+    line-height: 1.25;
+}
+.page-home-product .hero-product-subtitle {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+.page-home-product .hero-product-bullets {
+    list-style: none;
+    margin: 0 0 2rem 0;
+    padding: 0;
+}
+.page-home-product .hero-product-bullets li {
+    margin-bottom: 0.5rem;
+    color: #e2e8f0;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.page-home-product .hero-product-bullets li i {
+    color: #38bdf8;
+    flex-shrink: 0;
+}
+.page-home-product .hero-product-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.page-home-product .btn-hero-product {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    transition: var(--transition);
+}
+.page-home-product .btn-hero-product:hover {
+    background: var(--primary-dark);
+    color: #fff;
+}
+.page-home-product .btn-hero-product-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    background: transparent;
+    color: #e2e8f0;
+    border: 1px solid #475569;
+    transition: var(--transition);
+}
+.page-home-product .btn-hero-product-outline:hover {
+    border-color: #38bdf8;
+    color: #38bdf8;
+}
+.page-home-product .hero-product-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.page-home-product .hero-product-visual-placeholder {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.page-home-product .hero-product-phone,
+.page-home-product .hero-product-admin {
+    width: 140px;
+    height: 220px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: #94a3b8;
+    font-size: 0.8rem;
+}
+.page-home-product .hero-product-phone i,
+.page-home-product .hero-product-admin i {
+    font-size: 2rem;
+    color: #38bdf8;
+}
+.page-home-product .hero-product-admin { height: 180px; }
+
+/* Секция «С какими проблемами сталкиваются заведения» — dark grid в стиле референса */
+.section-problems-dark {
+    padding: 60px 0;
+    background: #1a1a1a;
+    color: #fff;
+}
+.section-problems-dark-title {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3rem;
+}
+.problems-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
+    margin: 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 2px;
+    overflow: hidden;
+    background: #1a1a1a;
+}
+.problems-grid-cell {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+}
+.problems-grid-cell:nth-child(3n) {
+    border-right: none;
+}
+.problems-grid-cell:nth-child(n + 4) {
+    border-bottom: none;
+}
+.problems-grid-cell:last-child {
+    border-right: none;
+    border-bottom: none;
+}
+.problems-cell-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+}
+.problems-cell-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.5rem;
+}
+.problems-cell-text {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 260px;
+}
+.problems-cta-wrap {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+.problems-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 12px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+.problems-cta-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+@media (max-width: 768px) {
+    .section-problems-dark { padding: 40px 0; }
+    .section-problems-dark-title { margin-bottom: 2rem; }
+    .problems-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .problems-grid-cell {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        min-height: 140px;
+    }
+    .problems-grid-cell:last-child {
+        border-bottom: none;
+    }
+}
+
+/* Секция «Как система решает эти проблемы» — светлая сетка в том же стиле */
+.section-solutions-light {
+    padding: 60px 0;
+    background: #fff;
+    color: var(--text);
+}
+.section-solutions-light-title {
+    text-align: center;
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+.section-solutions-light-subtitle {
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+}
+.solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
+    margin: 0 auto;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    background: #fff;
+}
+.solutions-grid-cell {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+}
+.solutions-grid-cell:nth-child(3n) {
+    border-right: none;
+}
+.solutions-grid-cell:nth-child(n + 4) {
+    border-bottom: none;
+}
+.solutions-grid-cell:last-child {
+    border-right: none;
+    border-bottom: none;
+}
+.solutions-cell-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 0.5rem 0;
+}
+.solutions-cell-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+.solutions-cell-text {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--text-secondary);
+    max-width: 260px;
+}
+@media (max-width: 768px) {
+    .section-solutions-light { padding: 40px 0; }
+    .section-solutions-light-subtitle { margin-bottom: 2rem; }
+    .solutions-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .solutions-grid-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        min-height: 160px;
+    }
+    .solutions-grid-cell:last-child {
+        border-bottom: none;
+    }
+}
+
+/* Тарифы системы бронирования (главная) — тёмная тема как блок проблем */
+.section-tariffs-product {
+    padding: 60px 0;
+    background: #1a1a1a;
+    color: #fff;
+}
+.section-tariffs-product .section-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    color: #fff;
+}
+.tariffs-product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+}
+.tariff-product-card {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+.tariff-product-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.tariff-product-card-featured {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+}
+.tariff-product-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #38bdf8;
+    color: #0f172a;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+}
+.tariff-product-name {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 0.25rem 0;
+}
+.tariff-product-tagline {
+    font-size: 0.95rem;
+    color: #38bdf8;
+    font-weight: 600;
+    margin: 0 0 0.75rem 0;
+}
+.tariff-product-for {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 1rem 0;
+    line-height: 1.45;
+}
+.tariff-product-what {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.75rem 0;
+}
+.tariff-product-features {
+    flex: 1;
+    margin-bottom: 1.25rem;
+}
+.tariff-product-features h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0.75rem 0 0.25rem 0;
+}
+.tariff-product-features h4:first-child {
+    margin-top: 0;
+}
+.tariff-product-features p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.5;
+}
+.tariff-product-price {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin-bottom: 1rem;
+}
+.tariff-product-price-label {
+    display: block;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.25rem;
+}
+.tariff-product-price-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+.btn-tariff-product {
+    display: inline-block;
+    text-align: center;
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: #fff;
+    background: var(--primary);
+    transition: var(--transition);
+}
+.btn-tariff-product:hover {
+    background: var(--primary-dark);
+    color: #fff;
+}
+.tariffs-product-footer {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+.tariffs-product-footer a {
+    color: #38bdf8;
+    text-decoration: none;
+}
+.tariffs-product-footer a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 1024px) {
+    .tariffs-product-grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+}
+@media (max-width: 768px) {
+    .section-tariffs-product { padding: 40px 0; }
+    .tariff-product-card { padding: 1.5rem; }
+}
+
+/* Мобильная адаптация hero продукта */
+@media (max-width: 1024px) {
+    .page-home-product .hero-product-bullets { display: flex; flex-wrap: wrap; }
+}
+@media (max-width: 768px) {
+    .page-home-product .hero-product {
+        margin-top: 80px;
+        padding: 90px 0 60px;
+    }
+    .page-home-product .hero-product-inner,
+    .page-home-product .hero-product-content {
+        text-align: center;
+    }
+    .page-home-product .hero-product-title { font-size: 1.5rem; }
+    .page-home-product .hero-product-subtitle { font-size: 1rem; }
+    .page-home-product .hero-product-bullets {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: auto;
+        margin-right: auto;
+        width: fit-content;
+        text-align: left;
+    }
+    .page-home-product .hero-product-bullets li i {
+        min-width: 1.25rem;
+        text-align: center;
+    }
+    .page-home-product .hero-product-actions {
+        justify-content: center;
+    }
 }
 

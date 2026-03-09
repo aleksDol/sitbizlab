@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initServices();
     initModal();
     initPackageCardService();
+    initTariffProductButtons();
     // Hero и фоны секций — для LCP грузим сразу, не откладываем
     initHeroBackground();
     initSectionBackgrounds();
@@ -516,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // На лендингах: при клике «Обсудить проект» на карточке пакета подставляем название пакета в форму
+    // На лендингах: при клике «Обсудить проект» на карточке пакета подставляем название пакета в форму и комментарий
     function initPackageCardService() {
         document.querySelectorAll('.site-package-card .btn-service, .site-package-card a[href="#contact"]').forEach(function (btn) {
             btn.addEventListener('click', function () {
@@ -527,11 +528,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 const pkgName = nameEl.textContent.trim();
                 const sel = document.getElementById('selectedService');
                 if (sel) sel.value = pkgName;
+                const messageInput = document.getElementById('ctaMessage');
+                if (messageInput) {
+                    messageInput.value = 'Интересует пакет «' + pkgName + '» — хочу обсудить проект.';
+                }
                 const form = document.getElementById('mainForm') || document.querySelector('form[action*="contact"]');
                 if (form) {
                     const serviceInput = form.querySelector('input[name="service"]');
                     if (serviceInput) serviceInput.value = pkgName;
                 }
+            });
+        });
+    }
+
+    // Главная: при клике «Узнать подробнее» на карточке тарифа — подставляем название тарифа и комментарий в форму
+    function initTariffProductButtons() {
+        document.querySelectorAll('.btn-tariff-product').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                const card = this.closest('.tariff-product-card');
+                if (!card) return;
+                const nameEl = card.querySelector('.tariff-product-name');
+                const tariffName = nameEl ? nameEl.textContent.trim() : '';
+                if (!tariffName) return;
+                e.preventDefault();
+                const sel = document.getElementById('selectedService');
+                if (sel) sel.value = tariffName;
+                const messageInput = document.getElementById('ctaMessage');
+                if (messageInput) {
+                    messageInput.value = 'Интересует тариф «' + tariffName + '» — хочу обсудить подключение.';
+                }
+                scrollToSection('contact');
+                setTimeout(function () {
+                    if (messageInput) messageInput.focus();
+                }, 500);
             });
         });
     }
