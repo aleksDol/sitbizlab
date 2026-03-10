@@ -31,10 +31,6 @@
     <link rel="preconnect" href="https://mc.yandex.ru">
     <link rel="dns-prefetch" href="https://top-fwz1.mail.ru">
 
-    <!-- Preload шрифтов -->
-    <link rel="preload" href="{% static 'site/fonts/inter-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="{% static 'site/fonts/inter-cyrillic.woff2' %}" as="font" type="font/woff2" crossorigin>
-
     <!-- Критический CSS: header + hero отрисовываются сразу, style.css грузится асинхронно -->
     <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -120,14 +116,6 @@
     </script>
 </head>
 <body class="page-home-product" itemscope itemtype="https://schema.org/WebPage">
-    <svg aria-hidden="true" style="position:absolute;width:0;height:0;clip:rect(0,0,0,0);">
-        <defs>
-            <clipPath id="hero-rounded-triangle-clip" clipPathUnits="objectBoundingBox">
-                <!-- Перевёрнутый треугольник: широкая верхняя грань, остриё внизу, лёгкое скругление вершин -->
-                <path d="M 0.03 0.01 L 0.97 0.01 Q 1 0.01 1 0.06 L 1 0.58 Q 1 0.92 0.5 0.98 Q 0 0.92 0 0.58 L 0 0.06 Q 0 0.01 0.03 0.01 Z"/>
-            </clipPath>
-        </defs>
-    </svg>
     <!-- Счётчики загружаются после отрисовки страницы, чтобы не блокировать FCP/LCP и снизить TBT -->
     <script type="text/javascript">
     (function(){
@@ -151,32 +139,6 @@
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/106429374" style="position:absolute;left:-9999px;" alt="" /></div></noscript>
     <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3737368;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
-
-    <div class="ai-agent-wrapper">
-        <button class="ai-agent-trigger" id="aiTrigger" aria-label="Открыть чат с помощником"><i class="fas fa-comments"></i><span class="pulse"></span></button>
-        <div class="ai-agent-container" id="aiAgent">
-            <div class="ai-header">
-                <div class="ai-avatar"><i class="fas fa-bolt"></i></div>
-                <div class="ai-info"><h4>SitBiz Scout</h4><p>AI-помощник</p></div>
-                <button class="ai-close" id="closeAi" aria-label="Закрыть чат">×</button>
-            </div>
-            <div class="ai-chat" id="aiChat">
-                <div class="ai-message"><div class="message-bubble">
-                    <p>👋 <strong>Привет! Я SitBiz Scout.</strong></p>
-                    <p>Помогу за 60 секунд понять, сможем ли мы запустить для вас работающий проект.</p>
-                    <p>Готовы начать?</p>
-                </div></div>
-            </div>
-            <div class="ai-controls">
-                <div class="quick-actions" id="quickActions">
-                    <button class="quick-btn" data-answer="Да, начать">🚀 Да, начать</button>
-                    <button class="quick-btn" data-answer="Расскажите про акцию">🎁 Акция</button>
-                    <button class="quick-btn" data-answer="Показать примеры">💼 Примеры</button>
-                </div>
-                <div class="options-grid" id="optionsGrid" style="display: none;"></div>
-            </div>
-        </div>
-    </div>
 
     <header class="header" role="banner">
         <nav class="nav container" role="navigation" aria-label="Основная навигация">
@@ -244,6 +206,32 @@
             </div>
         </div>
     </section>
+
+    <div class="ai-agent-wrapper">
+        <button class="ai-agent-trigger" id="aiTrigger" aria-label="Открыть чат с помощником"><i class="fas fa-comments"></i><span class="pulse"></span></button>
+        <div class="ai-agent-container" id="aiAgent">
+            <div class="ai-header">
+                <div class="ai-avatar"><i class="fas fa-bolt"></i></div>
+                <div class="ai-info"><h4>SitBiz Scout</h4><p>AI-помощник</p></div>
+                <button class="ai-close" id="closeAi" aria-label="Закрыть чат">×</button>
+            </div>
+            <div class="ai-chat" id="aiChat">
+                <div class="ai-message"><div class="message-bubble">
+                    <p>👋 <strong>Привет! Я SitBiz Scout.</strong></p>
+                    <p>Помогу за 60 секунд понять, сможем ли мы запустить для вас работающий проект.</p>
+                    <p>Готовы начать?</p>
+                </div></div>
+            </div>
+            <div class="ai-controls">
+                <div class="quick-actions" id="quickActions">
+                    <button class="quick-btn" data-answer="Да, начать">🚀 Да, начать</button>
+                    <button class="quick-btn" data-answer="Расскажите про акцию">🎁 Акция</button>
+                    <button class="quick-btn" data-answer="Показать примеры">💼 Примеры</button>
+                </div>
+                <div class="options-grid" id="optionsGrid" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- С какими проблемами сталкиваются заведения -->
     <section class="section section-problems-dark" id="problems" role="region" aria-labelledby="problems-heading">
