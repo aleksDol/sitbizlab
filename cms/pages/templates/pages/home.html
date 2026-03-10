@@ -37,6 +37,7 @@
 
     <!-- Preload LCP image: hero (мобильный / десктоп по media) -->
     <link rel="preload" as="image" href="{% static 'site/assets/team-hero.webp' %}?v=3.3" media="(min-width: 769px)">
+    <link rel="preload" as="image" href="{% static 'site/assets/team-hero-mob.webp' %}" media="(max-width: 768px)">
 
     <!-- JSON-LD: Organization + WebSite для поисковиков -->
     <script type="application/ld+json">
@@ -76,29 +77,29 @@
             </clipPath>
         </defs>
     </svg>
+    <!-- Счётчики загружаются после отрисовки страницы, чтобы не блокировать FCP/LCP и снизить TBT -->
     <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
-        for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r)return;}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-        (window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=106429374','ym');
-        ym(106429374,'init',{clickmap:true,trackLinks:true,webvisor:true});
+    (function(){
+        function runCounters(){
+            (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
+            for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r)return;}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+            (window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=106429374','ym');
+            ym(106429374,'init',{clickmap:true,trackLinks:true,webvisor:true});
+            var _tmr = window._tmr || (window._tmr = []);
+            _tmr.push({id: "3737368", type: "pageView", start: (new Date()).getTime()});
+            if (!document.getElementById("tmr-code")) {
+                var ts = document.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = "tmr-code";
+                ts.src = "https://top-fwz1.mail.ru/js/code.js";
+                var s = document.getElementsByTagName("script")[0]; if (s && s.parentNode) s.parentNode.insertBefore(ts, s);
+            }
+        }
+        if (document.readyState === 'complete') setTimeout(runCounters, 0);
+        else window.addEventListener('load', function(){ setTimeout(runCounters, 0); });
+    })();
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/106429374" style="position:absolute;left:-9999px;" alt="" /></div></noscript>
-
-    <!-- Top.Mail.Ru counter -->
-    <script type="text/javascript">
-    var _tmr = window._tmr || (window._tmr = []);
-    _tmr.push({id: "3737368", type: "pageView", start: (new Date()).getTime()});
-    (function (d, w, id) {
-      if (d.getElementById(id)) return;
-      var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
-      ts.src = "https://top-fwz1.mail.ru/js/code.js";
-      var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
-      if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
-    })(document, window, "tmr-code");
-    </script>
     <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3737368;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
-    <!-- /Top.Mail.Ru counter -->
 
     <div class="ai-agent-wrapper">
         <button class="ai-agent-trigger" id="aiTrigger" aria-label="Открыть чат с помощником"><i class="fas fa-comments"></i><span class="pulse"></span></button>
