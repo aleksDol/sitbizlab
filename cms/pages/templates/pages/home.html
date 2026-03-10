@@ -26,66 +26,14 @@
     <meta name="twitter:description" content="{{ site.meta_description|default:'Система онлайн-бронирования для ресторанов и кальянных: запись гостей, база клиентов, напоминания. От 19 000 ₽.' }}">
     <meta name="twitter:image" content="{{ og_image_url|default:'' }}">
 
-    <!-- Preconnect к внешним CDN для ускорения загрузки -->
+    <!-- Preconnect к внешним CDN -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://mc.yandex.ru">
-    <link rel="dns-prefetch" href="https://top-fwz1.mail.ru">
 
-    <!-- Критический CSS: header + hero отрисовываются сразу, style.css грузится асинхронно -->
-    <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#fff;color:#1f2937;-webkit-font-smoothing:antialiased}
-    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 24px}
-    .header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);height:72px;display:flex;align-items:center}
-    .header .container{display:flex;align-items:center;justify-content:space-between}
-    .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:1.25rem;font-weight:700;color:#1f2937}
-    .logo img{height:40px;width:auto}
-    .nav{display:flex;align-items:center;gap:2rem}
-    .nav a{color:#4b5563;text-decoration:none;font-size:.95rem;font-weight:500}
-    .nav-cta{background:#2563eb;color:#fff!important;padding:10px 20px;border-radius:8px;font-weight:600;font-size:.95rem;text-decoration:none}
-    .page-home-product .hero-product{margin-top:72px;padding:80px 0 100px;position:relative;background:#0f172a;color:#f1f5f9;min-height:0;overflow:hidden}
-    .page-home-product .hero-product-bg{position:absolute;inset:0;z-index:0}
-    .page-home-product .hero-product-bg-image{position:absolute;inset:0;z-index:0;overflow:hidden}
-    .page-home-product .hero-product-bg-image img{width:100%;height:100%;object-fit:cover;display:block}
-    .page-home-product .hero-product-bg-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,23,42,.88) 0%,rgba(30,41,59,.85) 50%,rgba(15,23,42,.9) 100%);z-index:1}
-    .page-home-product .hero-product .container{margin-left:0;margin-right:auto;padding-left:1cm}
-    .page-home-product .hero-product-inner{position:relative;z-index:1;max-width:720px;text-align:left}
-    .page-home-product .hero-product-title{font-size:clamp(1.75rem,4vw,2.5rem);font-weight:700;color:#fff;margin-bottom:1rem;line-height:1.25}
-    .page-home-product .hero-product-subtitle{font-size:1.1rem;color:#94a3b8;margin-bottom:1.5rem;line-height:1.6}
-    .page-home-product .hero-product-bullets{list-style:none;margin:0 0 2rem;padding:0}
-    .page-home-product .hero-product-bullets li{margin-bottom:.5rem;color:#e2e8f0;font-size:1rem;display:flex;align-items:center;gap:.6rem}
-    .page-home-product .hero-product-bullets li i{color:#38bdf8;flex-shrink:0}
-    .page-home-product .hero-product-actions{display:flex;flex-wrap:wrap;gap:1rem}
-    .page-home-product .btn-hero-product{display:inline-flex;align-items:center;justify-content:center;padding:14px 28px;border-radius:8px;font-weight:600;font-size:1rem;text-decoration:none;background:#2563eb;color:#fff;border:none}
-    .page-home-product .btn-hero-product-outline{display:inline-flex;align-items:center;justify-content:center;padding:14px 28px;border-radius:8px;font-weight:600;font-size:1rem;text-decoration:none;background:transparent;color:#e2e8f0;border:1px solid #475569}
-    .menu-toggle{display:none;background:none;border:none;font-size:1.5rem;color:#1f2937;cursor:pointer}
-    .mobile-menu{display:none}
-    @media(max-width:768px){
-        .nav{display:none}
-        .menu-toggle{display:flex}
-        .page-home-product .hero-product{margin-top:80px;padding:90px 0 60px}
-        .page-home-product .hero-product-inner,.page-home-product .hero-product-content{text-align:center}
-        .page-home-product .hero-product-title{font-size:1.5rem}
-        .page-home-product .hero-product-subtitle{font-size:1rem}
-        .page-home-product .hero-product-bullets{display:flex;flex-direction:column;align-items:flex-start;margin-left:auto;margin-right:auto;width:fit-content;text-align:left}
-        .page-home-product .hero-product-actions{justify-content:center}
-        .page-home-product .hero-product-bg-image img{object-position:center}
-    }
-    .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-    body:not(.css-loaded) .section,
-    body:not(.css-loaded) .footer,
-    body:not(.css-loaded) .ai-agent-wrapper,
-    body:not(.css-loaded) .section-cta,
-    body:not(.css-loaded) #serviceModal,
-    body:not(.css-loaded) #caseDescriptionModal,
-    body:not(.css-loaded) #caseLightbox{visibility:hidden}
-    </style>
+    <!-- Шрифты -->
+    <link rel="preload" href="{% static 'site/fonts/inter-cyrillic.woff2' %}" as="font" type="font/woff2" crossorigin>
 
-    <!-- Основной CSS — асинхронная загрузка, не блокирует FCP/LCP -->
-    <link rel="stylesheet" href="{% static 'site/style.css' %}" media="print" onload="this.media='all';document.body.classList.add('css-loaded')">
-    <noscript><link rel="stylesheet" href="{% static 'site/style.css' %}"></noscript>
-
-    <!-- Font Awesome — асинхронно -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'site/style.css' %}">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           media="print"
