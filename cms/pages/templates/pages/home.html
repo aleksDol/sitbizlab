@@ -31,9 +31,7 @@
     <link rel="preconnect" href="https://mc.yandex.ru">
     <link rel="dns-prefetch" href="https://top-fwz1.mail.ru">
 
-    <!-- Preload LCP image и шрифтов — ДО CSS, чтобы браузер увидел их раньше -->
-    <link rel="preload" as="image" href="{% static 'site/assets/team-hero.webp' %}?v=3.3" media="(min-width: 769px)" fetchpriority="high">
-    <link rel="preload" as="image" href="{% static 'site/assets/team-hero-mob.webp' %}" media="(max-width: 768px)" fetchpriority="high">
+    <!-- Preload шрифтов -->
     <link rel="preload" href="{% static 'site/fonts/inter-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{% static 'site/fonts/inter-cyrillic.woff2' %}" as="font" type="font/woff2" crossorigin>
 
@@ -51,7 +49,8 @@
     .nav-cta{background:#2563eb;color:#fff!important;padding:10px 20px;border-radius:8px;font-weight:600;font-size:.95rem;text-decoration:none}
     .page-home-product .hero-product{margin-top:72px;padding:80px 0 100px;position:relative;background:#0f172a;color:#f1f5f9;min-height:0;overflow:hidden}
     .page-home-product .hero-product-bg{position:absolute;inset:0;z-index:0}
-    .page-home-product .hero-product-bg-image{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;z-index:0;background-image:url('{% static "site/assets/team-hero.webp" %}?v=3.3')}
+    .page-home-product .hero-product-bg-image{position:absolute;inset:0;z-index:0;overflow:hidden}
+    .page-home-product .hero-product-bg-image img{width:100%;height:100%;object-fit:cover;display:block}
     .page-home-product .hero-product-bg-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,23,42,.88) 0%,rgba(30,41,59,.85) 50%,rgba(15,23,42,.9) 100%);z-index:1}
     .page-home-product .hero-product .container{margin-left:0;margin-right:auto;padding-left:1cm}
     .page-home-product .hero-product-inner{position:relative;z-index:1;max-width:720px;text-align:left}
@@ -74,7 +73,7 @@
         .page-home-product .hero-product-subtitle{font-size:1rem}
         .page-home-product .hero-product-bullets{display:flex;flex-direction:column;align-items:flex-start;margin-left:auto;margin-right:auto;width:fit-content;text-align:left}
         .page-home-product .hero-product-actions{justify-content:center}
-        .page-home-product .hero-product-bg-image{background-image:url('{% static "site/assets/team-hero-mob.webp" %}')}
+        .page-home-product .hero-product-bg-image img{object-position:center}
     }
     .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
     </style>
@@ -222,7 +221,10 @@
     <!-- Hero: продукт — система бронирования -->
     <section class="hero-product" id="hero" role="region" aria-labelledby="hero-heading">
         <div class="hero-product-bg" aria-hidden="true">
-            <div class="hero-product-bg-image" data-bg="{% static 'site/assets/team-hero.webp' %}?v=3.3" data-bg-mobile="{% static 'site/assets/team-hero-mob.webp' %}"></div>
+            <picture class="hero-product-bg-image">
+                <source media="(max-width: 768px)" srcset="{% static 'site/assets/team-hero-mob.webp' %}">
+                <img src="{% static 'site/assets/team-hero.webp' %}?v=3.3" alt="" fetchpriority="high" decoding="async" width="1920" height="1080">
+            </picture>
             <div class="hero-product-bg-overlay" aria-hidden="true"></div>
         </div>
         <div class="container hero-product-inner">

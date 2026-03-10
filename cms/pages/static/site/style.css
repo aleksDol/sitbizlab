@@ -5227,10 +5227,14 @@ a.product-card .btn-service {
 .page-home-product .hero-product-bg-image {
     position: absolute;
     inset: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     z-index: 0;
+    overflow: hidden;
+}
+.page-home-product .hero-product-bg-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 .page-home-product .hero-product-bg-overlay {
     position: absolute;
