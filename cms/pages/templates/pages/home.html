@@ -39,6 +39,21 @@
     <link rel="preload" as="image" href="{% static 'site/assets/team-hero.webp' %}?v=3.3" media="(min-width: 769px)">
     <link rel="preload" as="image" href="{% static 'site/assets/team-hero-mob.webp' %}" media="(max-width: 768px)">
 
+    <!-- Критический CSS: hero-фон задан сразу, чтобы LCP не ждал JS -->
+    <style>
+    .page-home-product .hero-product-bg-image {
+        background-image: url('{% static "site/assets/team-hero.webp" %}?v=3.3');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    @media (max-width: 768px) {
+        .page-home-product .hero-product-bg-image {
+            background-image: url('{% static "site/assets/team-hero-mob.webp" %}');
+        }
+    }
+    </style>
+
     <!-- JSON-LD: Organization + WebSite для поисковиков -->
     <script type="application/ld+json">
     {

@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function initSectionBackgrounds() {
         const isDesktop = window.matchMedia && window.matchMedia('(min-width: 769px)').matches;
         document.querySelectorAll('[data-bg][data-bg-mobile]').forEach(function (el) {
-            if (el.classList.contains('hero-bg-image')) return;
+            if (el.classList.contains('hero-bg-image') || el.classList.contains('hero-product-bg-image')) return;
             const url = isDesktop ? el.getAttribute('data-bg') : el.getAttribute('data-bg-mobile');
             if (url) el.style.backgroundImage = 'url(' + JSON.stringify(url) + ')';
         });
