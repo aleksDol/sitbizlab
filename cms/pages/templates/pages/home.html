@@ -72,10 +72,17 @@
         .page-home-product .hero-product-bg-image img{object-position:center}
     }
     .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+    body:not(.css-loaded) .section,
+    body:not(.css-loaded) .footer,
+    body:not(.css-loaded) .ai-agent-wrapper,
+    body:not(.css-loaded) .section-cta,
+    body:not(.css-loaded) #serviceModal,
+    body:not(.css-loaded) #caseDescriptionModal,
+    body:not(.css-loaded) #caseLightbox{visibility:hidden}
     </style>
 
     <!-- Основной CSS — асинхронная загрузка, не блокирует FCP/LCP -->
-    <link rel="stylesheet" href="{% static 'site/style.css' %}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{% static 'site/style.css' %}" media="print" onload="this.media='all';document.body.classList.add('css-loaded')">
     <noscript><link rel="stylesheet" href="{% static 'site/style.css' %}"></noscript>
 
     <!-- Font Awesome — асинхронно -->
