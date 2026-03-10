@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ site.site_name }} — Сайты, боты и мини-приложения, которые приносят заявки</title>
-    <meta name="description" content="{{ site.meta_description|default:'Создаём сайты, Telegram-ботов и MiniApps под ключ. Автоматизация и рост продаж. Ответим в течение 15 минут.' }}">
-    <meta name="keywords" content="разработка сайтов, лендинг, создание сайта под ключ, веб-студия, заказать сайт, лендинг под ключ, сайт для бизнеса">
+    <title>{{ site.site_name }} — Система онлайн-бронирования для кальянных и ресторанов</title>
+    <meta name="description" content="{{ site.meta_description|default:'Система онлайн-бронирования для кальянных и ресторанов: запись через Telegram, сайт или MiniApp, база гостей, напоминания, рост отзывов. Подключение от 19 000 ₽. Ответим в течение 15 минут.' }}">
+    <meta name="keywords" content="онлайн-бронирование, система бронирования, бронирование для ресторана, бронирование для кальянной, запись гостей, Telegram-бот бронирование, база клиентов ресторана, напоминание о визите">
     <meta name="author" content="{{ site.site_name }}">
     <link rel="canonical" href="{{ canonical_url|default:'' }}">
     <meta name="csrf-token" content="{{ csrf_token }}">
@@ -14,16 +14,16 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ canonical_url|default:'' }}">
-    <meta property="og:title" content="{{ site.site_name }} — Сайты, которые работают">
-    <meta property="og:description" content="{{ site.meta_description|default:'Лендинги и сайты под ключ. От 25 000 ₽. Ответим в течение 15 минут.' }}">
+    <meta property="og:title" content="{{ site.site_name }} — Система онлайн-бронирования для кальянных и ресторанов">
+    <meta property="og:description" content="{{ site.meta_description|default:'Система онлайн-бронирования: запись гостей через Telegram, сайт или MiniApp, база клиентов, напоминания. От 19 000 ₽. Ответим в течение 15 минут.' }}">
     <meta property="og:image" content="{{ og_image_url|default:'' }}">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:site_name" content="{{ site.site_name }}">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ site.site_name }} — Сайты, которые работают">
-    <meta name="twitter:description" content="{{ site.meta_description|default:'Лендинги и сайты под ключ. От 25 000 ₽.' }}">
+    <meta name="twitter:title" content="{{ site.site_name }} — Система онлайн-бронирования для кальянных и ресторанов">
+    <meta name="twitter:description" content="{{ site.meta_description|default:'Система онлайн-бронирования для ресторанов и кальянных: запись гостей, база клиентов, напоминания. От 19 000 ₽.' }}">
     <meta name="twitter:image" content="{{ og_image_url|default:'' }}">
 
     <!-- Inter — самохостинг (файлы в static/site/fonts/), без блокирующего запроса к Google -->
@@ -48,7 +48,7 @@
                 "@id": "{{ base_url|default:'' }}/#organization",
                 "name": "{{ site.site_name }}",
                 "url": "{{ base_url|default:'' }}",
-                "description": "{{ site.meta_description|default:'Создаем сайты и лендинги, которые приносят заявки.' }}",
+                "description": "{{ site.meta_description|default:'Система онлайн-бронирования для кальянных и ресторанов: запись гостей через Telegram, сайт или MiniApp, база клиентов, напоминания.' }}",
                 "potentialAction": {
                     "@type": "ContactAction",
                     "target": "{{ base_url|default:'' }}/#contact",
@@ -59,7 +59,7 @@
                 "@type": "WebSite",
                 "name": "{{ site.site_name }}",
                 "url": "{{ canonical_url|default:'' }}",
-                "description": "{{ site.meta_description|default:'Сайты и лендинги под ключ. От 25 000 ₽.' }}",
+                "description": "{{ site.meta_description|default:'Система онлайн-бронирования для кальянных и ресторанов. Запись гостей, база клиентов, рост отзывов. От 19 000 ₽.' }}",
                 "publisher": {"@id": "{{ base_url|default:'' }}/#organization"},
                 "inLanguage": "ru-RU"
             }
@@ -470,8 +470,8 @@
                     <p class="want-disclaimer">Ответим в течение 15 минут. Без навязывания.</p>
                 </div>
                 <div class="want-testimonials">
-                    <blockquote class="want-quote"><span class="quote-mark">"</span><p>Быстро сделали лендинг, заявки пошли с первого дня. Рекомендую.</p><cite>Дмитрий, владелец сервиса</cite></blockquote>
-                    <blockquote class="want-quote"><span class="quote-mark">"</span><p>Понятная структура, всё под ключ. Очень доволен результатом.</p><cite>Анна, онлайн-школа</cite></blockquote>
+                    <blockquote class="want-quote"><span class="quote-mark">"</span><p>Раньше все брони были в переписках, постоянно что-то терялось. После запуска системы гости записываются сами, а администратор просто контролирует записи. Работать стало намного проще.</p><cite>Дмитрий, владелец кальянной</cite></blockquote>
+                    <blockquote class="want-quote"><span class="quote-mark">"</span><p>Очень удобная система. Теперь видно загрузку столиков, есть база гостей и история визитов. Плюс начали чаще возвращаться гости благодаря напоминаниям.</p><cite>Анна, управляющая рестораном</cite></blockquote>
                 </div>
             </div>
         </div>
